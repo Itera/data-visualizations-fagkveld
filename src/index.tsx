@@ -1,17 +1,35 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import { initializeIcons } from "@uifabric/icons";
+import { loadTheme } from "@fluentui/react";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+import { D3Charts } from "./D3Charts";
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+import "./index.scss";
+
+initializeIcons();
+
+loadTheme({
+  defaultFontStyle: {
+    fontFamily: "Monaco, Menlo, Consolas",
+    fontWeight: "regular",
+  },
+  fonts: {
+    small: {
+      fontSize: "11px",
+    },
+    medium: {
+      fontSize: "13px",
+    },
+    large: {
+      fontSize: "20px",
+      fontWeight: "semibold",
+    },
+    xLarge: {
+      fontSize: "22px",
+      fontWeight: "semibold",
+    },
+  },
+});
+
+ReactDOM.render(<D3Charts />, document.getElementById("root"));
