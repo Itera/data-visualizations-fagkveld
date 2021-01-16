@@ -94,59 +94,62 @@ export const D3Charts: FC = () => {
   }, []);
 
   return (
-    <div className="ms-Grid" dir="ltr">
-      <h1 className="ms-fontSize-42">D3 Demo - Google Trends</h1>
-      <div className="ms-Grid-row">
-        <Stack horizontal wrap tokens={horizontalGapStackTokens}>
-          <Stack.Item styles={stackItemStyles}>
-            <SearchBox
-              placeholder="Search 1"
-              value={searchWord1}
-              onChange={(e) => setSearchWord1(e?.target.value || "")}
-            />
-          </Stack.Item>
-          <Stack.Item styles={stackItemStyles}>
-            <SearchBox
-              placeholder="Search 2"
-              value={searchWord2}
-              onChange={(e) => setSearchWord2(e?.target.value || "")}
-            />
-          </Stack.Item>
-          <Stack.Item styles={stackItemStyles}>
-            <SearchBox
-              placeholder="Search 3"
-              value={searchWord3}
-              onChange={(e) => setSearchWord3(e?.target.value || "")}
-            />
-          </Stack.Item>
-          <Stack.Item styles={stackItemStyles}>
-            <SearchBox
-              placeholder="Search 4"
-              value={searchWord4}
-              onChange={(e) => setSearchWord4(e?.target.value || "")}
-            />
-          </Stack.Item>
-        </Stack>
-        <PrimaryButton
-          text="Search"
-          onClick={getTrendData}
-          styles={buttonStyles}
-        />
-      </div>
-      <div className="ms-Grid-row charts">
-        <div
-          className="ms-Grid-col ms-sm12 ms-md12 ms-lg6 ms-depth-4"
-          ref={chartContainerRef}
-        >
-          {data.points?.length && data.labels?.length && chartWidth && (
-            <ReactRenderedBarChart
-              labels={data.labels}
-              data={data.points[data.points.length - 1]}
-              width={chartWidth}
-            />
-          )}
-        </div>
-        <div className="ms-Grid-col ms-sm12 ms-md12 ms-lg6 ms-depth-4">
+    <>
+      <Stack>
+        <h1 className="ms-fontSize-42">D3 Demo - Google Trends</h1>
+        <Stack.Item>
+          <Stack horizontal wrap tokens={horizontalGapStackTokens}>
+            <Stack.Item styles={stackItemStyles}>
+              <SearchBox
+                placeholder="Search 1"
+                value={searchWord1}
+                onChange={(e) => setSearchWord1(e?.target.value || "")}
+              />
+            </Stack.Item>
+            <Stack.Item styles={stackItemStyles}>
+              <SearchBox
+                placeholder="Search 2"
+                value={searchWord2}
+                onChange={(e) => setSearchWord2(e?.target.value || "")}
+              />
+            </Stack.Item>
+            <Stack.Item styles={stackItemStyles}>
+              <SearchBox
+                placeholder="Search 3"
+                value={searchWord3}
+                onChange={(e) => setSearchWord3(e?.target.value || "")}
+              />
+            </Stack.Item>
+            <Stack.Item styles={stackItemStyles}>
+              <SearchBox
+                placeholder="Search 4"
+                value={searchWord4}
+                onChange={(e) => setSearchWord4(e?.target.value || "")}
+              />
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
+        <Stack.Item>
+          <PrimaryButton
+            text="Search"
+            onClick={getTrendData}
+            styles={buttonStyles}
+          />
+        </Stack.Item>
+      </Stack>
+      <Stack className="charts" horizontal>
+        <Stack.Item className="ms-sm12 ms-md12 ms-lg6 ms-depth-4">
+          <div ref={chartContainerRef}>
+            {data.points?.length && data.labels?.length && chartWidth && (
+              <ReactRenderedBarChart
+                labels={data.labels}
+                data={data.points[data.points.length - 1]}
+                width={chartWidth}
+              />
+            )}
+          </div>
+        </Stack.Item>
+        <Stack.Item className="ms-sm12 ms-md12 ms-lg6 ms-depth-4">
           {chartWidth && (
             <D3RenderedLineChart
               labels={data.labels}
@@ -154,9 +157,9 @@ export const D3Charts: FC = () => {
               width={chartWidth}
             />
           )}
-        </div>
-      </div>
-    </div>
+        </Stack.Item>
+      </Stack>
+    </>
   );
 };
 
