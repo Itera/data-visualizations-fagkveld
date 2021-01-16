@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef } from "react";
-import { GTData } from "../../types";
+import { GTData } from "../../api/trend";
 import * as d3 from "d3";
 
 interface D3RenderedLineChartProps {

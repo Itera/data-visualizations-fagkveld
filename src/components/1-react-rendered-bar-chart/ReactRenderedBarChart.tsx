@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from "react";
-import { GTData } from "../../types";
+import { GTData } from "../../api/trend";
 import { zip } from "lodash";
 // @ts-ignore
 import * as d3 from "d3";
