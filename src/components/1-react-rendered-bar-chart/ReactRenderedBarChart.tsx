@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useMemo, useRef } from "react";
 import { zip } from "lodash";
 import * as d3 from "d3";
 
@@ -35,23 +35,49 @@ export const ReactRenderedBarChart: FC<ReactRenderedBarChartProps> = ({
   data,
   width,
 }) => {
-  const [bars, setBars] = useState<Bar[]>([]);
   const xAxisRef = useRef<SVGGElement>(null);
   const yAxisRef = useRef<SVGGElement>(null);
 
   const height = width / aspectRatio;
 
-  useEffect(() => {
-    const xScale = d3
-      .scaleBand()
-      .rangeRound([margin.left, width - margin.right])
-      .padding(0.3)
-      .domain(labels);
-    const yScale = d3
-      .scaleLinear()
-      .range([height - margin.bottom, margin.top])
-      .domain([0, d3.max(data.value, (d) => d) as number]);
+  const xScale = useMemo(
+    () =>
+      d3
+        .scaleBand()
+        .rangeRound([margin.left, width - margin.right])
+        .padding(0.3)
+        .domain(labels),
+    [width, labels]
+  );
+  const yScale = useMemo(
+    () =>
+      d3
+        .scaleLinear()
+        .range([height - margin.bottom, margin.top])
+        .domain([0, d3.max(data.value, (d) => d) as number]),
+    [height, data.value]
+  );
 
+  const bars = useMemo(
+    () =>
+      zip(labels, data.value).map(
+        ([label, trendValue], index): Bar => {
+          const topYCoordinate = yScale(trendValue as number) as number;
+          const colorKey = Object.keys(colors)[index] as ColorName;
+          return {
+            key: label as string,
+            x: xScale(label as string) as number,
+            y: topYCoordinate,
+            width: xScale.bandwidth(),
+            height: height - margin.bottom - topYCoordinate,
+            fill: colors[colorKey],
+          };
+        }
+      ),
+    [labels, data.value, yScale, xScale, height]
+  );
+
+  useEffect(() => {
     if (xAxisRef?.current) {
       const xAxis = d3.axisBottom(xScale);
       d3.select(xAxisRef.current)
@@ -65,23 +91,7 @@ export const ReactRenderedBarChart: FC<ReactRenderedBarChartProps> = ({
         .call(yAxis)
         .attr("transform", `translate(${margin.left}, 0)`);
     }
-
-    const _bars = zip(labels, data.value).map(
-      ([label, trendValue], index): Bar => {
-        const topYCoordinate = yScale(trendValue as number) as number;
-        const colorKey = Object.keys(colors)[index] as ColorName;
-        return {
-          key: label as string,
-          x: xScale(label as string) as number,
-          y: topYCoordinate,
-          width: xScale.bandwidth(),
-          height: height - margin.bottom - topYCoordinate,
-          fill: colors[colorKey],
-        };
-      }
-    );
-    setBars(_bars);
-  }, [labels, data, width, height]);
+  }, [xScale, yScale, height]);
 
   return (
     <svg width={width} height={height}>
