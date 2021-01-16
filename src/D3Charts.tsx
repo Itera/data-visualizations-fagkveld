@@ -2,6 +2,7 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import { PrimaryButton } from "@fluentui/react/lib/Button";
 import { SearchBox } from "office-ui-fabric-react/lib/SearchBox";
 import { IStackItemStyles, IStackTokens, Stack } from "@fluentui/react";
+
 import { ReactRenderedBarChart } from "./components/1-react-rendered-bar-chart/ReactRenderedBarChart";
 import { D3RenderedLineChart } from "./components/2-d3-rendered-line-chart/D3RenderedLineChart";
 import { getTrendData } from "./api/trend";

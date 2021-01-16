@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useRef } from "react";
-import { GTData } from "../../api/trend";
 import * as d3 from "d3";
+
+import { GTData } from "../../api/trend";
 
 type D3RenderedLineChartProps = {
   labels: string[];
