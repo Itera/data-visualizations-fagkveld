@@ -1,11 +1,11 @@
 import axios from "axios";
 
-export interface TrendData {
+export type TrendData = {
   labels: Array<string>;
   points: Array<GTData>;
-}
+};
 
-export interface GTData {
+export type GTData = {
   formattedAxisTime: string; // "Sep 1, 2020"
   formattedTime: string; // "Sep 2020"
   formattedValue: string[]; // ["28"]
@@ -13,19 +13,19 @@ export interface GTData {
   dateTime: Date;
   time: number; // "1598918400"
   value: number[]; // [28]
-}
+};
 
-interface GTRequest {
+type GTRequest = {
   keyWords: Array<string>;
-}
+};
 
-interface GTResponse {
+type GTResponse = {
   data: {
     default: {
       timelineData: Array<GTData>;
     };
   };
-}
+};
 
 export async function getTrendData(
   labels: Array<string>

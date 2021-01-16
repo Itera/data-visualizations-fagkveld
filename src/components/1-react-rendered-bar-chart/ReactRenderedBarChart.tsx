@@ -4,21 +4,21 @@ import { zip } from "lodash";
 // @ts-ignore
 import * as d3 from "d3";
 
-interface ReactRenderedBarChartProps {
+type ReactRenderedBarChartProps = {
   labels: string[];
   data: GTData;
   width: number;
-}
+};
 type ColorName = "lavender" | "amethyst" | "purple" | "blue" | "green";
 
-interface Bar {
+type Bar = {
   key: string;
   x: number;
   y: number;
   width: number;
   height: number;
   fill: string;
-}
+};
 
 const margin = { top: 40, right: 20, bottom: 40, left: 40 };
 const colors: Record<ColorName, string> = {

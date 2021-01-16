@@ -4,23 +4,23 @@ import React, { RefObject } from "react";
 import * as d3 from "d3";
 import moment from "moment";
 
-export interface PriceData {
+export type PriceData = {
   open: number;
   high: number;
   low: number;
   close: number;
   volume: number;
   date: Date;
-}
+};
 
-export interface Margin {
+export type Margin = {
   top: number;
   bottom: number;
   left: number;
   right: number;
-}
+};
 
-export interface CandleStickChartConfig {
+export type CandleStickChartConfig = {
   priceBadgeColor: string;
   candleBodyColorUp: string;
   candleBodyColorDown: string;
@@ -31,17 +31,17 @@ export interface CandleStickChartConfig {
   chartGridColorHighlight: string;
   chartAxisColor: string;
   margin: Margin;
-}
+};
 
-export interface CandleStickChartProps {
+export type CandleStickChartProps = {
   data: PriceData[] | string;
   config?: CandleStickChartConfig;
   chartType: "svg" | "canvas";
-}
+};
 
-export interface CandleStickChartState {
+export type CandleStickChartState = {
   data: PriceData[];
-}
+};
 
 function addEventListenerToStopMouseScroll() {
   document.addEventListener("wheel", this.stopMouseScroll, { passive: false }); // Might not be sufficient in all browsers.
