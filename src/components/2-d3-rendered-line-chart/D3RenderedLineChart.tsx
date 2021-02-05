@@ -1,12 +1,13 @@
 import React, { FC, useEffect, useRef } from "react";
-import { GTData } from "../../types";
 import * as d3 from "d3";
 
-interface D3RenderedLineChartProps {
+import { GTData } from "../../api/trend";
+
+type D3RenderedLineChartProps = {
   labels: string[];
   data: GTData[];
   width: number;
-}
+};
 
 const aspectRatio = 16 / 9;
 const margin = { top: 20, right: 10, bottom: 20, left: 40 };

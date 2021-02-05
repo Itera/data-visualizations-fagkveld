@@ -1,12 +1,12 @@
-import React, { FC, useEffect, useLayoutEffect, useRef, useState } from "react";
-import axios from "axios";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { PrimaryButton } from "@fluentui/react/lib/Button";
 import { SearchBox } from "office-ui-fabric-react/lib/SearchBox";
 import { IStackItemStyles, IStackTokens, Stack } from "@fluentui/react";
-import { debounce } from "lodash";
-import { GTData } from "./types";
+
 import { ReactRenderedBarChart } from "./components/1-react-rendered-bar-chart/ReactRenderedBarChart";
 import { D3RenderedLineChart } from "./components/2-d3-rendered-line-chart/D3RenderedLineChart";
+import { getTrendData } from "./api/trend";
+import { usePromise } from "./hooks/promise";
 
 const stackItemStyles: IStackItemStyles = {
   root: {
@@ -29,136 +29,123 @@ export const D3Charts: FC = () => {
   const [searchWord2, setSearchWord2] = useState<string>("Java");
   const [searchWord3, setSearchWord3] = useState<string>("C");
   const [searchWord4, setSearchWord4] = useState<string>("Python");
-  const [data, setData] = useState<{ points: GTData[]; labels: string[] }>({
-    points: [],
-    labels: [],
-  });
+
+  const labels = [searchWord1, searchWord2, searchWord3, searchWord4];
+  const [isResolving, data, error, refreshData] = usePromise(
+    () => getTrendData(labels),
+    labels
+  );
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+    }
+    if (error) {
+      console.error(error);
+    }
+  }, [data, error]);
 
   const [chartWidth, setChartWidth] = useState(0);
   const chartContainerRef = useRef<HTMLDivElement>(null);
 
-  const getTrendData = () => {
-    const keyWords = [
-      searchWord1,
-      searchWord2,
-      searchWord3,
-      searchWord4,
-    ].filter((w) => w.length > 0);
-    axios
-      .post("/gt", {
-        keyWords: keyWords,
-      })
-      .then((response: any) => {
-        let chartData = response?.data?.default?.timelineData as GTData[];
-        chartData = chartData.map((d) => {
-          d.dateTime = new Date(d.time);
-          return d;
-        });
-        setData({ points: chartData, labels: keyWords });
-        console.log(response);
-      })
-      .catch((error: Error) => {
-        console.log(error);
-      });
-  };
-
-  useLayoutEffect(() => {
-    const resizeHandler = () => {
-      if (chartContainerRef?.current) {
-        const containerWidth = chartContainerRef.current.offsetWidth;
-        let horizontalPadding = 0;
-        try {
-          const styles = window.getComputedStyle(chartContainerRef.current);
-          horizontalPadding =
-            parseInt(styles.paddingLeft, 10) +
-            parseInt(styles.paddingRight, 10);
-        } catch (e) {
-          console.error(e);
-        }
-        setChartWidth(containerWidth - horizontalPadding || 0);
-      }
-    };
-
-    if (chartContainerRef.current) {
-      resizeHandler();
-
-      const debouncedResizeHandler = debounce(resizeHandler);
-
-      window.addEventListener("resize", debouncedResizeHandler);
-      return () => window.removeEventListener("resize", debouncedResizeHandler);
-    }
-  }, []);
-
   useEffect(() => {
-    getTrendData();
-  }, []);
+    function resizeHandler() {
+      if (chartContainerRef.current) {
+        const width = computeChartWidth(chartContainerRef.current);
+        setChartWidth(width);
+      }
+    }
+
+    const id = requestAnimationFrame(() => resizeHandler());
+    window.addEventListener("resize", resizeHandler);
+    return () => {
+      window.cancelAnimationFrame(id);
+      window.removeEventListener("resize", resizeHandler);
+    };
+  }, [setChartWidth, data]);
 
   return (
-    <div className="ms-Grid" dir="ltr">
-      <h1 className="ms-fontSize-42">D3 Demo - Google Trends</h1>
-      <div className="ms-Grid-row">
-        <Stack horizontal wrap tokens={horizontalGapStackTokens}>
-          <Stack.Item styles={stackItemStyles}>
-            <SearchBox
-              placeholder="Search 1"
-              value={searchWord1}
-              onChange={(e) => setSearchWord1(e?.target.value || "")}
-            />
+    <>
+      <Stack>
+        <h1 className="ms-fontSize-42">D3 Demo - Google Trends</h1>
+        <Stack.Item>
+          <Stack horizontal wrap tokens={horizontalGapStackTokens}>
+            <Stack.Item styles={stackItemStyles}>
+              <SearchBox
+                placeholder="Search 1"
+                value={searchWord1}
+                onChange={(e) => setSearchWord1(e?.target.value || "")}
+              />
+            </Stack.Item>
+            <Stack.Item styles={stackItemStyles}>
+              <SearchBox
+                placeholder="Search 2"
+                value={searchWord2}
+                onChange={(e) => setSearchWord2(e?.target.value || "")}
+              />
+            </Stack.Item>
+            <Stack.Item styles={stackItemStyles}>
+              <SearchBox
+                placeholder="Search 3"
+                value={searchWord3}
+                onChange={(e) => setSearchWord3(e?.target.value || "")}
+              />
+            </Stack.Item>
+            <Stack.Item styles={stackItemStyles}>
+              <SearchBox
+                placeholder="Search 4"
+                value={searchWord4}
+                onChange={(e) => setSearchWord4(e?.target.value || "")}
+              />
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
+        <Stack.Item>
+          <PrimaryButton
+            text="Search"
+            onClick={refreshData}
+            styles={buttonStyles}
+          />
+        </Stack.Item>
+      </Stack>
+      {!isResolving && data && (
+        <Stack className="charts" horizontal>
+          <Stack.Item className="ms-sm12 ms-md12 ms-lg6 ms-depth-4">
+            <div ref={chartContainerRef}>
+              {chartWidth && (
+                <ReactRenderedBarChart
+                  labels={data.labels}
+                  data={data.points[data.points.length - 1]}
+                  width={chartWidth}
+                />
+              )}
+            </div>
           </Stack.Item>
-          <Stack.Item styles={stackItemStyles}>
-            <SearchBox
-              placeholder="Search 2"
-              value={searchWord2}
-              onChange={(e) => setSearchWord2(e?.target.value || "")}
-            />
-          </Stack.Item>
-          <Stack.Item styles={stackItemStyles}>
-            <SearchBox
-              placeholder="Search 3"
-              value={searchWord3}
-              onChange={(e) => setSearchWord3(e?.target.value || "")}
-            />
-          </Stack.Item>
-          <Stack.Item styles={stackItemStyles}>
-            <SearchBox
-              placeholder="Search 4"
-              value={searchWord4}
-              onChange={(e) => setSearchWord4(e?.target.value || "")}
-            />
+          <Stack.Item className="ms-sm12 ms-md12 ms-lg6 ms-depth-4">
+            {chartWidth && (
+              <D3RenderedLineChart
+                labels={data.labels}
+                data={data.points}
+                width={chartWidth}
+              />
+            )}
           </Stack.Item>
         </Stack>
-        <PrimaryButton
-          text="Search"
-          onClick={getTrendData}
-          styles={buttonStyles}
-        />
-      </div>
-      <div className="ms-Grid-row charts">
-        <div
-          className="ms-Grid-col ms-sm12 ms-md12 ms-lg6 ms-depth-4"
-          ref={chartContainerRef}
-        >
-          {data.points?.length && data.labels?.length && chartWidth && (
-            <ReactRenderedBarChart
-              labels={data.labels}
-              data={data.points[data.points.length - 1]}
-              width={chartWidth}
-            />
-          )}
-        </div>
-        <div className="ms-Grid-col ms-sm12 ms-md12 ms-lg6 ms-depth-4">
-          {chartWidth && (
-            <D3RenderedLineChart
-              labels={data.labels}
-              data={data.points}
-              width={chartWidth}
-            />
-          )}
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
+
+function computeChartWidth(container: HTMLElement): number {
+  const width = container.offsetWidth;
+  let padding = 0;
+  try {
+    const { paddingLeft, paddingRight } = window.getComputedStyle(container);
+    padding = parseInt(paddingLeft, 10) + parseInt(paddingRight, 10);
+  } catch (e) {
+    console.error(e);
+  }
+  return width - padding || 0;
+}
 
 /*
 <IconButton
