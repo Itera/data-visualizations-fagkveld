@@ -1,4 +1,8 @@
+@import "./../node_modules/office-ui-fabric-core/dist/sass/References";
+@import "./../node_modules/office-ui-fabric-core/dist/sass/Color.scss";
+
+@import "./components/4-advanced-chart/stacked-bar-chart.scss";
+
 .charts {
   margin-top: 50px;
 }
-

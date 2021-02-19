@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { initializeIcons } from "@uifabric/icons";
 import { loadTheme } from "@fluentui/react";
 
-import { D3Charts } from "./D3Charts";
+import App from "./App";
 
 import "./index.scss";
 
@@ -32,4 +32,4 @@ loadTheme({
   },
 });
 
-ReactDOM.render(<D3Charts />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById("root"));

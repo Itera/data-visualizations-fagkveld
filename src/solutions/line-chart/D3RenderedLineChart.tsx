@@ -1,26 +1,20 @@
-import React, { FC, useEffect, useRef } from "react";
-import * as d3 from "d3";
+/**
+ * Needs work
+ */
 
-import { GTData } from "../../api/trend";
+import React, { FC, useEffect } from "react";
+import * as d3 from "d3";
+import { PointData } from "../../types";
 
 type D3RenderedLineChartProps = {
-  labels: string[];
-  data: GTData[];
+  data: PointData[];
   width: number;
 };
 
 const aspectRatio = 16 / 9;
 const margin = { top: 20, right: 10, bottom: 20, left: 40 };
-const colors = {
-  lavender: "#E2CFEA",
-  amethyst: "#A06CD5",
-  purple: "#6247AA",
-  blue: "#102B3F",
-  green: "#062726",
-};
 
 export const D3RenderedLineChart: FC<D3RenderedLineChartProps> = ({
-  labels,
   data: dataOld,
   width,
 }) => {
@@ -52,11 +46,13 @@ export const D3RenderedLineChart: FC<D3RenderedLineChartProps> = ({
       .domain([0, d3.max(data, (d) => d3.max(d.value, (v) => v)) as number])
       .range([height - margin.bottom, margin.top]);
 
+    // eslint-disable-next-line
     const xAxis = (g: d3.Selection<SVGGElement, unknown, HTMLElement, any>) =>
       g
         .attr("transform", `translate(0, ${height - margin.bottom})`)
         .call(d3.axisBottom(xScale));
 
+    // eslint-disable-next-line
     const yAxis = (g: d3.Selection<SVGGElement, unknown, HTMLElement, any>) =>
       g
         .attr("transform", `translate(${margin.left}, 0)`)
@@ -106,7 +102,7 @@ export const D3RenderedLineChart: FC<D3RenderedLineChartProps> = ({
       .on("mouseover", function (a, b, c) {
         console.log(a, b, c);
       });
-  }, [labels, dataOld, width, height]);
+  }, [dataOld, width, height]);
 
   return <svg id="lineChartRoot"></svg>; // width={width} height={width / aspectRatio}
 };
