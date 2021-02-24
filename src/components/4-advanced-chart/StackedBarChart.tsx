@@ -35,18 +35,11 @@ export const StackedBarChart: FC<ChartComponentProps<StackedData[]>> = ({
         .domain([
           0,
           // @ts-ignore
-          d3.max<StackedBarPlotData>(data, (d) => {
-            const sumElementValues = Object.entries(d).reduce(
-              (sum, [key, val]) => {
-                if (key !== "key") {
-                  return typeof val === "number" ? sum + val : sum;
-                }
-                return sum;
-              },
-              0
-            );
-            return sumElementValues;
-          }) * yDomainMultiplier,
+          yDomainMultiplier * d3.max<StackedBarPlotData>(data, (d) => (
+            Object.entries(d)
+              .filter(([key, value]) => key !== 'key' && typeof value === 'number')
+              .reduce((sum, [, value]) => sum + value, 0)
+          )),
         ]),
       color: d3
         .scaleOrdinal(d3.schemePaired)
