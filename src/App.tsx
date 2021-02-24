@@ -10,7 +10,9 @@ import {
 import { Navigation } from "./components/example-page/Navigation";
 import { PointData, StackedData } from "./types";
 
-const aspectRatio = 16 / 9;
+const ASPECT_RATIO = 16 / 9;
+const WIDTH = 1500;
+const HEIGHT = WIDTH / ASPECT_RATIO;
 
 const App: FC = () => {
   return (
