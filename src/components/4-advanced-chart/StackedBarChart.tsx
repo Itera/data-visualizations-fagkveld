@@ -137,7 +137,7 @@ export const StackedBarChart: FC<ChartComponentProps<StackedData[]>> = ({
 };
 
 function getNumberOfRects(data: StackedData[]) {
-  const nrOfKeys = data.length ?? 0;
+  const nrOfKeys = data.length;
   const nrOfCategories = data[0] ? Object.keys(data[0]).length - 1 : 0;
   return nrOfKeys * nrOfCategories;
 }
