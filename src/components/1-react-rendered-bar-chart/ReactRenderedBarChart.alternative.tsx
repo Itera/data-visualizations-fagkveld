@@ -1,6 +1,6 @@
 /**
- * In this example we use React to render a bar chart. Although this is possible to do,
- * this solution does not scale well as we add more data. We also miss out on a lot of
+ * In this example, we show how a D3 bar chart can be rendered using using React. Although this is a possible approach,
+ * the solution does not scale well when used with larger datasets. We also miss out on a lot of
  * powerfull features in D3 (animated udpates, pan and zoom to mention a few) when
  * taking over rendering in this manner.
  */
