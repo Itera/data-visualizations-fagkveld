@@ -1,7 +1,7 @@
 import { useState, useRef, useLayoutEffect } from "react";
 import throttle from "lodash/throttle";
 
-export function useElementSize<T extends HTMLDivElement>(): [
+export function useElementSize<T extends HTMLElement>(): [
   DOMRect | undefined,
   React.RefObject<T>
 ] {

@@ -8,6 +8,7 @@ import {
   D3CanvasChart,
 } from "./components";
 import { Navigation } from "./components/nav/Navigation";
+import { useElementSize } from "./hooks/useElementSize";
 import { Example } from "./statics";
 import { PointData, StackedData } from "./types";
 
@@ -87,6 +88,7 @@ const D3BarChartExample = () => {
 
 const StackedBarChartExample = () => {
   const [plotData, setPlotData] = useState<PointData[] | StackedData[]>([]);
+  const [size, elementRef] = useElementSize<HTMLDivElement>();
 
   return (
     <>
@@ -95,13 +97,22 @@ const StackedBarChartExample = () => {
         keyType={"number"}
         setPlotData={setPlotData}
       />
-      {plotData && (
+      {plotData && size && (
         <StackedBarChart
           data={plotData as StackedData[]}
-          width={WIDTH}
-          height={HEIGHT}
+          width={size.width}
+          height={size.height}
         />
       )}
+      <div
+        style={{
+          position: "fixed",
+          display: "hidden",
+          width: "100%",
+          height: "calc(100% - 250px)",
+        }}
+        ref={elementRef}
+      ></div>
     </>
   );
 };
