@@ -24,28 +24,28 @@ export const DataProvider: FC<DataProviderProps> = ({
   const [keys, setKeys] = useState<Key[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
 
-  const [nrOfKeys, setNrOfKeys] = useState(100);
-  const [nrOfCategories, setNrOfCategories] = useState(1);
+  const [numKeys, setnumKeys] = useState(100);
+  const [numCategories, setnumCategories] = useState(1);
   const [dataId, setDataId] = useState(0);
   const updateDataValues = () => setDataId((state) => state + 1);
 
   useEffect(() => {
-    if (nrOfKeys) {
+    if (numKeys) {
       const randomKeys =
         keyType === "string"
-          ? getRandomStrings(nrOfKeys)
-          : getNumbers(0, 1, nrOfKeys);
+          ? getRandomStrings(numKeys)
+          : getNumbers(0, 1, numKeys);
 
       setKeys(randomKeys);
     }
-  }, [nrOfKeys, keyType]);
+  }, [numKeys, keyType]);
 
   useEffect(() => {
-    if (nrOfCategories) {
-      const randomCategories = getRandomStrings(nrOfCategories);
+    if (numCategories) {
+      const randomCategories = getRandomStrings(numCategories);
       setCategories(randomCategories);
     }
-  }, [nrOfCategories]);
+  }, [numCategories]);
 
   useEffect(() => {
     if (keys.length && categories.length) {
@@ -77,8 +77,8 @@ export const DataProvider: FC<DataProviderProps> = ({
           step={1}
           showValue
           snapToStep
-          value={nrOfKeys}
-          onChange={(value: number) => setNrOfKeys(value)}
+          value={numKeys}
+          onChange={(value: number) => setnumKeys(value)}
         />
         <Slider
           label="Number of categories"
@@ -87,8 +87,8 @@ export const DataProvider: FC<DataProviderProps> = ({
           step={1}
           showValue
           snapToStep
-          value={nrOfCategories}
-          onChange={(value: number) => setNrOfCategories(value)}
+          value={numCategories}
+          onChange={(value: number) => setnumCategories(value)}
         />
 
         <DefaultButton text="Update values" onClick={updateDataValues} />

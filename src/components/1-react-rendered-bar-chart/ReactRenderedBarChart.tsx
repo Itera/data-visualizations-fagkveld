@@ -9,27 +9,23 @@ import React, { FC, useEffect, useMemo } from "react";
 import * as d3 from "d3";
 import { getTickValues } from "../../helpers";
 import { ChartComponentProps, PointData } from "../../types";
-import { colors, INVISIBLE_VALUE } from "../../statics";
-
-const margin = { top: 40, right: 20, bottom: 40, left: 40 };
-const aspectRatio = 16 / 9;
+import { COLORS, INVISIBLE_VALUE, MARGIN } from "../../statics";
 
 export const ReactRenderedBarChart: FC<ChartComponentProps<PointData[]>> = ({
   data,
   width,
+  height,
 }) => {
-  const height = width / aspectRatio;
-
   const scales = useMemo(
     () => ({
       x: d3
         .scaleBand()
-        .padding(0)
-        .range([margin.left, width - margin.right])
+        .padding(0.1)
+        .range([MARGIN.left, width - MARGIN.right])
         .domain(data.map((d) => d.key + "")),
       y: d3
         .scaleLinear()
-        .range([height - margin.bottom, margin.top])
+        .range([height - MARGIN.bottom, MARGIN.top])
         .domain(d3.extent(data, (d) => d.value) as [number, number]),
     }),
     [width, height, data]
@@ -37,7 +33,7 @@ export const ReactRenderedBarChart: FC<ChartComponentProps<PointData[]>> = ({
 
   /**
    * Although it is possilbe to render the axies with React alone, it is much easier
-   * to do with D3. This side effect redraws the axies when the scales or plot dimentions change.
+   * to do with D3. This side effect rerenders the axies when the scales or plot width/height change.
    */
   useEffect(() => {
     const xAxisContainer = d3.select("#x-axis-container");
@@ -46,7 +42,7 @@ export const ReactRenderedBarChart: FC<ChartComponentProps<PointData[]>> = ({
     const xAxis = d3.axisBottom(scales.x).tickValues(
       getTickValues(
         data.map((d) => d.key as string),
-        width - margin.left - margin.right,
+        width - MARGIN.left - MARGIN.right,
         25
       )
     );
@@ -54,17 +50,17 @@ export const ReactRenderedBarChart: FC<ChartComponentProps<PointData[]>> = ({
 
     xAxisContainer
       .call(xAxis as any) // eslint-disable-line
-      .attr("transform", `translate(0, ${height - margin.bottom})`);
+      .attr("transform", `translate(0, ${height - MARGIN.bottom})`);
 
     yAxisContainer
       .call(yAxis as any) // eslint-disable-line
-      .attr("transform", `translate(${margin.left}, 0)`);
+      .attr("transform", `translate(${MARGIN.left}, 0)`);
   }, [scales, height, width, data]);
 
   /**
-   * Here we use React to add our bar chart to the DOM.
+   * Here we use React to add the bar chart to the DOM.
    * We use the scales to calculate position, width and height for all the
-   * bars in the plot
+   * bars in the plot.
    */
   return (
     <svg width={width} height={height}>
@@ -76,8 +72,8 @@ export const ReactRenderedBarChart: FC<ChartComponentProps<PointData[]>> = ({
             x: scales.x(d.key + "") ?? INVISIBLE_VALUE,
             y: topYCoordinate,
             width: scales.x.bandwidth(),
-            height: height - margin.bottom - topYCoordinate,
-            fill: colors.lavender,
+            height: height - MARGIN.bottom - topYCoordinate,
+            fill: COLORS.green,
           };
 
           return <rect {...barProps}></rect>;

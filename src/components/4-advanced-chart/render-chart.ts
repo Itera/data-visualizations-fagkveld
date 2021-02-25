@@ -3,15 +3,14 @@ import * as d3 from "d3";
 import { getTickValues } from "../../helpers";
 import { addTooltip } from "./tooltip";
 
-import { Scales, margin } from "./StackedBarChart";
+import { Scales } from "./StackedBarChart";
 import { StackedData } from "../../types";
-
-const transitionDuration = 250;
+import { MARGIN, TRANSITION_DURATION } from "../../statics";
 
 /**
- * Draw or update x and y axis. If updating, the update is animated.
+ * Render or update x and y axis. If updating, the update is animated.
  */
-export function drawAxis(
+export function renderAxis(
   scales: Scales,
   data: StackedData[],
   width: number
@@ -21,7 +20,7 @@ export function drawAxis(
 
   const xAxisTickValues = getTickValues(
     data.map((d) => d.key),
-    width - margin.left - margin.right,
+    width - MARGIN.left - MARGIN.right,
     20
   );
 
@@ -33,11 +32,11 @@ export function drawAxis(
 }
 
 /**
- * Draw or update y axis grid lines. If updating, the update is animated.
+ * Render or update y axis grid lines. If updating, the update is animated.
  */
-export function drawGrid(scales: Scales, width: number): void {
+export function renderGrid(scales: Scales, width: number): void {
   const grid = d3.select("#grid");
-  const lengthOfGridLines = -(width - margin.left - margin.right);
+  const lengthOfGridLines = -(width - MARGIN.left - MARGIN.right);
 
   grid.transition().call(
     d3
@@ -49,9 +48,12 @@ export function drawGrid(scales: Scales, width: number): void {
 }
 
 /**
- * Draw bars in the stacked bar chart.
+ * Render bars in the stacked bar chart.
  */
-export function drawStackedBarChart(scales: Scales, data: StackedData[]): void {
+export function renderStackedBarChart(
+  scales: Scales,
+  data: StackedData[]
+): void {
   const dataContainer = d3.select("#data-container");
 
   const elements = Object.keys(data?.[0] ?? {}).filter((key) => key !== "key");
@@ -75,13 +77,13 @@ export function drawStackedBarChart(scales: Scales, data: StackedData[]): void {
           .attr("opacity", 0)
           .call(addTooltip)
           .call((enter) =>
-            enter.transition().duration(transitionDuration).attr("opacity", 1)
+            enter.transition().duration(TRANSITION_DURATION).attr("opacity", 1)
           ),
       (update) =>
         update.call((update) =>
           update
             .transition()
-            .duration(transitionDuration)
+            .duration(TRANSITION_DURATION)
             .attr("fill", (d) => scales.color(d.key) as string)
             .attr("opacity", 1)
         ),
@@ -89,7 +91,7 @@ export function drawStackedBarChart(scales: Scales, data: StackedData[]): void {
         exit.call((exit) =>
           exit
             .transition()
-            .duration(transitionDuration)
+            .duration(TRANSITION_DURATION)
             .attr("opacity", 0)
             .remove()
         )
@@ -112,14 +114,14 @@ export function drawStackedBarChart(scales: Scales, data: StackedData[]): void {
           .attr("opacity", 0)
           .call((_enter) =>
             // @ts-ignore
-            _enter.transition().duration(transitionDuration).attr("opacity", 1)
+            _enter.transition().duration(TRANSITION_DURATION).attr("opacity", 1)
           ),
       (update) =>
         update.call((update) =>
           // @ts-ignore
           update
             .transition()
-            .duration(transitionDuration)
+            .duration(TRANSITION_DURATION)
             .attr("x", (d) => scales.x(d.data.key + ""))
             .attr("y", (d) => scales.y(d[1]))
             .attr("height", (d) => {
@@ -134,7 +136,7 @@ export function drawStackedBarChart(scales: Scales, data: StackedData[]): void {
         exit.call((exit) =>
           exit
             .transition()
-            .duration(transitionDuration)
+            .duration(TRANSITION_DURATION)
             .attr("opacity", 0)
             .remove()
         )

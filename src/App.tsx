@@ -1,13 +1,14 @@
 import React, { FC, useState } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
 import {
   ReactRenderedBarChart,
   DataProvider,
   D3RenderedBarChart,
   StackedBarChart,
   D3CanvasExample,
+  D3CanvasChart,
 } from "./components";
-import { Navigation } from "./components/example-page/Navigation";
+import { Navigation } from "./components/nav/Navigation";
+import { Example } from "./statics";
 import { PointData, StackedData } from "./types";
 
 const ASPECT_RATIO = 16 / 9;
@@ -15,29 +16,27 @@ const WIDTH = 1500;
 const HEIGHT = WIDTH / ASPECT_RATIO;
 
 const App: FC = () => {
+  const [activeExample, setActiveExample] = useState<Example>(
+    Example.REACT_BAR_CHART
+  );
+
+  let example;
+  if (activeExample === Example.REACT_BAR_CHART) {
+    example = <ReactBarChartExmaple />;
+  } else if (activeExample === Example.D3_BAR_CHART) {
+    example = <D3BarChartExample />;
+  } else if (activeExample === Example.D3_STACKED_BAR_CHART) {
+    example = <StackedBarChartExample />;
+  } else if (activeExample === Example.CANVAS_EXAMPLE) {
+    example = <D3CanvasExample data={[]} width={WIDTH} height={HEIGHT} />;
+  } else if (activeExample === Example.CANVAS_CHART) {
+    example = <D3CanvasChartExample />;
+  }
+
   return (
     <div>
-      <BrowserRouter>
-        <Navigation />
-        <Switch>
-          <Route exact path="/react-rendered-bar-chart">
-            <ReactBarChartExmaple />
-          </Route>
-          <Route exact path="/d3-rendered-bar-chart">
-            <D3BarChartExample />
-          </Route>
-          <Route exact path="/d3-stacked-bar-chart">
-            <StackedBarChartExample />
-          </Route>
-          <Route exact path="/d3-canvas-example">
-            <D3CanvasExample
-              data={[]}
-              width={1500}
-              height={1500 / aspectRatio}
-            />
-          </Route>
-        </Switch>
-      </BrowserRouter>
+      <Navigation setActiveExample={setActiveExample} />
+      {example}
     </div>
   );
 };
@@ -57,8 +56,8 @@ const ReactBarChartExmaple = () => {
       {plotData && (
         <ReactRenderedBarChart
           data={plotData as PointData[]}
-          width={1500}
-          height={1500 / aspectRatio}
+          width={WIDTH}
+          height={HEIGHT}
         />
       )}
     </>
@@ -78,8 +77,8 @@ const D3BarChartExample = () => {
       {plotData && (
         <D3RenderedBarChart
           data={plotData as PointData[]}
-          width={1500}
-          height={1500 / aspectRatio}
+          width={WIDTH}
+          height={HEIGHT}
         />
       )}
     </>
@@ -99,8 +98,29 @@ const StackedBarChartExample = () => {
       {plotData && (
         <StackedBarChart
           data={plotData as StackedData[]}
-          width={1500}
-          height={1500 / aspectRatio}
+          width={WIDTH}
+          height={HEIGHT}
+        />
+      )}
+    </>
+  );
+};
+
+const D3CanvasChartExample = () => {
+  const [plotData, setPlotData] = useState<PointData[] | StackedData[]>([]);
+
+  return (
+    <>
+      <DataProvider
+        dataType={"point"}
+        keyType={"number"}
+        setPlotData={setPlotData}
+      />
+      {plotData && (
+        <D3CanvasChart
+          data={plotData as PointData[]}
+          width={WIDTH}
+          height={HEIGHT}
         />
       )}
     </>

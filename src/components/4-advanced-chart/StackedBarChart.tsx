@@ -3,11 +3,10 @@ import * as d3 from "d3";
 import "d3-scale-chromatic";
 
 import { ChartComponentProps, StackedData } from "../../types";
-import { drawAxis, drawGrid, drawStackedBarChart } from "./draw-chart";
+import { renderAxis, renderGrid, renderStackedBarChart } from "./render-chart";
+import { MARGIN } from "../../statics";
 
-export const margin = { top: 40, right: 20, bottom: 40, left: 40 };
-
-const yDomainMultiplier = 1.1;
+const Y_DOMAIN_MULTIPLIER = 1.1;
 
 export type Scales = {
   x: d3.ScaleBand<string>;
@@ -27,19 +26,22 @@ export const StackedBarChart: FC<ChartComponentProps<StackedData[]>> = ({
       x: d3
         .scaleBand()
         .padding(0.1)
-        .range([margin.left, width - margin.right])
+        .range([MARGIN.left, width - MARGIN.right])
         .domain(data.map((d) => d.key + "")),
       y: d3
         .scaleLinear()
-        .range([height - margin.bottom, margin.top])
+        .range([height - MARGIN.bottom, MARGIN.top])
         .domain([
           0,
-          // @ts-ignore
-          yDomainMultiplier * d3.max<StackedBarPlotData>(data, (d) => (
-            Object.entries(d)
-              .filter(([key, value]) => key !== 'key' && typeof value === 'number')
-              .reduce((sum, [, value]) => sum + value, 0)
-          )),
+          Y_DOMAIN_MULTIPLIER *
+            // @ts-ignore
+            d3.max(data, (d) =>
+              Object.entries(d)
+                .filter(
+                  ([key, value]) => key !== "key" && typeof value === "number"
+                )
+                .reduce((sum, [, value]) => sum + value, 0)
+            ),
         ]),
       color: d3
         .scaleOrdinal(d3.schemePaired)
@@ -47,15 +49,13 @@ export const StackedBarChart: FC<ChartComponentProps<StackedData[]>> = ({
     }),
     [data, width, height]
   );
-  // @ts-ignore
-  window.scales = scales;
 
   /**
    * Initialize and clean up chart
    */
   useEffect(() => {
     const svg = d3
-      .select("#chart-root")
+      .select("#stacked-bar-chart-root")
       .attr("width", width)
       .attr("height", height);
 
@@ -64,17 +64,17 @@ export const StackedBarChart: FC<ChartComponentProps<StackedData[]>> = ({
     chartContainer
       .append("g")
       .attr("id", "x-axis")
-      .attr("transform", `translate(0, ${height - margin.bottom})`);
+      .attr("transform", `translate(0, ${height - MARGIN.bottom})`);
 
     chartContainer
       .append("g")
       .attr("id", "y-axis")
-      .attr("transform", `translate(${margin.left}, 0)`);
+      .attr("transform", `translate(${MARGIN.left}, 0)`);
 
     chartContainer
       .append("g")
       .attr("id", "grid")
-      .attr("transform", `translate(${margin.left}, 0)`);
+      .attr("transform", `translate(${MARGIN.left}, 0)`);
 
     chartContainer.append("g").attr("id", "data-container");
 
@@ -112,16 +112,18 @@ export const StackedBarChart: FC<ChartComponentProps<StackedData[]>> = ({
    */
   useEffect(() => {
     const startTime = Date.now();
-    d3.select("#chart-root").attr("height", height).attr("width", width);
+    d3.select("#stacked-bar-chart-root")
+      .attr("height", height)
+      .attr("width", width);
 
     d3.select("#x-axis").attr(
       "transform",
-      `translate(0, ${height - margin.bottom})`
+      `translate(0, ${height - MARGIN.bottom})`
     );
 
-    drawAxis(scales, data, width);
-    drawGrid(scales, width);
-    drawStackedBarChart(scales, data);
+    renderAxis(scales, data, width);
+    renderGrid(scales, width);
+    renderStackedBarChart(scales, data);
 
     const endTime = Date.now();
     setDurationOfLastUpdate(endTime - startTime);
@@ -129,15 +131,15 @@ export const StackedBarChart: FC<ChartComponentProps<StackedData[]>> = ({
 
   return (
     <>
-      <svg id="chart-root"></svg>
+      <svg id="stacked-bar-chart-root"></svg>
       <div>Duration of last update: {durationOfLastUpdate}</div>
-      <div>Number of rects drawn: {getNumberOfRects(data)}</div>
+      <div>Number of rects rendered: {getNumberOfRects(data)}</div>
     </>
   );
 };
 
 function getNumberOfRects(data: StackedData[]) {
-  const nrOfKeys = data.length;
-  const nrOfCategories = data[0] ? Object.keys(data[0]).length - 1 : 0;
-  return nrOfKeys * nrOfCategories;
+  const numKeys = data.length;
+  const numCategories = data[0] ? Object.keys(data[0]).length - 1 : 0;
+  return numKeys * numCategories;
 }

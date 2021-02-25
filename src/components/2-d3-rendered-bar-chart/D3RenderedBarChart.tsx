@@ -6,9 +6,7 @@ import React, { FC, useEffect, useMemo } from "react";
 import * as d3 from "d3";
 import { getTickValues } from "../../helpers";
 import { ChartComponentProps, PointData } from "../../types";
-import { colors, INVISIBLE_VALUE } from "../../statics";
-
-const margin = { top: 40, right: 20, bottom: 40, left: 40 };
+import { COLORS, INVISIBLE_VALUE, MARGIN } from "../../statics";
 
 type Scales = {
   x: d3.ScaleBand<string>;
@@ -25,33 +23,31 @@ export const D3RenderedBarChart: FC<ChartComponentProps<PointData[]>> = ({
       x: d3
         .scaleBand()
         .padding(0.1) // equivalent to .paddingInner(0.1).paddingOuter(0.1)
-        .range([margin.left, width - margin.right])
+        .range([MARGIN.left, width - MARGIN.right])
         .domain(data.map((d) => d.key + "")),
       y: d3
         .scaleLinear()
-        .range([height - margin.bottom, margin.top])
+        .range([height - MARGIN.bottom, MARGIN.top])
         .domain(d3.extent(data, (d) => d.value) as [number, number]),
     }),
     [width, height, data]
   );
 
   useEffect(() => {
-    drawAxis(scales, data, height, width);
-    drawData(scales, data, height);
+    renderAxis(scales, data, height, width);
+    renderData(scales, data, height);
   }, [scales, height, width, data]);
 
   return (
     <svg width={width} height={height}>
       <g id="data-container"></g>
-      <g>
-        <g id="x-axis-container"></g>
-        <g id="y-axis-container"></g>
-      </g>
+      <g id="x-axis-container"></g>
+      <g id="y-axis-container"></g>
     </svg>
   );
 };
 
-function drawAxis(
+function renderAxis(
   scales: Scales,
   data: PointData[],
   height: number,
@@ -63,7 +59,7 @@ function drawAxis(
   const xAxis = d3.axisBottom(scales.x).tickValues(
     getTickValues(
       data.map((d) => d.key as string),
-      width - margin.left - margin.right,
+      width - MARGIN.left - MARGIN.right,
       25
     )
   );
@@ -71,14 +67,14 @@ function drawAxis(
 
   xAxisContainer
     .call(xAxis as any) // eslint-disable-line
-    .attr("transform", `translate(0, ${height - margin.bottom})`);
+    .attr("transform", `translate(0, ${height - MARGIN.bottom})`);
 
   yAxisContainer
     .call(yAxis as any) // eslint-disable-line
-    .attr("transform", `translate(${margin.left}, 0)`);
+    .attr("transform", `translate(${MARGIN.left}, 0)`);
 }
 
-function drawData(scales: Scales, data: PointData[], height: number) {
+function renderData(scales: Scales, data: PointData[], height: number) {
   const dataContainer = d3.select("#data-container");
 
   dataContainer
@@ -93,9 +89,9 @@ function drawData(scales: Scales, data: PointData[], height: number) {
           .attr("width", scales.x.bandwidth())
           .attr(
             "height",
-            (d) => height - margin.bottom - (scales.y(d.value) as number)
+            (d) => height - MARGIN.bottom - (scales.y(d.value) as number)
           )
-          .attr("fill", colors.blue),
+          .attr("fill", COLORS.blue),
       (update) =>
         update
           .attr("x", (d) => scales.x(d.key + "") ?? INVISIBLE_VALUE)
@@ -103,7 +99,7 @@ function drawData(scales: Scales, data: PointData[], height: number) {
           .attr("width", scales.x.bandwidth())
           .attr(
             "height",
-            (d) => height - margin.bottom - (scales.y(d.value) as number)
+            (d) => height - MARGIN.bottom - (scales.y(d.value) as number)
           ),
       (exit) => exit.remove()
     );

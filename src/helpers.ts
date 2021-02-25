@@ -4,10 +4,10 @@ export function getTickValues<T>(
   pixelsPerLabel: number
 ): T[] {
   const numberOfTicks = Math.floor(range / pixelsPerLabel);
-  const periodOfDepthPicking = Math.ceil(values.length / numberOfTicks);
+  const periodOfValuePicking = Math.ceil(values.length / numberOfTicks);
 
   return values.reduce<T[]>((acc, label, index) => {
-    if (index % periodOfDepthPicking === 0) {
+    if (index % periodOfValuePicking === 0) {
       acc.push(label);
     }
     return acc;
