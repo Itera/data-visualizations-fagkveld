@@ -8,7 +8,7 @@ import { TRANSITION_DURATION } from "../../constants";
  * Render points in the scatter chart.
  */
 export function renderScatterChart(scales: Scales, data: PointData[]): void {
-  const dataContainer = d3.select("sketch");
+  const dataContainer = d3.select("offScreenContainer");
 
   dataContainer
     .selectAll("circle")

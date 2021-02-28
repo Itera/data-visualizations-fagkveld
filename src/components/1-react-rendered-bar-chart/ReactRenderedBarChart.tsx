@@ -63,7 +63,7 @@ export const ReactRenderedBarChart: FC<ChartComponentProps<PointData[]>> = ({
    * bars in the plot.
    */
   return (
-    <svg width={width} height={height}>
+    <svg id="chart-root" width={width} height={height}>
       <g>
         {data.map((d) => {
           const y = scales.y(d.value) as number;

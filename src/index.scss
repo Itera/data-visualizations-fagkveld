@@ -8,8 +8,13 @@
   min-width: 800px;
   max-width: 1500px;
   margin: 0 auto;
-}
 
-.charts {
-  margin-top: 50px;
+  .example-container {
+    margin-top: 50px;
+  }
+
+  #chart-root {
+    border: 1px solid $ms-color-gray50;
+    border-radius: 4px;
+  }
 }

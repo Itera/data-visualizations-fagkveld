@@ -2,20 +2,23 @@ import React, { FC, useState } from "react";
 
 import { PointData, StackedData } from "./types";
 import {
-  ReactRenderedBarChart,
   DataProvider,
+  ReactRenderedBarChart,
   D3RenderedBarChart,
   StackedBarChart,
   D3CanvasAnimation,
   D3CanvasScatterChart,
 } from "./components";
-import { useElementSize } from "./hooks/useElementSize";
 
 const ASPECT_RATIO = 16 / 9;
-const WIDTH = 1500;
-const HEIGHT = WIDTH / ASPECT_RATIO;
 
-export const ReactBarChartExmaple: FC = () => {
+const KEYS_DOMAIN = { min: 0, max: 10000 };
+
+type ExampleProps = {
+  size: DOMRect;
+};
+
+export const ReactBarChartExmaple: FC<ExampleProps> = ({ size }) => {
   const [plotData, setPlotData] = useState<PointData[] | StackedData[]>([]);
 
   return (
@@ -28,15 +31,15 @@ export const ReactBarChartExmaple: FC = () => {
       {plotData && (
         <ReactRenderedBarChart
           data={plotData as PointData[]}
-          width={WIDTH}
-          height={HEIGHT}
+          width={size.width}
+          height={size.width / ASPECT_RATIO}
         />
       )}
     </>
   );
 };
 
-export const D3BarChartExample: FC = () => {
+export const D3BarChartExample: FC<ExampleProps> = ({ size }) => {
   const [plotData, setPlotData] = useState<PointData[] | StackedData[]>([]);
 
   return (
@@ -49,17 +52,16 @@ export const D3BarChartExample: FC = () => {
       {plotData && (
         <D3RenderedBarChart
           data={plotData as PointData[]}
-          width={WIDTH}
-          height={HEIGHT}
+          width={size.width}
+          height={size.width / ASPECT_RATIO}
         />
       )}
     </>
   );
 };
 
-export const StackedBarChartExample: FC = () => {
+export const StackedBarChartExample: FC<ExampleProps> = ({ size }) => {
   const [plotData, setPlotData] = useState<PointData[] | StackedData[]>([]);
-  const [size, elementRef] = useElementSize<HTMLDivElement>();
 
   return (
     <>
@@ -75,25 +77,15 @@ export const StackedBarChartExample: FC = () => {
           height={size.width / ASPECT_RATIO}
         />
       )}
-      <div
-        style={{
-          position: "absolute",
-          display: "hidden",
-          width: "100%",
-        }}
-        ref={elementRef}
-      ></div>
     </>
   );
 };
 
-export const CanvasAnimationExample: FC = () => (
-  <D3CanvasAnimation width={WIDTH} height={HEIGHT} />
+export const CanvasAnimationExample: FC<ExampleProps> = ({ size }) => (
+  <D3CanvasAnimation width={size.width} height={size.width / ASPECT_RATIO} />
 );
 
-const keysDomain = { min: 0, max: 10000 };
-
-export const CanvasScatterChartExample: FC = () => {
+export const CanvasScatterChartExample: FC<ExampleProps> = ({ size }) => {
   const [plotData, setPlotData] = useState<PointData[] | StackedData[]>([]);
 
   return (
@@ -102,13 +94,13 @@ export const CanvasScatterChartExample: FC = () => {
         dataType="point"
         keyType="number"
         setPlotData={setPlotData}
-        keysDomain={keysDomain}
+        keysDomain={KEYS_DOMAIN}
       />
       {plotData && (
         <D3CanvasScatterChart
           data={plotData as PointData[]}
-          width={WIDTH}
-          height={HEIGHT}
+          width={size.width}
+          height={size.width / ASPECT_RATIO}
         />
       )}
     </>

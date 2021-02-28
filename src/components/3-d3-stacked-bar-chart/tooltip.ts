@@ -10,7 +10,7 @@ export function addTooltip(selection: any): void {
   const tooltip = d3.select("#tooltip");
 
   return selection
-    .on("mouseover", function (e: any) {
+    .on("mouseover", (e: any) => {
       const data = e.srcElement.__data__.data;
       tooltip.transition().duration(150).style("opacity", 1);
       tooltip
@@ -20,7 +20,7 @@ export function addTooltip(selection: any): void {
 
       document.addEventListener("mousemove", throttledMouseMoveHandler);
     })
-    .on("mouseout", function (d: any) {
+    .on("mouseout", (d: any) => {
       tooltip.transition().delay(100).duration(50).style("opacity", 0);
       document.removeEventListener("mousemove", throttledMouseMoveHandler);
     });

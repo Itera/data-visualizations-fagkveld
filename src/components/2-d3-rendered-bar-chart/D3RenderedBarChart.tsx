@@ -39,7 +39,7 @@ export const D3RenderedBarChart: FC<ChartComponentProps<PointData[]>> = ({
   }, [scales, height, width, data]);
 
   return (
-    <svg width={width} height={height}>
+    <svg id="chart-root" width={width} height={height}>
       <g id="data-container"></g>
       <g id="x-axis-container"></g>
       <g id="y-axis-container"></g>

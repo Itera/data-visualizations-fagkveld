@@ -1,6 +1,7 @@
 import { getTickValues, toNumber } from "../../helpers";
 import { MARGIN } from "../../constants";
 import { PointData } from "../../types";
+import { NeutralColors } from "@fluentui/theme";
 
 const TICK_LENGTH = 6;
 
@@ -52,7 +53,7 @@ export function drawXAxis(
   context.beginPath();
   context.moveTo(MARGIN.left, height - MARGIN.bottom);
   context.lineTo(width - MARGIN.right, height - MARGIN.bottom);
-  context.strokeStyle = "#000";
+  context.strokeStyle = NeutralColors.gray130;
   context.stroke();
 
   /**
@@ -77,7 +78,7 @@ export function drawXAxis(
     );
   });
 
-  context.strokeStyle = "#000";
+  context.strokeStyle = NeutralColors.gray130;
   context.stroke();
 
   /**
@@ -85,7 +86,7 @@ export function drawXAxis(
    */
   context.textAlign = "center";
   context.textBaseline = "top";
-  context.fillStyle = "#000";
+  context.fillStyle = NeutralColors.gray130;
 
   xAxisTickValues.forEach((d, i) => {
     context.fillText(
@@ -107,7 +108,7 @@ export function drawYAxis(
   context.beginPath();
   context.moveTo(MARGIN.left + 0.5, MARGIN.top);
   context.lineTo(MARGIN.left + 0.5, height - MARGIN.bottom);
-  context.strokeStyle = "#000";
+  context.strokeStyle = NeutralColors.gray130;
   context.stroke();
 
   /**
@@ -118,7 +119,7 @@ export function drawYAxis(
     context.lineTo(MARGIN.left - TICK_LENGTH, yScale(d) as number);
   });
 
-  context.strokeStyle = "#000";
+  context.strokeStyle = NeutralColors.gray130;
   context.stroke();
 
   /**
@@ -126,7 +127,7 @@ export function drawYAxis(
    */
   context.textAlign = "right";
   context.textBaseline = "middle";
-  context.fillStyle = "#000";
+  context.fillStyle = NeutralColors.gray130;
 
   yScale.ticks().forEach((d) => {
     context.fillText(

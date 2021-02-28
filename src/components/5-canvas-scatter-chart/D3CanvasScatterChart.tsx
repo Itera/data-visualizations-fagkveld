@@ -46,11 +46,14 @@ export const D3CanvasScatterChart: FC<ChartComponentProps<PointData[]>> = ({
     return () => {
       offScreenContainer.remove();
     };
-    // eslint-disable-next-line
-  }, []);
+  }, [width, height]);
 
+  /**
+   * Draw chart
+   */
   useEffect(() => {
     renderScatterChart(scales, data);
+
     const timer = d3.timer(
       createDrawCallback(scales, data, height, width),
       1000 / 60
@@ -78,10 +81,9 @@ function createDrawCallback(
   const chartRoot = d3.select("#chart-root");
   const canvas = chartRoot.node() as HTMLCanvasElement;
   const context = canvas.getContext("2d") as CanvasRenderingContext2D;
-  const offScreenContainerNode = document.getElementsByTagNameNS(
-    d3.namespaces.custom,
-    "offScreenContainer"
-  )[0];
+  const offScreenContainerNode = d3
+    .select("offScreenContainer")
+    .node() as HTMLElement;
 
   return () => {
     context.clearRect(0, 0, canvas.width, canvas.height);
