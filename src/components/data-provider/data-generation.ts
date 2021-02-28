@@ -85,19 +85,20 @@ export function generatePointData(
 }
 
 export function generateStackedData(
-  keys: any[], // eslint-disable-line
+  keys: any[],
   categories: string[],
   valueDomain: Domain
 ): StackedData[] {
-  return keys.map((key) => {
-    const data: StackedData = {
-      key: key,
-    };
-    categories.forEach((category) => {
-      data[category] = generateRandomValue(valueDomain);
-    });
-    return data as StackedData;
-  });
+  return keys.map(
+    (key) =>
+      categories.reduce(
+        (data, category) => ({
+          ...data,
+          [category]: generateRandomValue(valueDomain),
+        }),
+        { key }
+      ) as StackedData
+  );
 }
 
 function generateRandomValue(valueDomain: Domain) {
@@ -108,8 +109,5 @@ function generateRandomValue(valueDomain: Domain) {
 }
 
 function round(value: number, numberOfDecimals: number) {
-  return (
-    Math.floor(value * Math.pow(10, numberOfDecimals)) /
-    Math.pow(10, numberOfDecimals)
-  );
+  return +value.toFixed(numberOfDecimals);
 }

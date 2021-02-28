@@ -46,13 +46,11 @@ export const D3RenderedLineChart: FC<D3RenderedLineChartProps> = ({
       .domain([0, d3.max(data, (d) => d3.max(d.value, (v) => v)) as number])
       .range([height - margin.bottom, margin.top]);
 
-    // eslint-disable-next-line
     const xAxis = (g: d3.Selection<SVGGElement, unknown, HTMLElement, any>) =>
       g
         .attr("transform", `translate(0, ${height - margin.bottom})`)
         .call(d3.axisBottom(xScale));
 
-    // eslint-disable-next-line
     const yAxis = (g: d3.Selection<SVGGElement, unknown, HTMLElement, any>) =>
       g
         .attr("transform", `translate(${margin.left}, 0)`)

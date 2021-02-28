@@ -27,8 +27,8 @@ export const DataProvider: FC<DataProviderProps> = ({
   const [keys, setKeys] = useState<Key[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
 
-  const [numKeys, setnumKeys] = useState(100);
-  const [numCategories, setnumCategories] = useState(1);
+  const [numKeys, setNumKeys] = useState(100);
+  const [numCategories, setNumCategories] = useState(1);
   const [dataId, setDataId] = useState(0);
   const updateDataValues = () => setDataId((state) => state + 1);
 
@@ -81,7 +81,7 @@ export const DataProvider: FC<DataProviderProps> = ({
           showValue
           snapToStep
           value={numKeys}
-          onChange={(value: number) => setnumKeys(value)}
+          onChange={(value: number) => setNumKeys(value)}
         />
       </StackItem>
       <StackItem grow>
@@ -93,7 +93,7 @@ export const DataProvider: FC<DataProviderProps> = ({
           showValue
           snapToStep
           value={numCategories}
-          onChange={(value: number) => setnumCategories(value)}
+          onChange={(value: number) => setNumCategories(value)}
         />
       </StackItem>
       <DefaultButton text="Update values" onClick={updateDataValues} />

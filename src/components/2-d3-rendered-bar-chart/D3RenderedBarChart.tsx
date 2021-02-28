@@ -6,7 +6,7 @@ import React, { FC, useEffect, useMemo } from "react";
 import * as d3 from "d3";
 import { getTickValues } from "../../helpers";
 import { ChartComponentProps, PointData } from "../../types";
-import { COLORS, INVISIBLE_VALUE, MARGIN } from "../../statics";
+import { COLORS, INVISIBLE_VALUE, MARGIN } from "../../constants";
 
 type Scales = {
   x: d3.ScaleBand<string>;
@@ -24,7 +24,7 @@ export const D3RenderedBarChart: FC<ChartComponentProps<PointData[]>> = ({
         .scaleBand()
         .padding(0.1) // equivalent to .paddingInner(0.1).paddingOuter(0.1)
         .range([MARGIN.left, width - MARGIN.right])
-        .domain(data.map((d) => d.key + "")),
+        .domain(data.map((d) => String(d.key))),
       y: d3
         .scaleLinear()
         .range([height - MARGIN.bottom, MARGIN.top])
@@ -66,11 +66,11 @@ function renderAxis(
   const yAxis = d3.axisLeft(scales.y);
 
   xAxisContainer
-    .call(xAxis as any) // eslint-disable-line
+    .call(xAxis as any)
     .attr("transform", `translate(0, ${height - MARGIN.bottom})`);
 
   yAxisContainer
-    .call(yAxis as any) // eslint-disable-line
+    .call(yAxis as any)
     .attr("transform", `translate(${MARGIN.left}, 0)`);
 }
 
@@ -84,17 +84,17 @@ function renderData(scales: Scales, data: PointData[], height: number) {
       (enter) =>
         enter
           .append("rect")
-          .attr("x", (d) => scales.x(d.key + "") ?? INVISIBLE_VALUE)
+          .attr("x", (d) => scales.x(String(d.key)) ?? INVISIBLE_VALUE)
           .attr("y", (d) => scales.y(d.value) as number)
           .attr("width", scales.x.bandwidth())
           .attr(
             "height",
             (d) => height - MARGIN.bottom - (scales.y(d.value) as number)
           )
-          .attr("fill", COLORS.blue),
+          .attr("fill", COLORS.BLUE),
       (update) =>
         update
-          .attr("x", (d) => scales.x(d.key + "") ?? INVISIBLE_VALUE)
+          .attr("x", (d) => scales.x(String(d.key)) ?? INVISIBLE_VALUE)
           .attr("y", (d) => scales.y(d.value) as number)
           .attr("width", scales.x.bandwidth())
           .attr(

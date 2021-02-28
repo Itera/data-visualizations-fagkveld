@@ -4,7 +4,7 @@ import "d3-scale-chromatic";
 
 import { ChartComponentProps, StackedData } from "../../types";
 import { renderAxis, renderGrid, renderStackedBarChart } from "./render-chart";
-import { MARGIN } from "../../statics";
+import { MARGIN } from "../../constants";
 
 const Y_DOMAIN_MULTIPLIER = 1.1;
 
@@ -27,7 +27,7 @@ export const StackedBarChart: FC<ChartComponentProps<StackedData[]>> = ({
         .scaleBand()
         .padding(0.1)
         .range([MARGIN.left, width - MARGIN.right])
-        .domain(data.map((d) => d.key + "")),
+        .domain(data.map((d) => String(d.key))),
       y: d3
         .scaleLinear()
         .range([height - MARGIN.bottom, MARGIN.top])
@@ -87,7 +87,6 @@ export const StackedBarChart: FC<ChartComponentProps<StackedData[]>> = ({
           [width, height],
         ])
         .scaleExtent([1, 8])
-        // eslint-disable-next-line
         .on("zoom", function zoomHandler(e: any) {
           chartContainer.attr("transform", e.transform);
         })

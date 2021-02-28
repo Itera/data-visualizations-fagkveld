@@ -6,29 +6,24 @@ import { StackedData } from "../../types";
 const BEEK_WIDTH = 20;
 const TOOLTIP_HEIGHT = 80;
 
-// eslint-disable-next-line
-export function addTooltip(selection: any) {
+export function addTooltip(selection: any): void {
   const tooltip = d3.select("#tooltip");
 
-  return (
-    selection
-      // eslint-disable-next-line
-      .on("mouseover", function (e: any) {
-        const data = e.srcElement.__data__.data;
-        tooltip.transition().duration(150).style("opacity", 1);
-        tooltip
-          .html(getTooltipHtml(data))
-          .style("right", `${window.innerWidth - e.clientX + BEEK_WIDTH}px`)
-          .style("top", `${e.clientY - TOOLTIP_HEIGHT / 2}px`);
+  return selection
+    .on("mouseover", function (e: any) {
+      const data = e.srcElement.__data__.data;
+      tooltip.transition().duration(150).style("opacity", 1);
+      tooltip
+        .html(getTooltipHtml(data))
+        .style("right", `${window.innerWidth - e.clientX + BEEK_WIDTH}px`)
+        .style("top", `${e.clientY - TOOLTIP_HEIGHT / 2}px`);
 
-        document.addEventListener("mousemove", throttledMouseMoveHandler);
-      })
-      // eslint-disable-next-line
-      .on("mouseout", function (d: any) {
-        tooltip.transition().delay(100).duration(50).style("opacity", 0);
-        document.removeEventListener("mousemove", throttledMouseMoveHandler);
-      })
-  );
+      document.addEventListener("mousemove", throttledMouseMoveHandler);
+    })
+    .on("mouseout", function (d: any) {
+      tooltip.transition().delay(100).duration(50).style("opacity", 0);
+      document.removeEventListener("mousemove", throttledMouseMoveHandler);
+    });
 }
 
 function getTooltipHtml(data: StackedData): string {

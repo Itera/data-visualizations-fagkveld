@@ -13,3 +13,7 @@ export function getTickValues<T>(
     return acc;
   }, []);
 }
+
+export function toNumber(num: string | null | undefined): number {
+  return +(num ?? "0");
+}

@@ -8,7 +8,7 @@ export type PointData = {
 };
 
 export type StackedData = {
-  key: any; // eslint-disable-line
+  key: any;
   [category: string]: number;
 };
 

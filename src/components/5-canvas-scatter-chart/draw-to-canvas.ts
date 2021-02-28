@@ -1,33 +1,35 @@
-import { getTickValues } from "../../helpers";
-import { MARGIN } from "../../statics";
+import { getTickValues, toNumber } from "../../helpers";
+import { MARGIN } from "../../constants";
 import { PointData } from "../../types";
 
+const TICK_LENGTH = 6;
+
 export function drawElement(
-  element: any, // eslint-disable-line
+  element: HTMLElement,
   context: CanvasRenderingContext2D
 ): void {
   switch (element.tagName) {
     case "rect": {
-      const elm = element as SVGRectElement;
-      context.fillStyle = elm.getAttribute("fill") as string;
+      const elem = (element as unknown) as SVGRectElement;
+      context.fillStyle = elem.getAttribute("fill") as string;
       context.beginPath();
       context.rect(
-        +(elm.getAttribute("x") as string),
-        +(elm.getAttribute("y") as string),
-        +(elm.getAttribute("width") as string),
-        +(elm.getAttribute("height") as string)
+        toNumber(elem.getAttribute("x")),
+        toNumber(elem.getAttribute("y")),
+        toNumber(elem.getAttribute("width")),
+        toNumber(elem.getAttribute("height"))
       );
       context.fill();
       break;
     }
     case "circle": {
-      const elm = element as SVGCircleElement;
-      context.fillStyle = elm.getAttribute("fill") as string;
+      const elem = (element as unknown) as SVGCircleElement;
+      context.fillStyle = elem.getAttribute("fill") as string;
       context.beginPath();
       context.arc(
-        +(elm.getAttribute("x") as string),
-        +(elm.getAttribute("y") as string),
-        +(elm.getAttribute("radius") as string),
+        toNumber(elem.getAttribute("x")),
+        toNumber(elem.getAttribute("y")),
+        toNumber(elem.getAttribute("radius")),
         0,
         2 * Math.PI
       );
@@ -36,8 +38,6 @@ export function drawElement(
     }
   }
 }
-
-const TICK_LENGTH = 6;
 
 export function drawXAxis(
   xScale: d3.ScaleBand<string>,
@@ -50,7 +50,7 @@ export function drawXAxis(
    * Draw axis line
    */
   context.beginPath();
-  context.lineTo(MARGIN.left, height - MARGIN.bottom);
+  context.moveTo(MARGIN.left, height - MARGIN.bottom);
   context.lineTo(width - MARGIN.right, height - MARGIN.bottom);
   context.strokeStyle = "#000";
   context.stroke();
@@ -68,11 +68,11 @@ export function drawXAxis(
 
   xAxisTickValues.forEach((d) => {
     context.moveTo(
-      (xScale(d + "") as number) + xScale.bandwidth() / 2,
+      (xScale(String(d)) as number) + xScale.bandwidth() / 2,
       height - MARGIN.bottom + 0.5
     );
     context.lineTo(
-      (xScale(d + "") as number) + xScale.bandwidth() / 2,
+      (xScale(String(d)) as number) + xScale.bandwidth() / 2,
       height - MARGIN.bottom + TICK_LENGTH + 0.5
     );
   });
@@ -89,8 +89,8 @@ export function drawXAxis(
 
   xAxisTickValues.forEach((d, i) => {
     context.fillText(
-      i + "",
-      (xScale(d + "") as number) + xScale.bandwidth() / 2,
+      String(i),
+      (xScale(String(d)) as number) + xScale.bandwidth() / 2,
       height - MARGIN.bottom + TICK_LENGTH + 2
     );
   });
@@ -130,7 +130,7 @@ export function drawYAxis(
 
   yScale.ticks().forEach((d) => {
     context.fillText(
-      d + "",
+      String(d),
       MARGIN.left - TICK_LENGTH - 2,
       yScale(d) as number
     );

@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 
 import { StackedData } from "../../types";
-import { MARGIN, TRANSITION_DURATION } from "../../statics";
+import { MARGIN, TRANSITION_DURATION } from "../../constants";
 import { getTickValues } from "../../helpers";
 
 import { Scales } from "./StackedBarChart";
@@ -24,11 +24,11 @@ export function renderAxis(
     20
   );
 
-  xAxis.transition().call(
-    d3.axisBottom(scales.x).tickValues(xAxisTickValues as any) as any // eslint-disable-line
-  );
+  xAxis
+    .transition()
+    .call(d3.axisBottom(scales.x).tickValues(xAxisTickValues as any) as any);
 
-  yAxis.transition().call(d3.axisLeft(scales.y) as any); // eslint-disable-line
+  yAxis.transition().call(d3.axisLeft(scales.y) as any);
 }
 
 /**
@@ -43,7 +43,7 @@ export function renderGrid(scales: Scales, width: number): void {
       .axisLeft(scales.y)
       .tickSize(lengthOfGridLines)
       .tickSizeOuter(0)
-      .tickFormat(() => "") as any // eslint-disable-line
+      .tickFormat(() => "") as any
   );
 }
 
@@ -103,7 +103,7 @@ export function renderStackedBarChart(
         // @ts-ignore
         enter
           .append("rect")
-          .attr("x", (d) => scales.x(d.data.key + ""))
+          .attr("x", (d) => scales.x(String(d.data.key)))
           .attr("y", (d) => scales.y(d[1]))
           .attr("height", (d) => {
             const top = scales.y(d[1]) as number;
@@ -122,7 +122,7 @@ export function renderStackedBarChart(
           update
             .transition()
             .duration(TRANSITION_DURATION)
-            .attr("x", (d) => scales.x(d.data.key + ""))
+            .attr("x", (d) => scales.x(String(d.data.key)))
             .attr("y", (d) => scales.y(d[1]))
             .attr("height", (d) => {
               const top = scales.y(d[1]) as number;

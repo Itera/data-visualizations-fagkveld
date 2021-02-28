@@ -9,7 +9,7 @@ import React, { FC, useEffect, useMemo } from "react";
 import * as d3 from "d3";
 import { getTickValues } from "../../helpers";
 import { ChartComponentProps, PointData } from "../../types";
-import { COLORS, INVISIBLE_VALUE, MARGIN } from "../../statics";
+import { COLORS, INVISIBLE_VALUE, MARGIN } from "../../constants";
 
 export const ReactRenderedBarChart: FC<ChartComponentProps<PointData[]>> = ({
   data,
@@ -22,7 +22,7 @@ export const ReactRenderedBarChart: FC<ChartComponentProps<PointData[]>> = ({
         .scaleBand()
         .padding(0.1)
         .range([MARGIN.left, width - MARGIN.right])
-        .domain(data.map((d) => d.key + "")),
+        .domain(data.map((d) => String(d.key))),
       y: d3
         .scaleLinear()
         .range([height - MARGIN.bottom, MARGIN.top])
@@ -49,11 +49,11 @@ export const ReactRenderedBarChart: FC<ChartComponentProps<PointData[]>> = ({
     const yAxis = d3.axisLeft(scales.y);
 
     xAxisContainer
-      .call(xAxis as any) // eslint-disable-line
+      .call(xAxis as any)
       .attr("transform", `translate(0, ${height - MARGIN.bottom})`);
 
     yAxisContainer
-      .call(yAxis as any) // eslint-disable-line
+      .call(yAxis as any)
       .attr("transform", `translate(${MARGIN.left}, 0)`);
   }, [scales, height, width, data]);
 
@@ -66,14 +66,14 @@ export const ReactRenderedBarChart: FC<ChartComponentProps<PointData[]>> = ({
     <svg width={width} height={height}>
       <g>
         {data.map((d) => {
-          const topYCoordinate = scales.y(d.value) as number;
+          const y = scales.y(d.value) as number;
           const barProps = {
             key: d.key,
-            x: scales.x(d.key + "") ?? INVISIBLE_VALUE,
-            y: topYCoordinate,
+            x: scales.x(String(d.key)) ?? INVISIBLE_VALUE,
+            y: y,
             width: scales.x.bandwidth(),
-            height: height - MARGIN.bottom - topYCoordinate,
-            fill: COLORS.green,
+            height: height - MARGIN.bottom - y,
+            fill: COLORS.GREEN,
           };
 
           return <rect {...barProps}></rect>;

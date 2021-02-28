@@ -1,5 +1,6 @@
 import React, { FC, useState } from "react";
 
+import { PointData, StackedData } from "./types";
 import {
   ReactRenderedBarChart,
   DataProvider,
@@ -9,7 +10,6 @@ import {
   D3CanvasScatterChart,
 } from "./components";
 import { useElementSize } from "./hooks/useElementSize";
-import { PointData, StackedData } from "./types";
 
 const ASPECT_RATIO = 16 / 9;
 const WIDTH = 1500;
@@ -42,8 +42,8 @@ export const D3BarChartExample: FC = () => {
   return (
     <>
       <DataProvider
-        dataType={"point"}
-        keyType={"number"}
+        dataType="point"
+        keyType="number"
         setPlotData={setPlotData}
       />
       {plotData && (
@@ -64,8 +64,8 @@ export const StackedBarChartExample: FC = () => {
   return (
     <>
       <DataProvider
-        dataType={"stacked"}
-        keyType={"number"}
+        dataType="stacked"
+        keyType="number"
         setPlotData={setPlotData}
       />
       {plotData && size && (
@@ -99,8 +99,8 @@ export const CanvasScatterChartExample: FC = () => {
   return (
     <>
       <DataProvider
-        dataType={"point"}
-        keyType={"number"}
+        dataType="point"
+        keyType="number"
         setPlotData={setPlotData}
         keysDomain={keysDomain}
       />

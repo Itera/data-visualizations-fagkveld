@@ -3,7 +3,7 @@ import * as d3 from "d3";
 
 import { ChartComponentProps, PointData } from "../../types";
 import { renderScatterChart } from "./render-chart";
-import { MARGIN, TRANSITION_DURATION } from "../../statics";
+import { MARGIN, TRANSITION_DURATION } from "../../constants";
 import { drawElement, drawXAxis, drawYAxis } from "./draw-to-canvas";
 
 d3.namespaces.custom = "http://d3js.org/namespace/custom";
@@ -24,7 +24,7 @@ export const D3CanvasScatterChart: FC<ChartComponentProps<PointData[]>> = ({
         .scaleBand()
         .padding(0.1) // equivalent to .paddingInner(0.1).paddingOuter(0.1)
         .range([MARGIN.left, width - MARGIN.right])
-        .domain(data.map((d) => d.key + "")),
+        .domain(data.map((d) => String(d.key))),
       y: d3
         .scaleLinear()
         .range([height - MARGIN.bottom, MARGIN.top])
@@ -37,14 +37,14 @@ export const D3CanvasScatterChart: FC<ChartComponentProps<PointData[]>> = ({
    * Init and clean up chart
    */
   useEffect(() => {
-    const sketch = d3
+    const offScreenContainer = d3
       .select("body")
-      .append("custom:sketch")
+      .append("custom:offScreenContainer")
       .attr("width", width)
       .attr("height", height);
 
     return () => {
-      sketch.remove();
+      offScreenContainer.remove();
     };
     // eslint-disable-next-line
   }, []);
@@ -52,7 +52,7 @@ export const D3CanvasScatterChart: FC<ChartComponentProps<PointData[]>> = ({
   useEffect(() => {
     renderScatterChart(scales, data);
     const timer = d3.timer(
-      getDrawCallback(scales, data, height, width),
+      createDrawCallback(scales, data, height, width),
       1000 / 60
     );
 
@@ -69,7 +69,7 @@ export const D3CanvasScatterChart: FC<ChartComponentProps<PointData[]>> = ({
   return <canvas id="chart-root" width={width} height={height}></canvas>;
 };
 
-function getDrawCallback(
+function createDrawCallback(
   scales: Scales,
   data: PointData[],
   height: number,
@@ -78,9 +78,9 @@ function getDrawCallback(
   const chartRoot = d3.select("#chart-root");
   const canvas = chartRoot.node() as HTMLCanvasElement;
   const context = canvas.getContext("2d") as CanvasRenderingContext2D;
-  const sketchNode = document.getElementsByTagNameNS(
+  const offScreenContainerNode = document.getElementsByTagNameNS(
     d3.namespaces.custom,
-    "sketch"
+    "offScreenContainer"
   )[0];
 
   return () => {
@@ -89,8 +89,8 @@ function getDrawCallback(
     drawXAxis(scales.x, context, data, height, width);
     drawYAxis(scales.y, context, height);
 
-    for (let child = sketchNode.firstChild; child; child = child.nextSibling) {
-      drawElement(child, context);
+    for (const child of offScreenContainerNode.children) {
+      drawElement(child as HTMLElement, context);
     }
   };
 }

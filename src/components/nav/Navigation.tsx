@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { DefaultButton, Stack } from "@fluentui/react";
 
-import { ExampleName } from "../../statics";
+import { ExampleName } from "../../constants";
 
 export const Navigation: FC<{
   activeExample: ExampleName;
@@ -31,13 +31,13 @@ export const Navigation: FC<{
         checked={activeExample === ExampleName.CANVAS_EXAMPLE}
         onClick={() => setActiveExample(ExampleName.CANVAS_EXAMPLE)}
       >
-        D3 canvas example
+        Canvas animation
       </DefaultButton>
       <DefaultButton
         checked={activeExample === ExampleName.CANVAS_CHART}
         onClick={() => setActiveExample(ExampleName.CANVAS_CHART)}
       >
-        D3 advanced canvas example
+        Canvas scatter chart
       </DefaultButton>
     </Stack>
   );

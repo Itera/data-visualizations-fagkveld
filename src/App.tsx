@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 
 import { Navigation } from "./components/nav/Navigation";
-import { ExampleName } from "./statics";
+import { ExampleName } from "./constants";
 
 import {
   ReactBarChartExmaple,
