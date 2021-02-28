@@ -3,6 +3,6 @@ export * from "./nav/Navigation";
 
 export { ReactRenderedBarChart } from "./1-react-rendered-bar-chart/ReactRenderedBarChart";
 export { D3RenderedBarChart } from "./2-d3-rendered-bar-chart/D3RenderedBarChart";
-export { StackedBarChart } from "./4-advanced-chart/StackedBarChart";
-export { D3CanvasExample } from "./5-canvas-example/D3CanvasExample";
-export { D3CanvasChart } from "./6-advanced-canvas-example/D3CanvasChart";
+export { StackedBarChart } from "./3-d3-stacked-bar-chart/StackedBarChart";
+export { D3CanvasAnimation } from "./4-canvas-animation/D3CanvasAnimation";
+export { D3CanvasScatterChart } from "./5-canvas-scatter-chart/D3CanvasScatterChart";

@@ -1,27 +1,44 @@
 import React, { FC } from "react";
+import { DefaultButton, Stack } from "@fluentui/react";
 
-import { Example } from "../../statics";
+import { ExampleName } from "../../statics";
 
 export const Navigation: FC<{
-  setActiveExample: (next: Example) => void;
-}> = ({ setActiveExample }) => {
+  activeExample: ExampleName;
+  setActiveExample: (next: ExampleName) => void;
+}> = ({ setActiveExample, activeExample }) => {
   return (
-    <div>
-      <button onClick={() => setActiveExample(Example.REACT_BAR_CHART)}>
+    <Stack horizontal horizontalAlign="space-between">
+      <DefaultButton
+        checked={activeExample === ExampleName.REACT_BAR_CHART}
+        onClick={() => setActiveExample(ExampleName.REACT_BAR_CHART)}
+      >
         React rendered bar chart
-      </button>
-      <button onClick={() => setActiveExample(Example.D3_BAR_CHART)}>
+      </DefaultButton>
+      <DefaultButton
+        checked={activeExample === ExampleName.D3_BAR_CHART}
+        onClick={() => setActiveExample(ExampleName.D3_BAR_CHART)}
+      >
         D3 rendered bar chart
-      </button>
-      <button onClick={() => setActiveExample(Example.D3_STACKED_BAR_CHART)}>
+      </DefaultButton>
+      <DefaultButton
+        checked={activeExample === ExampleName.D3_STACKED_BAR_CHART}
+        onClick={() => setActiveExample(ExampleName.D3_STACKED_BAR_CHART)}
+      >
         D3 rendered stacked bar chart
-      </button>
-      <button onClick={() => setActiveExample(Example.CANVAS_EXAMPLE)}>
+      </DefaultButton>
+      <DefaultButton
+        checked={activeExample === ExampleName.CANVAS_EXAMPLE}
+        onClick={() => setActiveExample(ExampleName.CANVAS_EXAMPLE)}
+      >
         D3 canvas example
-      </button>
-      <button onClick={() => setActiveExample(Example.CANVAS_CHART)}>
+      </DefaultButton>
+      <DefaultButton
+        checked={activeExample === ExampleName.CANVAS_CHART}
+        onClick={() => setActiveExample(ExampleName.CANVAS_CHART)}
+      >
         D3 advanced canvas example
-      </button>
-    </div>
+      </DefaultButton>
+    </Stack>
   );
 };

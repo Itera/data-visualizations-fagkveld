@@ -14,7 +14,7 @@ export const INVISIBLE_VALUE = -Infinity;
 
 export const TRANSITION_DURATION = 250;
 
-export enum Example {
+export enum ExampleName {
   REACT_BAR_CHART = "REACT_BAR_CHART",
   D3_BAR_CHART = "D3_BAR_CHART",
   D3_STACKED_BAR_CHART = "D3_STACKED_BAR_CHART",

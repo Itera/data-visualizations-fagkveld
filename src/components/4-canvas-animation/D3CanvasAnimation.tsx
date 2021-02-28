@@ -1,12 +1,10 @@
 import React, { FC, useEffect } from "react";
 import * as d3 from "d3";
-
-import { StackedData, ChartComponentProps } from "../../types";
 import { throttle } from "lodash";
 
 d3.namespaces.custom = "http://d3js.org/namespace/custom";
 
-export const D3CanvasExample: FC<ChartComponentProps<StackedData[]>> = ({
+export const D3CanvasAnimation: FC<{ width: number; height: number }> = ({
   height,
   width,
 }) => {

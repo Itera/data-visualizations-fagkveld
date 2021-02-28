@@ -1,6 +1,6 @@
 import * as d3 from "d3";
 
-import { Scales } from "./D3CanvasChart";
+import { Scales } from "./D3CanvasScatterChart";
 import { PointData } from "../../types";
 import { TRANSITION_DURATION } from "../../statics";
 

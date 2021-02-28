@@ -74,15 +74,13 @@ export function generatePointData(
   valueDomain: Domain
 ): PointData[] {
   return flatten(
-    keys.map((key) => {
-      return categories.map((category) => {
-        return {
-          key: key,
-          category: category,
-          value: generateRandomValue(valueDomain),
-        };
-      });
-    })
+    keys.map((key) =>
+      categories.map((category) => ({
+        key: key,
+        category: category,
+        value: generateRandomValue(valueDomain),
+      }))
+    )
   );
 }
 

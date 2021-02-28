@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { DefaultButton, Slider, Stack } from "@fluentui/react";
+import { DefaultButton, Slider, Stack, StackItem } from "@fluentui/react";
 import {
   getRandomStrings,
   getNumbers,
@@ -12,14 +12,17 @@ interface DataProviderProps {
   dataType: "point" | "stacked";
   keyType: "string" | "number";
   setPlotData: (data: PointData[] | StackedData[]) => void;
+  keysDomain?: Domain;
 }
 
-const valueDomain: Domain = { min: 0, max: 1000 };
+const valueDomain: Domain = { min: 100, max: 1000 };
+const defaultKeysDomain: Domain = { min: 0, max: 2000 };
 
 export const DataProvider: FC<DataProviderProps> = ({
   dataType,
   keyType,
   setPlotData,
+  keysDomain = defaultKeysDomain,
 }) => {
   const [keys, setKeys] = useState<Key[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
@@ -68,18 +71,20 @@ export const DataProvider: FC<DataProviderProps> = ({
   }, [dataId, setPlotData]);
 
   return (
-    <>
-      <Stack>
+    <Stack style={{ marginTop: "20px" }} horizontal verticalAlign="center">
+      <StackItem grow>
         <Slider
           label="Number of keys"
-          min={0}
-          max={2000}
+          min={keysDomain.min}
+          max={keysDomain.max}
           step={1}
           showValue
           snapToStep
           value={numKeys}
           onChange={(value: number) => setnumKeys(value)}
         />
+      </StackItem>
+      <StackItem grow>
         <Slider
           label="Number of categories"
           min={0}
@@ -90,9 +95,8 @@ export const DataProvider: FC<DataProviderProps> = ({
           value={numCategories}
           onChange={(value: number) => setnumCategories(value)}
         />
-
-        <DefaultButton text="Update values" onClick={updateDataValues} />
-      </Stack>
-    </>
+      </StackItem>
+      <DefaultButton text="Update values" onClick={updateDataValues} />
+    </Stack>
   );
 };

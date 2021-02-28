@@ -1,7 +1,14 @@
 @import "./../node_modules/office-ui-fabric-core/dist/sass/References";
 @import "./../node_modules/office-ui-fabric-core/dist/sass/Color.scss";
 
-@import "./components/4-advanced-chart/stacked-bar-chart.scss";
+@import "./components/3-d3-stacked-bar-chart/stacked-bar-chart.scss";
+
+.app-container {
+  position: relative;
+  min-width: 800px;
+  max-width: 1500px;
+  margin: 0 auto;
+}
 
 .charts {
   margin-top: 50px;

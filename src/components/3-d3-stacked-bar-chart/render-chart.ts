@@ -1,11 +1,11 @@
 import * as d3 from "d3";
 
-import { getTickValues } from "../../helpers";
-import { addTooltip } from "./tooltip";
-
-import { Scales } from "./StackedBarChart";
 import { StackedData } from "../../types";
 import { MARGIN, TRANSITION_DURATION } from "../../statics";
+import { getTickValues } from "../../helpers";
+
+import { Scales } from "./StackedBarChart";
+import { addTooltip } from "./tooltip";
 
 /**
  * Render or update x and y axis. If updating, the update is animated.
