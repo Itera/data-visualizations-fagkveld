@@ -9,26 +9,32 @@ import {
   StackedBarChartExample,
   CanvasAnimationExample,
   CanvasScatterChartExample,
-  CoordinateSystemExmaple,
+  PlaygroundExmaple,
+  PieChartExample,
+  LineChartExample,
 } from "./examples";
 import { useElementSize } from "./hooks/useElementSize";
 
 const App: FC = () => {
   const [activeExample, setActiveExample] = useState<ExampleName>(
-    ExampleName.COORDINATE_SYSTEM
+    ExampleName.PLAYGROUND
   );
   const [size, elementRef] = useElementSize<HTMLDivElement>();
 
   let example;
   if (size) {
-    if (activeExample === ExampleName.COORDINATE_SYSTEM) {
-      example = <CoordinateSystemExmaple size={size} />;
+    if (activeExample === ExampleName.PLAYGROUND) {
+      example = <PlaygroundExmaple size={size} />;
     } else if (activeExample === ExampleName.REACT_BAR_CHART) {
       example = <ReactBarChartExmaple size={size} />;
     } else if (activeExample === ExampleName.D3_BAR_CHART) {
       example = <D3BarChartExample size={size} />;
     } else if (activeExample === ExampleName.D3_STACKED_BAR_CHART) {
       example = <StackedBarChartExample size={size} />;
+    } else if (activeExample === ExampleName.LINE_CHART) {
+      example = <LineChartExample size={size} />;
+    } else if (activeExample === ExampleName.PIE_CHART) {
+      example = <PieChartExample size={size} />;
     } else if (activeExample === ExampleName.CANVAS_EXAMPLE) {
       example = <CanvasAnimationExample size={size} />;
     } else if (activeExample === ExampleName.CANVAS_CHART) {
@@ -45,14 +51,7 @@ const App: FC = () => {
 
       <div className="example-container">{example}</div>
 
-      <div
-        style={{
-          position: "absolute",
-          display: "hidden",
-          width: "100%",
-        }}
-        ref={elementRef}
-      ></div>
+      <div className="chart-size-reference" ref={elementRef}></div>
     </div>
   );
 };

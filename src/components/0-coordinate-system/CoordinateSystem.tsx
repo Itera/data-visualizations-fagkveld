@@ -28,7 +28,12 @@ export const CoordinateSystem: FC<{ width: number; height: number }> = ({
   }, [scales, height, width]);
 
   return (
-    <svg id="coordinate-system-chart-root" width={width} height={height}>
+    <svg
+      id="coordinate-system-chart-root"
+      viewBox={`0 0 ${width} ${height}`}
+      width={width}
+      height={height}
+    >
       <g id="x-axis-container"></g>
       <g id="y-axis-container"></g>
       <g id="x-grid-container"></g>

@@ -68,6 +68,22 @@ export function getNumbers(
   return result;
 }
 
+export function getDates(
+  start: Date,
+  stepInDays: number,
+  amount: number
+): Date[] {
+  const result: Date[] = [start];
+
+  for (let i = 1; i < amount; i++) {
+    const nextDate = new Date(result[i - 1]);
+    nextDate.setDate(nextDate.getDate() + i * stepInDays);
+    result.push(nextDate);
+  }
+
+  return result;
+}
+
 export function generatePointData(
   keys: Key[],
   categories: string[],
@@ -78,10 +94,42 @@ export function generatePointData(
       categories.map((category) => ({
         key: key,
         category: category,
-        value: generateRandomValue(valueDomain),
+        value: generateRandomNumber(valueDomain),
       }))
     )
   );
+}
+
+export function generateRandomWalkPointData(
+  keys: Key[],
+  categories: string[],
+  startValues: number[],
+  diffDomain: Domain
+): PointData[] {
+  const result: PointData[] = [];
+
+  for (let i = 0; i < categories.length; i++) {
+    const categoryPoints: PointData[] = [
+      {
+        category: categories[i],
+        key: keys[0],
+        value: startValues[i],
+      },
+    ];
+
+    for (let j = 1; j < keys.length; j++) {
+      const prevValue = categoryPoints[j - 1].value;
+      categoryPoints.push({
+        key: keys[j],
+        category: categories[i],
+        value: prevValue + generateRandomNumber(diffDomain),
+      });
+    }
+
+    result.push(...categoryPoints);
+  }
+
+  return result;
 }
 
 export function generateStackedData(
@@ -94,14 +142,25 @@ export function generateStackedData(
       categories.reduce(
         (data, category) => ({
           ...data,
-          [category]: generateRandomValue(valueDomain),
+          [category]: generateRandomNumber(valueDomain),
         }),
         { key }
       ) as StackedData
   );
 }
 
-function generateRandomValue(valueDomain: Domain) {
+export function generateRandomNumbers(
+  valueDomain: Domain,
+  amount: number
+): number[] {
+  const result = [];
+  for (let i = 0; i < amount; i++) {
+    result.push(generateRandomNumber(valueDomain));
+  }
+  return result;
+}
+
+function generateRandomNumber(valueDomain: Domain) {
   return round(
     valueDomain.min + Math.random() * (valueDomain.max - valueDomain.min),
     2

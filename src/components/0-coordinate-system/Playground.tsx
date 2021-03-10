@@ -9,9 +9,9 @@ type Scales = {
 };
 
 const MARGIN_TOP = 100;
-const MARGIN_LEFT = 100;
-const CHART_WIDTH = 800;
-const CHART_HEIGHT = 500;
+const MARGIN_LEFT = 700;
+const CHART_WIDTH = 400;
+const CHART_HEIGHT = 200;
 
 const data = [
   {
@@ -23,13 +23,13 @@ const data = [
     key: "B",
   },
   {
-    value: 400,
+    value: 150,
     key: "C",
   },
 ];
 
 export const Playground: FC = () => {
-  const scales = useMemo(
+  const scales: Scales = useMemo(
     () => ({
       x: d3
         .scalePoint()
@@ -45,7 +45,7 @@ export const Playground: FC = () => {
   );
 
   useEffect(() => {
-    removeContent("#pg-data");
+    removeContent("#pg-x-axis", "#pg-y-axis", "#pg-data");
     renderAxis(scales);
     renderData(scales, data);
   }, [scales]);
@@ -60,10 +60,17 @@ export const Playground: FC = () => {
         {/* 
           Experiment with different SVG elements. Update position, dimentions, fill, stroke etc. 
         */}
-        <circle cx={900} cy={300} r={50} fill="red"></circle>
+        <path
+          d="M 10,30
+           A 20,20 0,0,1 50,30
+           A 20,20 0,0,1 90,30
+           Q 90,60 50,90
+           Q 10,60 10,30 z"
+          fill="orange"
+        />
         <rect
-          x={350}
-          y={100}
+          x={50}
+          y={200}
           width={100}
           height={150}
           fill="blue"
@@ -71,13 +78,34 @@ export const Playground: FC = () => {
           strokeWidth={10}
         />
         <line
-          x1={200}
-          y1={300}
-          x2={700}
+          x1={50}
+          y1={400}
+          x2={250}
           y2={450}
           stroke="yellow"
           strokeWidth={4}
         />
+        <ellipse cx={150} cy={600} rx={100} ry={50} fill="cyan" />
+        <image href="logo192.png" x={400} y={50} height={200} width={200} />
+        <polygon
+          points="500,500 550,425 550,475 600,400"
+          fill="none"
+          stroke="black"
+        />
+        <polyline
+          points="500,700 550,625 550,675 600,600"
+          fill="none"
+          stroke="black"
+        />
+        <text x={800} y={450} fontSize={30}>
+          ITERA
+        </text>
+        <circle cx={800} cy={600} r={50} fill="red"></circle>
+        <g transform="translate(1050, 400)">
+          <circle cx={0} cy={50} r={20} fill="green"></circle>
+          <circle cx={0} cy={150} r={20} fill="green"></circle>
+          <circle cx={0} cy={250} r={20} fill="green"></circle>
+        </g>
       </g>
     </>
   );

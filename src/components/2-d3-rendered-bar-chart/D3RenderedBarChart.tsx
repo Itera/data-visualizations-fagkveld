@@ -79,7 +79,7 @@ function renderData(scales: Scales, data: PointData[], height: number) {
 
   dataContainer
     .selectAll("rect")
-    .data(data, (d) => (d as PointData).key)
+    .data(data, (d) => (d as PointData).key.toString())
     .join(
       (enter) =>
         enter

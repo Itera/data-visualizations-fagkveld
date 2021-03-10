@@ -1,8 +1,7 @@
-export type Key = string | number;
-export type Value = string | number;
+export type Key = string | number | Date;
 
-export type PointData = {
-  key: Key;
+export type PointData<T = Key> = {
+  key: T;
   category: string;
   value: number;
 };

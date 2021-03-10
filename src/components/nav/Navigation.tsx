@@ -8,12 +8,12 @@ export const Navigation: FC<{
   setActiveExample: (next: ExampleName) => void;
 }> = ({ setActiveExample, activeExample }) => {
   return (
-    <Stack horizontal horizontalAlign="space-between">
+    <Stack horizontal horizontalAlign="start" wrap>
       <DefaultButton
-        checked={activeExample === ExampleName.COORDINATE_SYSTEM}
-        onClick={() => setActiveExample(ExampleName.COORDINATE_SYSTEM)}
+        checked={activeExample === ExampleName.PLAYGROUND}
+        onClick={() => setActiveExample(ExampleName.PLAYGROUND)}
       >
-        Coordinate system
+        Playground
       </DefaultButton>
       <DefaultButton
         checked={activeExample === ExampleName.REACT_BAR_CHART}
@@ -32,6 +32,18 @@ export const Navigation: FC<{
         checked={activeExample === ExampleName.D3_STACKED_BAR_CHART}
       >
         D3 rendered stacked bar chart
+      </DefaultButton>
+      <DefaultButton
+        onClick={() => setActiveExample(ExampleName.LINE_CHART)}
+        checked={activeExample === ExampleName.LINE_CHART}
+      >
+        Line chart
+      </DefaultButton>
+      <DefaultButton
+        onClick={() => setActiveExample(ExampleName.PIE_CHART)}
+        checked={activeExample === ExampleName.PIE_CHART}
+      >
+        Pie chart
       </DefaultButton>
       <DefaultButton
         checked={activeExample === ExampleName.CANVAS_EXAMPLE}
