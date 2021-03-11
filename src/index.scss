@@ -1,6 +1,7 @@
 @import "./../node_modules/office-ui-fabric-core/dist/sass/References";
 @import "./../node_modules/office-ui-fabric-core/dist/sass/Color.scss";
 
+@import "./components/0-coordinate-system/coordinate-system.scss";
 @import "./components/3-d3-stacked-bar-chart/stacked-bar-chart.scss";
 
 .app-container {

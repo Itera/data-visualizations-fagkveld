@@ -9,18 +9,21 @@ import {
   StackedBarChartExample,
   CanvasAnimationExample,
   CanvasScatterChartExample,
+  CoordinateSystemExmaple,
 } from "./examples";
 import { useElementSize } from "./hooks/useElementSize";
 
 const App: FC = () => {
   const [activeExample, setActiveExample] = useState<ExampleName>(
-    ExampleName.REACT_BAR_CHART
+    ExampleName.COORDINATE_SYSTEM
   );
   const [size, elementRef] = useElementSize<HTMLDivElement>();
 
   let example;
   if (size) {
-    if (activeExample === ExampleName.REACT_BAR_CHART) {
+    if (activeExample === ExampleName.COORDINATE_SYSTEM) {
+      example = <CoordinateSystemExmaple size={size} />;
+    } else if (activeExample === ExampleName.REACT_BAR_CHART) {
       example = <ReactBarChartExmaple size={size} />;
     } else if (activeExample === ExampleName.D3_BAR_CHART) {
       example = <D3BarChartExample size={size} />;
