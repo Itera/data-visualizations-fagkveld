@@ -3,6 +3,7 @@ import React, { FC, useState } from "react";
 import { PointData, StackedData } from "./types";
 import {
   DataProvider,
+  CoordinateSystem,
   ReactRenderedBarChart,
   D3RenderedBarChart,
   StackedBarChart,
@@ -16,6 +17,12 @@ const KEYS_DOMAIN = { min: 0, max: 10000 };
 
 type ExampleProps = {
   size: DOMRect;
+};
+
+export const CoordinateSystemExmaple: FC<ExampleProps> = ({ size }) => {
+  return (
+    <CoordinateSystem width={size.width} height={size.width / ASPECT_RATIO} />
+  );
 };
 
 export const ReactBarChartExmaple: FC<ExampleProps> = ({ size }) => {

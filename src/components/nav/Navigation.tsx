@@ -10,6 +10,12 @@ export const Navigation: FC<{
   return (
     <Stack horizontal horizontalAlign="space-between">
       <DefaultButton
+        checked={activeExample === ExampleName.COORDINATE_SYSTEM}
+        onClick={() => setActiveExample(ExampleName.COORDINATE_SYSTEM)}
+      >
+        Coordinate system
+      </DefaultButton>
+      <DefaultButton
         checked={activeExample === ExampleName.REACT_BAR_CHART}
         onClick={() => setActiveExample(ExampleName.REACT_BAR_CHART)}
       >
@@ -22,8 +28,8 @@ export const Navigation: FC<{
         D3 rendered bar chart
       </DefaultButton>
       <DefaultButton
-        checked={activeExample === ExampleName.D3_STACKED_BAR_CHART}
         onClick={() => setActiveExample(ExampleName.D3_STACKED_BAR_CHART)}
+        checked={activeExample === ExampleName.D3_STACKED_BAR_CHART}
       >
         D3 rendered stacked bar chart
       </DefaultButton>

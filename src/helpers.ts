@@ -1,3 +1,5 @@
+import * as d3 from "d3";
+
 export function getTickValues<T>(
   values: T[],
   range: number,
@@ -16,4 +18,10 @@ export function getTickValues<T>(
 
 export function toNumber(num: string | null | undefined): number {
   return +(num ?? "0");
+}
+
+export function removeContent(...ids: string[]) {
+  ids.forEach((id) => {
+    d3.select(id).selectAll("*").remove();
+  });
 }
