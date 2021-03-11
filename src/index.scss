@@ -1,4 +1,20 @@
-.charts {
-  margin-top: 50px;
-}
+@import "./../node_modules/office-ui-fabric-core/dist/sass/References";
+@import "./../node_modules/office-ui-fabric-core/dist/sass/Color.scss";
 
+@import "./components/3-d3-stacked-bar-chart/stacked-bar-chart.scss";
+
+.app-container {
+  position: relative;
+  min-width: 800px;
+  max-width: 1500px;
+  margin: 0 auto;
+
+  .example-container {
+    margin-top: 50px;
+  }
+
+  #chart-root {
+    border: 1px solid $ms-color-gray50;
+    border-radius: 4px;
+  }
+}
