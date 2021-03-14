@@ -1,0 +1,54 @@
+@import 'theme/template/settings';
+
+.reveal {
+    :not(code table) {
+        font-size: 1.8rem;
+
+        td {
+            vertical-align: top;
+        }
+
+        &.separated-first-column {
+            th:first-of-type, td:first-of-type {
+                border-right: 1px solid $mainColor;
+            }
+        }
+    }
+
+    svg {
+        background-color: $backgroundColor;
+        stroke: $mainColor;
+        fill: $mainColor;
+        text-anchor: middle;
+    }
+
+    ul, ol {
+        ul, ol {
+            font-size: 0.75em;
+        }
+    }
+
+    .footnotes {
+        margin: 1rem 0;
+        font-size: 1rem;
+        text-align: left;
+        opacity: 60%;
+
+        ul {
+            list-style-type: none;
+        }
+    }
+
+    .recipe-step {
+        font-size: 2rem;
+        text-align: left;
+
+        > h1 {
+            font-size: 2.5rem;
+        }
+
+        pre {
+            margin-left: 0;
+        }
+    }
+}

@@ -1,0 +1,501 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+		<link rel="stylesheet" href="dist/custom.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Fagkveld - D3</h1>
+					<p>Creating data visualizations with D3</p>
+				</section>
+				<section>
+					<h1>What is D3</h1>
+					<ul>
+						<li>JavaScript library</li>
+						<li>Collection of utility functions
+							<ul>
+								<li>Manipulating data</li>
+								<li>Rendering visualizations</li>
+							</ul>
+						</li>
+						<li>Targets SVG, HTML5 Canvas, and WebGL</li>
+					</ul>
+				</section>
+				<section>
+					<section>
+					<h1>Why use D3</h1>
+						<ul>
+							<li>Flexible
+								<ul>
+									<li>Tailored visualizations</li>
+									<li>Full control</li>
+								</ul>
+							</li>
+							<li>Cutting-Edge
+								<ul>
+									<li>Use any browser-supported feature</li>
+									<li>No need to wait for library update</li>
+								</ul>
+							</li>
+							<li>Accessibility
+								<ul>
+									<li>SVGs can be made accessible</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h1>Comparison</h1>
+						<table class="separated-first-column">
+							<thead>
+								<tr>
+									<th>Feature</th>
+									<th>ChartJS</th>
+									<th>Highcharts</th>
+									<th>D3</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Target</td>
+									<td>
+										<ul>
+											<li>HTML5 Canvas</li>
+										</ul>
+									</td>
+									<td>
+										<ul>
+											<li>SVG</li>
+											<li>VML</li>
+										</ul>
+									</td>
+									<td>
+										<ul>
+											<li>SVG</li>
+											<li>HTML5 Canvas</li>
+											<li>WebGL</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td>Chart types</td>
+									<td>8</td>
+									<td>50</td>
+									<td>Unlimited<sup>*</sup><td>
+								</tr>
+								<tr>
+									<td>Accessible</td>
+									<td>No</td>
+									<td>WCAG 2</td>
+									<td>Up to you</td>
+								</tr>
+								<tr>
+									<td>License</td>
+									<td>MIT</td>
+									<td>Non-commercial CC</td>
+									<td>BSD 3-Clause</td>
+								</tr>
+							</tbody>
+						</table>
+						<footer class="footnotes">
+							<ul>
+								<li>* Limited by your imagination</li>
+							</span>
+						</footer>
+					</section>
+					<section>
+						<h1>Showcase</h1>
+						<iframe
+							width="100%"
+							height="550"
+							frameborder="0"
+							src="https://observablehq.com/embed/@mbostock/the-wealth-health-of-nations?cells=viewof+year%2Clegend%2Cchart"
+							style="background-color: white;"
+						>
+						</iframe>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h1>How does D3 work</h1>
+						<ul>
+							<li>Data-Driven Documents (D3)
+								<ul>
+									<li>Manipulate data</li>
+									<li>Bind data to document</li>
+									<li>React to changes and actions</li>
+								</ul>
+							</li>
+							<li>Reactive visualization</li>
+							<li>Mostly declarative</li>
+						</ul>
+					</section>
+					<section>
+						<h1>4 step process</h1>
+							<ol>
+								<li>Enrich data with spatial information (and more)
+									<ul>
+										<li><em>Scale</em></li>
+										<li><em>Layout</em></li>
+									</ul>
+								</li>
+								<li>Specify a <em>selection</em> of nodes to render</li>
+								<li><em>Join</em> enriched data to selection</li>
+								<li>Render selection by reacting to <em>events</em>
+									<ul>
+										<li>Enter event</li>
+										<li>Update event</li>
+										<li>Exit event</li>
+									</ul>
+								</li>
+							</ol>
+					</section>
+					<section>
+						<h1>Hard to understand?</h1>
+						<p>Let's see some examples</p>
+					</section>
+					<section class="recipe-step">
+						<h1>
+							Step 1: Enrich data with spatial information
+						</h1>
+						<pre class="fragment"><code class="javascript" data-trim data-no-escape data-line-numbers="|1|3-5|3|4|5|3-5">
+							import * as d3 from 'd3';
+
+							const scale = d3.scaleLinear
+								.domain([0, 100])
+								.range([0, 640]);
+						</code></pre>
+						<pre class="fragment"><code class="javascript" data-trim data-no-escape>
+							console.log(scale(0));   // Outputs: 0
+							console.log(scale(20));  // Outputs: 128
+							console.log(scale(50));  // Outputs: 320
+							console.log(scale(90));  // Outputs: 576
+							console.log(scale(100)); // Outputs: 640
+						</code></pre>
+						<svg class="fragment" width="865" height="75" style="font-size: 20px">
+							<g transform="translate(100, 50)">
+								<circle r="5" cx="0"></circle>
+								<circle r="5" cx="128"></circle>
+								<circle r="5" cx="320"></circle>
+								<circle r="5" cx="576"></circle>
+								<circle r="5" cx="640"></circle>
+								<line x2="640"></line>
+								<text x="0" y="-15">0</text>
+								<text x="128" y="-15">20</text>
+								<text x="320" y="-15">50</text>
+								<text x="576" y="-15">90</text>
+								<text x="640" y="-15">100</text>
+							</g>
+						</svg>
+					</section>
+					<section class="recipe-step">
+						<h1>Step 2: Specify a selection of nodes to render</h1>
+						<div class="fragment">
+							<p>Given the following HTML document:</p>
+							<pre><code class="html" data-trim data-no-escape data-line-numbers="|4-6">
+								<script type="text/template">
+									<html>
+										<body>
+											<svg>
+												<circle></circle>
+												<circle></circle>
+												<circle></circle>
+											</svg>
+										</body>
+									</html>
+								</script>
+							</code></pre>
+						</div>
+						<div class="fragment">
+							<p>
+								The following code snippet will create a D3 selection
+								containing all of the circle elements:
+							</p>
+							<pre class="fragment"><code class="javascript" data-trim data-no-escape data-line-numbers="|3|4|3-4">
+								import * as d3 from 'd3';
+
+								d3.select('svg')
+									.selectAll('circle');
+							</code></pre>
+						</div>
+						<p class="fragment">
+							<b>Note</b>: <code>select</code> and <code>selectAll</code>
+							takes a CSS selector as parameter.
+						</p>
+						<!-- <p class="fragment">
+							<b>Note</b>: this example only selects SVG nodes, we will
+							briefly look at how to select HTML5 Canvas nodes later.
+						</p> -->
+					</section>
+					<section class="recipe-step">
+						<h1>Step 3: Join enriched data to selection</h1>
+						<div class="fragment">
+							<p>Given the following HTML document:</p>
+							<pre><code class="html" data-trim data-no-escape>
+								<script type="text/template">
+									<html>
+										<body>
+											<svg></svg>
+										</body>
+									</html>
+								</script>
+							</code></pre>
+						</div>
+						<div class="fragment">
+							<p>We can bind our enriched data to the document as follows:</p>
+								<pre><code class="javascript" data-trim data-no-escape data-line-numbers="|3-5|7-8|10-11|12">
+									import * as d3 from 'd3';
+
+									const scale = d3.scaleLinear()
+										.domain([0, 100])
+										.range([0, 640]);
+
+									const data = [0, 20, 50, 90, 100];
+									const enrichedData = data.map(scale); // [0, 128, 320, 576, 640]
+
+									d3.select('svg')
+										.selectAll('circle')
+										.data(enrichedData);
+								</code></pre>
+						</div>
+					</section>
+					<section class="recipe-step">
+						<h1>Step 4: Render selection by reacting to events</h1>
+						<div class="fragment">
+							<p>
+								Given a slightly modified version of the previous slide's
+								code:
+							</p>
+							<pre><code class="javascript" data-trim data-no-escape data-line-numbers="10">
+								import * as d3 from 'd3';
+
+								const scale = d3.scaleLinear()
+									.domain([0, 100])
+									.range([0, 640]);
+
+								const data = [0, 20, 50, 90, 100];
+								const enrichedData = data.map(scale); // [0, 128, 320, 576, 640]
+
+								const circles = d3.select('svg')
+									.selectAll('circle')
+									.data(enrichedData);
+							</code></pre>
+						</div>
+						<div class="fragment">
+							<p>We can react to new data by appending circles as follows:</p>
+							<pre class="fragment"><code class="javascript" data-trim data-no-escape>
+								circles.enter()
+									.append('circle')
+									.attr('cx', (d) => d)
+									.attr('cy', 0)
+									.attr('r', 5);
+							</code></pre>
+						</div>
+						<svg class="fragment" width="865" height="75" style="font-size: 20px">
+							<g transform="translate(100, 50)">
+								<circle r="5" cx="0"></circle>
+								<circle r="5" cx="128"></circle>
+								<circle r="5" cx="320"></circle>
+								<circle r="5" cx="576"></circle>
+								<circle r="5" cx="640"></circle>
+								<g class="fragment">
+									<line x2="640"></line>
+									<text x="0" y="-15">0</text>
+									<text x="128" y="-15">20</text>
+									<text x="320" y="-15">50</text>
+									<text x="576" y="-15">90</text>
+									<text x="640" y="-15">100</text>
+								</g>
+							</g>
+						</svg>
+					</section>
+					<section class="recipe-step">
+						<h1>Optional step 5: Adding interactivity</h1>
+						<pre class="fragment" style="font-size: 0.75rem"><code class="html" data-trim data-no-escape data-line-numbers="|2-3|5|2-3,5">
+							<script type="text/template">
+									<div>
+										<button id="pushBtn">Push point</button>
+										<button id="popBtn">Pop point</button>
+									</div>
+									<svg width="865" height="60"><g transform="translate(100, 30)"></g></svg>
+							</script>
+						</code></pre>
+						<pre class="fragment" style="font-size: 0.75rem"><code class="javascript" data-trim data-no-escape data-line-numbers="|12|1-10|2|3-7|8|9|14-21|14-17|18-21|">
+							function render() {
+								const circles = d3.select('svg').select('g').selectAll('circle');
+								circles.enter()
+									.append('circle')
+									.attr('cx', (d) => d)
+									.attr('cy', 0)
+									.attr('r', 5);
+								circles.attr('opacity', '30%');
+								circles.exit().remove();
+							}
+
+							render();
+
+							d3.select('#pushBtn').on('click', () => {
+								data.push(Math.random() * 100);
+								render();
+							});
+							d3.select('#popBtn').on('click', () => {
+								data.pop();
+								render();
+							});
+						</code></pre>
+						<div id="interactivity-demo" class="fragment">
+							<button onclick="demo.interactive()">Start demo</button>
+						</div>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h1>D3 with React</h1>
+						<ul>
+							<li>Two approaches
+								<ul>
+									<li>Use React to render nodes
+										<ul>
+											<li>Manipulates data using D3</li>
+											<li>Benefits from Virtual DOM</li>
+										</ul>
+									</li>
+									<li>Use D3 to render nodes
+										<ul>
+											<li>Mutates DOM directly</li>
+											<li>Avoids overhead from Virtual DOM</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li>Two separate concerns
+								<ul>
+									<li>Data manipulation</li>
+									<li>Rendering</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section class="recipe-step">
+						<h1>Approach: React rendering D3 manipulated data</h1>
+						<pre><code lang="javascript" data-trim data-no-escape data-line-numbers="|1|2|4-18|5-9|5-8|10|12-18">
+							<script type="text/template">
+								import React, { useMemo } from 'react';
+								import * as d3 from 'd3';
+
+								function Viz(data = [10, 20, 50, 90, 100]) {
+									const scale = useMemo(
+										() => d3.scaleLinear().domain([0, d3.max(data)]).range([0, 640]),
+										[data]
+									);
+									const enrichedData = useMemo(() => data.map(scale), [data, scale]);
+
+									return (
+										<svg>
+											{enrichedData.map((d) => (
+												<circle cx={d} xy={0} r={5} />
+											))}
+										</svg>
+									);
+								}
+						  </script>
+						</code></pre>
+					</section>
+					<section class="recipe-step">
+						<h1>Approach: D3 rendering nodes in React</h1>
+						<pre style="font-size: 0.75rem"><code lang="javascript" data-trim data-no-escape data-line-numbers="|25-27|11|12-23|13|14-21">
+							<script type="text/template">
+								import React, { useEffect, useMemo, useRef } from 'react';
+								import * as d3 from 'd3';
+
+								function Viz(data = [10, 20, 50, 90, 100]) {
+									const scale = useMemo(
+										() => d3.scaleLinear().domain([0, d3.max(data)]).range([0, 640]),
+										[data]
+									);
+									const enrichedData = useMemo(() => data.map(scale), [data, scale]);
+
+									const svgRef = useRef(null);
+									useEffect(() => {
+										if (svgRef.current) {
+											d3.select(svgRef.current)
+												.selectAll('circle')
+												.data(enrichedData)
+												.enter()
+												.append('circle')
+												.attr('cx', (d) => d)
+												.attr('cy', 0)
+												.attr('r', 5);
+										}
+									}, [enrichedData]);
+
+									return (
+										<svg ref={svgRef}></svg>
+									);
+								}
+						  </script>
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<h1>D3 with TypeScript</h1>
+					<ul>
+						<li>There will be plenty of type issues</li>
+						<li>But it's nice to have type-completion<sup>*</sup></li>
+					</ul>
+					<pre><code lang="javascript" data-trim data-no-escape data-line-numbers="6,16">
+						import * as d3 from 'd3';
+
+						const data = [10, 20, 50, 90, 100];
+
+						const scale = d3.scaleLinear()
+							.domain(d3.extent(data) as [number, number])
+							.range([0, 640]),
+
+						const enrichedData data.map(scale);
+
+						d3.select(svgRef.current)
+							.selectAll('circle')
+							.data(enrichedData)
+							.enter()
+							.append('circle')
+							.attr('cx', (d) => d as number)
+							.attr('cy', 0)
+							.attr('r', 5);
+					</code></pre>
+					<footer class="footnotes">
+						<ul>
+							<li><sup>*</sup> Except in rare cases when the types are misleading 😅</li>
+						</ul>
+					</footer>
+				</section>
+			</div>
+		</div>
+		<script src="dist/reveal.js"></script>
+		<script src="dist/demo.js"></script>
+		<script src="https://d3js.org/d3.v6.min.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+			});
+			Reveal.getPlugin('highlight').hljs.configure({ tabReplace: '  ' });
+		</script>
+	</body>
+</html>
