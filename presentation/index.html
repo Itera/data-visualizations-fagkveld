@@ -176,45 +176,87 @@
 					</ul>
 				</section>
 				<section>
-					<h3>Simple example using HTML and CSS</h3>
+					<h3>Minimal example using HTML and CSS</h3>
 					<div class="split">
 						<div>
-							<pre><code class="html" data-trim data-no-escape><script type="text/template">
+							<pre style="font-size: 0.75rem;"><code class="html" data-trim data-no-escape><script type="text/template">
 								<html>
 									<body>
-										<div class="axis" style="left: 10px; bottom: 10px;"></div>
-										<div class="axis-tick" style="left: 10px;">0</div>
-										<div class="axis-tick" style="left: 110px;">1</div>
-										<div class="axis-tick" style="left: 210px;">2</div>
-										<div class="axis-tick" style="left: 310px;">3</div>
-										<div class="circle" style="left: 110px; top: 110px"></div>
-										<div class="circle" style="left: 210px; top: 210px"></div>
-										<div class="circle" style="left: 310px; top: 310px"></div>
+										<div
+											class="axis"
+											style="left: 0; width: 0; height: 180px">
+										</div>
+										<div
+											class="axis"
+											style="left: 0; width: 320px; height: 0">
+										</div>
+										<div class="axis-tick" style="left: 0;">0</div>
+										<div class="axis-tick" style="left: 80px;">1</div>
+										<div class="axis-tick" style="left: 160px;">2</div>
+										<div class="axis-tick" style="left: 240px;">3</div>
+										<div
+											class="circle"
+											style="left: 80px; bottom: 60px;">
+										</div>
+										<div
+											class="circle"
+											style="left: 160px; bottom: 120px;">
+										</div>
+										<div
+											class="circle"
+											style="left: 240px; bottom: 180px;">
+										</div>
 									</body>
 								</html>
 							</script></code></pre>
-							<pre><code class="css" data-trim data-no-escape>
+						</div>
+						<div>
+							<pre style="font-size: 0.75rem;"><code class="css" data-trim data-no-escape>
 								.axis {
 									position: absolute;
-									left: 10px;
-									border: 1px solid black;
+									left: 0;
+									bottom: 0;
+									border: 1px solid white;
 								}
 
 								.axis-tick {
 									position: absolute;
-									bottom: 12px;
+									bottom: 0;
+									display: flex;
+									flex-direction: column;
 									text-align: center;
+									transform: translate(-6.5px, 55px);
 								}
+
 								.axis-tick::before {
 									content: '|';
 								}
 
 								.circle {
 									position: absolute;
+									width: 10px;
+									height: 10px;
+									background-color: white;
+									border-radius: 10px;
+									transform: translate(-4.5px, 4.5px);
 								}
 							</code></pre>
 						</div>
+					</div>
+				</section>
+				<section>
+					<h3>Minimal example result</h3>
+					<div class="html-viz-demo">
 						<div>
+							<div class="axis" style="left: 0; width: 0; height: 180px"></div>
+							<div class="axis" style="left: 0; width: 260px; height: 0"></div>
+							<div class="axis-tick" style="left: 0;">0</div>
+							<div class="axis-tick" style="left: 80px;">1</div>
+							<div class="axis-tick" style="left: 160px;">2</div>
+							<div class="axis-tick" style="left: 240px;">3</div>
+							<div class="circle" style="left: 80px; bottom: 60px;"></div>
+							<div class="circle" style="left: 160px; bottom: 120px;"></div>
+							<div class="circle" style="left: 240px; bottom: 180px;"></div>
 						</div>
 					</div>
 				</section>
