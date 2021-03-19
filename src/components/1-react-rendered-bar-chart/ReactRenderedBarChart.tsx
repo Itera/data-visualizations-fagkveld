@@ -68,7 +68,7 @@ export const ReactRenderedBarChart: FC<ChartComponentProps<PointData[]>> = ({
         {data.map((d) => {
           const y = scales.y(d.value) as number;
           const barProps = {
-            key: d.key,
+            key: d.key.toString(),
             x: scales.x(String(d.key)) ?? INVISIBLE_VALUE,
             y: y,
             width: scales.x.bandwidth(),
