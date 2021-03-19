@@ -1,0 +1,789 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>D3 - Fagkveld</title>
+
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+	<link rel="stylesheet" href="dist/custom.css">
+
+	<!-- Theme used for syntax highlighted code -->
+	<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<h1>Fagkveld - D3</h1>
+				<p>Creating data visualizations with D3</p>
+			</section>
+			<section>
+				<h2>What are data visualizations</h2>
+			</section>
+			<section>
+				<section>
+					<h2>Why do we need visualizations?</h2>
+				</section>
+				<section>
+					<h3>Famous English adage</h3>
+					<blockquote style="font-style: italic;">A picture is worth a thousand words</blockquote>
+				</section>
+				<section>
+					<h3>Illustration</h3>
+					<svg width="1000" height="500" viewbox="0 0 1500 880">
+						<g>
+							<g transform="translate(0, 803.75)" fill="none" font-size="24" text-anchor="middle">
+								<path stroke="currentColor" d="M40.5,6V0.5H1480.5V6"></path>
+								<g transform="translate(295.4838562011719, 0)">
+									<line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9" dy="1em">0</text>
+								</g>
+								<g transform="translate(760, 0)">
+									<line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9" dy="1em">1</text>
+								</g>
+								<g transform="translate(1224.51611328125, 0)">
+									<line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9" dy="1em">2</text>
+								</g>
+							</g>
+							<g transform="translate(40, 0)" fill="none" font-size="24" text-anchor="end">
+								<path stroke="currentColor" d="M-6,804.25H0.5V40.5H-6"></path>
+								<g transform="translate(0,804.25)">
+									<line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em">0</text>
+								</g>
+								<g transform="translate(0, 733.9036865234375)">
+									<line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em">100</text>
+								</g>
+								<g transform="translate(0, 663.557373046875)">
+									<line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em">200</text>
+								</g>
+								<g transform="translate(0, 593.2110595703125)">
+									<line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em">300</text>
+								</g>
+								<g transform="translate(0, 522.86474609375)">
+									<line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em">400</text>
+								</g>
+								<g transform="translate(0, 452.5184020996094)">
+									<line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em">500</text>
+								</g>
+								<g transform="translate(0, 382.1720886230469)">
+									<line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em">600</text>
+								</g>
+								<g transform="translate(0, 311.82574462890625)">
+									<line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em">700</text>
+								</g>
+								<g transform="translate(0, 241.47943115234375)">
+									<line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em">800</text>
+								</g>
+								<g transform="translate(0, 171.13311767578125)">
+									<line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em">900</text>
+								</g>
+								<g transform="translate(0, 100.78679656982422)">
+									<line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em">1,000</text>
+								</g>
+							</g>
+							<g transform="translate(40, 0)" fill="none" font-size="24" text-anchor="end">
+								<path stroke="currentColor" d="M0.5,804.25V40.5"></path>
+								<g transform="translate(0,804.25)">
+									<line stroke="currentColor" x2="1440"></line><text fill="currentColor" x="-3" dy="0.32em"></text>
+								</g>
+								<g transform="translate(0, 733.9036865234375)">
+									<line stroke="currentColor" x2="1440"></line><text fill="currentColor" x="-3" dy="0.32em"></text>
+								</g>
+								<g transform="translate(0, 663.557373046875)">
+									<line stroke="currentColor" x2="1440"></line><text fill="currentColor" x="-3" dy="0.32em"></text>
+								</g>
+								<g transform="translate(0, 593.2110595703125)">
+									<line stroke="currentColor" x2="1440"></line><text fill="currentColor" x="-3" dy="0.32em"></text>
+								</g>
+								<g transform="translate(0, 522.86474609375)">
+									<line stroke="currentColor" x2="1440"></line><text fill="currentColor" x="-3" dy="0.32em"></text>
+								</g>
+								<g transform="translate(0, 452.5184020996094)">
+									<line stroke="currentColor" x2="1440"></line><text fill="currentColor" x="-3" dy="0.32em"></text>
+								</g>
+								<g transform="translate(0, 382.1720886230469)">
+									<line stroke="currentColor" x2="1440"></line><text fill="currentColor" x="-3" dy="0.32em"></text>
+								</g>
+								<g transform="translate(0, 311.82574462890625)">
+									<line stroke="currentColor" x2="1440"></line><text fill="currentColor" x="-3" dy="0.32em"></text>
+								</g>
+								<g transform="translate(0, 241.47943115234375)">
+									<line stroke="currentColor" x2="1440"></line><text fill="currentColor" x="-3" dy="0.32em"></text>
+								</g>
+								<g transform="translate(0, 171.13311767578125)">
+									<line stroke="currentColor" x2="1440"></line><text fill="currentColor" x="-3" dy="0.32em"></text>
+								</g>
+								<g transform="translate(0, 100.78679656982422)">
+									<line stroke="currentColor" x2="1440"></line><text fill="currentColor" x="-3" dy="0.32em"></text>
+								</g>
+							</g>
+							<g>
+								<g class="bar-container" fill="#a6cee3">
+									<rect x="86.45161290322585" y="298.0865800865801" height="505.6634199134199"
+										width="418.06451612903226"></rect>
+									<rect x="550.9677419354839" y="109.4318181818182" height="694.3181818181818"
+										width="418.06451612903226"></rect>
+									<rect x="1015.483870967742" y="706.8620129870129" height="96.88798701298708"
+										width="418.06451612903226"></rect>
+								</g>
+							</g>
+						</g>
+					</svg>
+				</section>
+				<section>
+					<h3>Pros</h3>
+					<p class="fragment">
+						Visualizations allow us to <em>digest relational information</em>
+						at a much faster pace
+					</p>
+					<p class="fragment">
+						They give us opportunities to discover new <em>relations</em>
+						that would not necessarily be as obvious when looking at the data
+						in text form
+					</p>
+				</section>
+				<section>
+					<h3>Cons</h3>
+					<p class="fragment">
+						It can be difficult to read precise information from a visualization
+					</p>
+					<p class="fragment">
+						If constructed poorely, a visualization can be more confusing
+						than helpful
+					</p>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>How do we build visualizations?</h2>
+				</section>
+				<section>
+					<h3>What problems do we need to solve when building visualizations?</h3>
+				</section>
+				<section>
+					<h3>Can we achieve it using only native Web <span style="text-transform: none;">APIs</span>?</h3>
+					<p>DIY charts</p>
+				</section>
+				<section>
+					<h3>Minimal example using HTML and CSS</h3>
+					<div class="split">
+						<div>
+							<pre style="font-size: 0.75rem;"><code class="html" data-trim data-no-escape><script type="text/template">
+								<html>
+									<body>
+										<div
+											class="axis"
+											style="left: 0; width: 0; height: 180px">
+										</div>
+										<div
+											class="axis"
+											style="left: 0; width: 320px; height: 0">
+										</div>
+										<div class="axis-tick" style="left: 0;">0</div>
+										<div class="axis-tick" style="left: 80px;">1</div>
+										<div class="axis-tick" style="left: 160px;">2</div>
+										<div class="axis-tick" style="left: 240px;">3</div>
+										<div
+											class="circle"
+											style="left: 80px; bottom: 60px;">
+										</div>
+										<div
+											class="circle"
+											style="left: 160px; bottom: 120px;">
+										</div>
+										<div
+											class="circle"
+											style="left: 240px; bottom: 180px;">
+										</div>
+									</body>
+								</html>
+							</script></code></pre>
+						</div>
+						<div>
+							<pre style="font-size: 0.75rem;"><code class="css" data-trim data-no-escape>
+								.axis {
+									position: absolute;
+									left: 0;
+									bottom: 0;
+									border: 1px solid white;
+								}
+
+								.axis-tick {
+									position: absolute;
+									bottom: 0;
+									display: flex;
+									flex-direction: column;
+									text-align: center;
+									transform: translate(-6.5px, 55px);
+								}
+
+								.axis-tick::before {
+									content: '|';
+								}
+
+								.circle {
+									position: absolute;
+									width: 10px;
+									height: 10px;
+									background-color: white;
+									border-radius: 10px;
+									transform: translate(-4.5px, 4.5px);
+								}
+							</code></pre>
+						</div>
+					</div>
+				</section>
+				<section>
+					<h3>Minimal example result</h3>
+					<div class="html-viz-demo">
+						<div>
+							<div class="axis" style="left: 0; width: 0; height: 180px"></div>
+							<div class="axis" style="left: 0; width: 260px; height: 0"></div>
+							<div class="axis-tick" style="left: 0;">0</div>
+							<div class="axis-tick" style="left: 80px;">1</div>
+							<div class="axis-tick" style="left: 160px;">2</div>
+							<div class="axis-tick" style="left: 240px;">3</div>
+							<div class="circle" style="left: 80px; bottom: 60px;"></div>
+							<div class="circle" style="left: 160px; bottom: 120px;"></div>
+							<div class="circle" style="left: 240px; bottom: 180px;"></div>
+						</div>
+					</div>
+				</section>
+				<section>
+					<h3>Quickly becomes unmaintainable</h3>
+					<ul class="fragment">
+						<li>What if we have a large amount of data points?</li>
+						<li class="fragment">Do we want the visualization to be interactive?</li>
+						<li class="fragment">How do we implement transitions/animations?</li>
+						<li class="fragment">Will the data be dynamic?</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Use a library</h3>
+					<p>Some popular ones are:</p>
+					<ul>
+						<li>ChartJS</li>
+						<li>Highcharts</li>
+						<li>D3</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Why talk about D3?</h3>
+					<ul>
+						<li>Flexible
+							<ul>
+								<li>Tailored visualizations</li>
+								<li>Full control</li>
+							</ul>
+						</li>
+						<li>Cutting-Edge
+							<ul>
+								<li>Use any browser-supported feature</li>
+								<li>No need to wait for library update</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section>
+					<h1>Comparison</h1>
+					<table class="separated-first-column">
+						<thead>
+							<tr>
+								<th>Feature</th>
+								<th>ChartJS</th>
+								<th>Highcharts</th>
+								<th>D3</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Target</td>
+								<td>
+									<ul>
+										<li>HTML5 Canvas</li>
+									</ul>
+								</td>
+								<td>
+									<ul>
+										<li>SVG</li>
+										<li>VML</li>
+									</ul>
+								</td>
+								<td>
+									<ul>
+										<li>SVG</li>
+										<li>HTML5 Canvas</li>
+										<li>WebGL</li>
+									</ul>
+								</td>
+							</tr>
+							<tr>
+								<td>Chart types</td>
+								<td>8</td>
+								<td>50</td>
+								<td>Unlimited<sup>*</sup>
+								<td>
+							</tr>
+							<tr>
+								<td>Accessible</td>
+								<td>No</td>
+								<td>WCAG 2</td>
+								<td>Up to you</td>
+							</tr>
+							<tr>
+								<td>License</td>
+								<td>MIT</td>
+								<td>Non-commercial CC</td>
+								<td>BSD 3-Clause</td>
+							</tr>
+						</tbody>
+					</table>
+					<footer class="footnotes">
+						<ul>
+							<li>* Limited by your imagination</li>
+							</span>
+					</footer>
+				</section>
+				<section>
+					<h1>Showcase</h1>
+					<p><a href="https://observablehq.com/@d3/gallery">D3 Gallery</a></p>
+					<!-- <iframe width="100%" height="750" frameborder="0"
+						src="https://observablehq.com/embed/@mbostock/the-wealth-health-of-nations?cells=viewof+year%2Clegend%2Cchart"
+						style="background-color: white;transform: translate(0, -15%) scale(0.75, 0.75);">
+					</iframe> -->
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>How do we use D3?</h2>
+				</section>
+				<section>
+					<h3>D3 - the library</h3>
+					<ul>
+						<li class="fragment">Collection of utility functions
+							<ul class="fragment">
+								<li>Manipulating data</li>
+								<li>Rendering visualizations</li>
+							</ul>
+						</li>
+						<li class="fragment">Grouped into various modules
+							<ul class="fragment">
+								<li>Scale</li>
+								<li class="fragment">Select</li>
+								<li class="fragment">Axis</li>
+								<li class="fragment"><a href="https://github.com/d3">And plenty more</a></li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section>
+					<h3>How does D3 work</h3>
+					<ul>
+						<li>Data-Driven Documents (D3)
+							<ul>
+								<li>Manipulate data</li>
+								<li>Bind data to document</li>
+								<li>React to changes and actions</li>
+							</ul>
+						</li>
+						<li>Reactive visualization</li>
+						<li>Mostly declarative</li>
+					</ul>
+				</section>
+				<section>
+					<h3>4 step process</h3>
+					<ol>
+						<li>Enrich data with spatial information (and more)
+							<ul>
+								<li><em>Scale</em></li>
+								<li><em>Layout</em></li>
+							</ul>
+						</li>
+						<li>Specify a <em>selection</em> of nodes to render</li>
+						<li><em>Join</em> enriched data to selection</li>
+						<li>Render nodes with enriched data</li>
+					</ol>
+				</section>
+				<section>
+					<h3>Feels rather vague?</h3>
+					<p>Let's see an example</p>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>Building a simple chart using D3</h2>
+				</section>
+				<section class="recipe-step">
+					<h3>Step 1: Enrich data with spatial information</h3>
+					<pre class="fragment"><code class="javascript" data-trim data-no-escape data-line-numbers="|1|3-5|3|4|5|3-5">
+						import * as d3 from 'd3';
+
+						const scale = d3.scaleLinear
+							.domain([0, 100])
+							.range([0, 640]);
+					</code></pre>
+					<pre class="fragment"><code class="javascript" data-trim data-no-escape>
+						console.log(scale(0));   // Outputs: 0
+						console.log(scale(20));  // Outputs: 128
+						console.log(scale(50));  // Outputs: 320
+						console.log(scale(90));  // Outputs: 576
+						console.log(scale(100)); // Outputs: 640
+					</code></pre>
+					<svg class="fragment" width="865" height="75" style="font-size: 20px">
+						<g transform="translate(100, 50)">
+							<circle r="5" cx="0"></circle>
+							<circle r="5" cx="128"></circle>
+							<circle r="5" cx="320"></circle>
+							<circle r="5" cx="576"></circle>
+							<circle r="5" cx="640"></circle>
+							<line x2="640"></line>
+							<text x="0" y="-15">0</text>
+							<text x="128" y="-15">20</text>
+							<text x="320" y="-15">50</text>
+							<text x="576" y="-15">90</text>
+							<text x="640" y="-15">100</text>
+						</g>
+					</svg>
+				</section>
+				<section class="recipe-step">
+					<h3>Step 2: Specify a selection of nodes to render</h3>
+					<div class="fragment">
+						<p>Given the following HTML document:</p>
+						<pre><code class="html" data-trim data-no-escape data-line-numbers="|4-6"><script type="text/template">
+							<html>
+								<body>
+									<svg>
+										<circle></circle>
+										<circle></circle>
+										<circle></circle>
+									</svg>
+								</body>
+							</html>
+						</script></code></pre>
+					</div>
+					<div class="fragment">
+						<p>
+							The following code snippet will create a D3 selection
+							containing all of the circle elements:
+						</p>
+						<pre><code class="javascript" data-trim data-no-escape data-line-numbers="|3|4|3-4">
+							import * as d3 from 'd3';
+
+							d3.select('svg')
+								.selectAll('circle');
+						</code></pre>
+					</div>
+					<p class="fragment">
+						<b>Note</b>: <code>select</code> and <code>selectAll</code>
+						takes a CSS selector as parameter.
+					</p>
+					<!-- <p class="fragment">
+								<b>Note</b>: this example only selects SVG nodes, we will
+								briefly look at how to select HTML5 Canvas nodes later.
+							</p> -->
+				</section>
+				<section class="recipe-step">
+					<h3>Step 3: Join enriched data to selection</h3>
+					<div class="fragment">
+						<p>Given the following HTML document:</p>
+						<pre><code class="html" data-trim data-no-escape data-line-numbers="|3"><script type="text/template">
+							<html>
+								<body>
+									<svg></svg>
+								</body>
+							</html>
+						</script></code></pre>
+					</div>
+					<div class="fragment">
+						<p>We can bind our enriched data to the document as follows:</p>
+						<pre><code class="javascript" data-trim data-no-escape data-line-numbers="|3-5|7-8|10-11|12">
+							import * as d3 from 'd3';
+
+							const scale = d3.scaleLinear()
+								.domain([0, 100])
+								.range([0, 640]);
+
+							const data = [0, 20, 50, 90, 100];
+							const enrichedData = data.map(scale); // [0, 128, 320, 576, 640]
+
+							d3.select('svg')
+								.selectAll('circle')
+								.data(enrichedData);
+						</code></pre>
+					</div>
+				</section>
+				<section class="recipe-step">
+					<h3>Step 4: Render nodes with enriched data</h3>
+					<div class="fragment">
+						<p>
+							Given a slightly modified version of the previous slide's
+							code:
+						</p>
+						<pre><code class="javascript" data-trim data-no-escape data-line-numbers="10">
+							import * as d3 from 'd3';
+
+							const scale = d3.scaleLinear()
+								.domain([0, 100])
+								.range([0, 640]);
+
+							const data = [0, 20, 50, 90, 100];
+							const enrichedData = data.map(scale); // [0, 128, 320, 576, 640]
+
+							const circles = d3.select('svg')
+								.selectAll('circle')
+								.data(enrichedData);
+						</code></pre>
+					</div>
+					<div class="fragment">
+						<p>We can react to new data by appending circles as follows:</p>
+						<pre class="fragment"><code class="javascript" data-trim data-no-escape>
+							circles.enter()
+								.append('circle')
+								.attr('cx', (d) => d)
+								.attr('cy', 0)
+								.attr('r', 5);
+						</code></pre>
+					</div>
+					<svg class="fragment" width="865" height="75" style="font-size: 20px">
+						<g transform="translate(100, 50)">
+							<circle r="5" cx="0"></circle>
+							<circle r="5" cx="128"></circle>
+							<circle r="5" cx="320"></circle>
+							<circle r="5" cx="576"></circle>
+							<circle r="5" cx="640"></circle>
+							<g class="fragment">
+								<line x2="640"></line>
+								<text x="0" y="-15">0</text>
+								<text x="128" y="-15">20</text>
+								<text x="320" y="-15">50</text>
+								<text x="576" y="-15">90</text>
+								<text x="640" y="-15">100</text>
+							</g>
+						</g>
+					</svg>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>But hey!</h2>
+					<p class="fragment">
+						What are these
+						<code style="color: #f92672">&lt;svg&gt;</code>
+						and
+						<code style="color: #f92672">&lt;circle&gt;</code>
+						things?
+					</p>
+				</section>
+				<section>
+					<h3>Introducing SVG</h3>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>D3 with React</h2>
+					<ul>
+						<li>Two approaches
+							<ul>
+								<li>Use React to render nodes
+									<ul>
+										<li>Manipulates data using D3</li>
+										<li>Benefits from Virtual DOM</li>
+									</ul>
+								</li>
+								<li>Use D3 to render nodes
+									<ul>
+										<li>Mutates DOM directly</li>
+										<li>Avoids overhead from Virtual DOM</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li>Two separate concerns
+							<ul>
+								<li>Data manipulation</li>
+								<li>Rendering</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="recipe-step">
+					<h3>Approach: React rendering D3 manipulated data</h3>
+					<pre><code class="javascript" data-trim data-no-escape data-line-numbers="|1|2|4-18|5-9|5-8|9|11-17"><script type="text/template">
+						import React, { useMemo } from 'react';
+						import * as d3 from 'd3';
+
+						function Viz(data = [10, 20, 50, 90, 100]) {
+							const scale = useMemo(
+								() => d3.scaleLinear().domain([0, d3.max(data)]).range([0, 640]),
+								[data]
+							);
+							const enrichedData = useMemo(() => data.map(scale), [data, scale]);
+
+							return (
+								<svg>
+									{enrichedData.map((d) => (
+										<circle cx={d} xy={0} r={5} />
+									))}
+								</svg>
+							);
+						}
+					</script></code></pre>
+				</section>
+				<section class="recipe-step">
+					<h3>Approach: D3 rendering nodes in React</h3>
+					<pre style="font-size: 0.75rem"><code class="javascript" data-trim data-no-escape data-line-numbers="|25-27|11|12-23|13|14-21"><script type="text/template">
+						import React, { useEffect, useMemo, useRef } from 'react';
+						import * as d3 from 'd3';
+
+						function Viz(data = [10, 20, 50, 90, 100]) {
+							const scale = useMemo(
+								() => d3.scaleLinear().domain([0, d3.max(data)]).range([0, 640]),
+								[data]
+							);
+							const enrichedData = useMemo(() => data.map(scale), [data, scale]);
+
+							const svgRef = useRef(null);
+							useEffect(() => {
+								if (svgRef.current) {
+									d3.select(svgRef.current)
+										.selectAll('circle')
+										.data(enrichedData)
+										.enter()
+										.append('circle')
+										.attr('cx', (d) => d)
+										.attr('cy', 0)
+										.attr('r', 5);
+								}
+							}, [enrichedData]);
+
+							return (
+								<svg ref={svgRef}></svg>
+							);
+						}
+					</script></code></pre>
+				</section>
+			</section>
+			<section>
+				<h2>D3 with TypeScript</h2>
+				<ul>
+					<li>There will be plenty of type issues</li>
+					<li>But it's nice to have type-completion<sup>*</sup></li>
+				</ul>
+				<pre><code class="javascript" data-trim data-no-escape data-line-numbers="6,16">
+					import * as d3 from 'd3';
+
+					const data = [10, 20, 50, 90, 100];
+
+					const scale = d3.scaleLinear()
+						.domain(d3.extent(data) as [number, number])
+						.range([0, 640]),
+
+					const enrichedData data.map(scale);
+
+					d3.select(svgRef.current)
+						.selectAll('circle')
+						.data(enrichedData)
+						.enter()
+						.append('circle')
+						.attr('cx', (d) => d as number)
+						.attr('cy', 0)
+						.attr('r', 5);
+				</code></pre>
+				<footer class="footnotes">
+					<ul>
+						<li><sup>*</sup> Except in rare cases when the types are misleading 😅</li>
+					</ul>
+				</footer>
+			</section>
+			<section>
+				<section>
+					<h2>More advanced D3</h2>
+				</section>
+				<section class="recipe-step">
+					<h3><em>Optional</em> step 5: Adding interactivity</h3>
+					<pre style="font-size: 0.75rem"><code class="html" data-trim data-no-escape data-line-numbers="|2-3|5|2-3,5"><script type="text/template">
+						<div>
+							<button id="pushBtn">Push point</button>
+							<button id="popBtn">Pop point</button>
+						</div>
+						<svg width="865" height="60"><g transform="translate(100, 30)"></g></svg>
+					</script></code></pre>
+					<pre style="font-size: 0.75rem"><code class="javascript" data-trim data-no-escape data-line-numbers="|12|1-10|2|3-7|8|9|14-21|14-17|18-21|">
+						function render() {
+							const circles = d3.select('svg').select('g').selectAll('circle');
+							circles.enter()
+								.append('circle')
+								.attr('cx', (d) => d)
+								.attr('cy', 0)
+								.attr('r', 5);
+							circles.attr('opacity', '30%');
+							circles.exit().remove();
+						}
+
+						render();
+
+						d3.select('#pushBtn').on('click', () => {
+							data.push(Math.random() * 100);
+							render();
+						});
+						d3.select('#popBtn').on('click', () => {
+							data.pop();
+							render();
+						});
+					</code></pre>
+					<div id="interactivity-demo" class="fragment">
+						<button onclick="demo.interactive()">Start demo</button>
+					</div>
+				</section>
+				<section class="recipe-step">
+					<h3><em>Optional</em> step 6: Adding transitions</h3>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>Let's see some more realistic examples</h2>
+					<p><a
+							href="https://github.com/Itera/data-visualizations-fagkveld">https://github.com/Itera/data-visualizations-fagkveld</a>
+					</p>
+				</section>
+			</section>
+			<section>
+				<h2>HTML5 Canvas</h2>
+			</section>
+			<section>
+				<h2>D3 with HTML5 Canvas</h2>
+			</section>
+			<section>
+				<h2>Canvas Demo</h2>
+			</section>
+			<section>
+				<section>
+					<h2>D3 in the wild</h2>
+				</section>
+				<section>
+					<h3>Cuttings Insight application</h3>
+				</section>
+			</section>
+		</div>
+	</div>
+	<script src="dist/reveal.js"></script>
+	<script src="dist/demo.js"></script>
+	<script src="https://d3js.org/d3.v6.min.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script>
+		Reveal.initialize({
+			hash: true,
+			plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+		});
+		Reveal.getPlugin('highlight').hljs.configure({ tabReplace: '  ' });
+	</script>
+</body>
+
+</html>
