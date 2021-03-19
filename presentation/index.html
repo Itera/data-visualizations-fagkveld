@@ -19,14 +19,14 @@
 <body>
 	<div class="reveal">
 		<div class="slides">
-			<section>
+			<section data-name="Fagkveld - D3">
 				<h1>Fagkveld - D3</h1>
 				<p>Creating data visualizations with D3</p>
 			</section>
-			<section>
+			<section data-name="What are data visualizations"=>
 				<h2>What are data visualizations</h2>
 			</section>
-			<section>
+			<section data-name="Data visualization intro">
 				<section>
 					<h2>Why do we need visualizations?</h2>
 				</section>
@@ -34,7 +34,7 @@
 					<h3>Famous English adage</h3>
 					<blockquote style="font-style: italic;">A picture is worth a thousand words</blockquote>
 				</section>
-				<section>
+				<section data-name="Illutration">
 					<h3>Illustration</h3>
 					<svg width="1000" height="500" viewbox="0 0 1500 880">
 						<g>
@@ -158,18 +158,18 @@
 					</p>
 				</section>
 			</section>
-			<section>
-				<section>
+			<section data-name="How to build">
+				<section data-name="How do we build visualizations?">
 					<h2>How do we build visualizations?</h2>
 				</section>
-				<section>
+				<section data-name="What problems">
 					<h3>What problems do we need to solve when building visualizations?</h3>
 				</section>
-				<section>
+				<section data-name="Can we use only native">
 					<h3>Can we achieve it using only native Web <span style="text-transform: none;">APIs</span>?</h3>
 					<p>DIY charts</p>
 				</section>
-				<section>
+				<section data-name="Minimal example using HTML and CSS">
 					<h3>Minimal example using HTML and CSS</h3>
 					<div class="split">
 						<div>
@@ -238,7 +238,7 @@
 						</div>
 					</div>
 				</section>
-				<section>
+				<section data-name="Minimal example result">
 					<h3>Minimal example result</h3>
 					<div class="html-viz-demo">
 						<div>
@@ -254,7 +254,7 @@
 						</div>
 					</div>
 				</section>
-				<section>
+				<section data-name="Quickly becomes unmaintainable">
 					<h3>Quickly becomes unmaintainable</h3>
 					<ul class="fragment">
 						<li>What if we have a large amount of data points?</li>
@@ -263,7 +263,7 @@
 						<li class="fragment">Will the data be dynamic?</li>
 					</ul>
 				</section>
-				<section>
+				<section data-name="Use a library">
 					<h3>Use a library</h3>
 					<p>Some popular ones are:</p>
 					<ul>
@@ -272,7 +272,7 @@
 						<li>D3</li>
 					</ul>
 				</section>
-				<section>
+				<section data-name="Why D3">
 					<h3>Why talk about D3?</h3>
 					<ul>
 						<li>Flexible
@@ -289,7 +289,7 @@
 						</li>
 					</ul>
 				</section>
-				<section>
+				<section data-name="Comparison">
 					<h1>Comparison</h1>
 					<table class="separated-first-column">
 						<thead>
@@ -349,7 +349,7 @@
 							</span>
 					</footer>
 				</section>
-				<section>
+				<section data-name="Showcase">
 					<h1>Showcase</h1>
 					<p><a href="https://observablehq.com/@d3/gallery">D3 Gallery</a></p>
 					<!-- <iframe width="100%" height="750" frameborder="0"
@@ -358,11 +358,11 @@
 					</iframe> -->
 				</section>
 			</section>
-			<section>
-				<section>
+			<section data-name="How to use">
+				<section data-name="How do we use D3?">
 					<h2>How do we use D3?</h2>
 				</section>
-				<section>
+				<section data-name="D3 - the library">
 					<h3>D3 - the library</h3>
 					<ul>
 						<li class="fragment">Collection of utility functions
@@ -381,7 +381,7 @@
 						</li>
 					</ul>
 				</section>
-				<section>
+				<section data-name="How does D3 work?">
 					<h3>How does D3 work</h3>
 					<ul>
 						<li>Data-Driven Documents (D3)
@@ -395,7 +395,7 @@
 						<li>Mostly declarative</li>
 					</ul>
 				</section>
-				<section>
+				<section data-name="4 step process">
 					<h3>4 step process</h3>
 					<ol>
 						<li>Enrich data with spatial information (and more)
@@ -409,16 +409,16 @@
 						<li>Render nodes with enriched data</li>
 					</ol>
 				</section>
-				<section>
+				<section data-name="Lets see an example">
 					<h3>Feels rather vague?</h3>
 					<p>Let's see an example</p>
 				</section>
 			</section>
-			<section>
+			<section data-name="Building a simple chart using D3">
 				<section>
 					<h2>Building a simple chart using D3</h2>
 				</section>
-				<section class="recipe-step">
+				<section data-name="Step 1" class="recipe-step">
 					<h3>Step 1: Enrich data with spatial information</h3>
 					<pre class="fragment"><code class="javascript" data-trim data-no-escape data-line-numbers="|1|3-5|3|4|5|3-5">
 						import * as d3 from 'd3';
@@ -450,7 +450,7 @@
 						</g>
 					</svg>
 				</section>
-				<section class="recipe-step">
+				<section data-name="Step 2" class="recipe-step">
 					<h3>Step 2: Specify a selection of nodes to render</h3>
 					<div class="fragment">
 						<p>Given the following HTML document:</p>
@@ -487,7 +487,7 @@
 								briefly look at how to select HTML5 Canvas nodes later.
 							</p> -->
 				</section>
-				<section class="recipe-step">
+				<section data-name="Step 3" class="recipe-step">
 					<h3>Step 3: Join enriched data to selection</h3>
 					<div class="fragment">
 						<p>Given the following HTML document:</p>
@@ -517,7 +517,7 @@
 						</code></pre>
 					</div>
 				</section>
-				<section class="recipe-step">
+				<section data-name="Step 4" class="recipe-step">
 					<h3>Step 4: Render nodes with enriched data</h3>
 					<div class="fragment">
 						<p>
@@ -568,7 +568,7 @@
 					</svg>
 				</section>
 			</section>
-			<section>
+			<section data-name="Introducing SVG">
 				<section>
 					<h2>But hey!</h2>
 					<p class="fragment">
@@ -583,7 +583,7 @@
 					<h3>Introducing SVG</h3>
 				</section>
 			</section>
-			<section>
+			<section data-name="D3 with React">
 				<section>
 					<h2>D3 with React</h2>
 					<ul>
@@ -668,7 +668,7 @@
 					</script></code></pre>
 				</section>
 			</section>
-			<section>
+			<section data-name="D3 with TypeScript">
 				<h2>D3 with TypeScript</h2>
 				<ul>
 					<li>There will be plenty of type issues</li>
@@ -700,7 +700,7 @@
 					</ul>
 				</footer>
 			</section>
-			<section>
+			<section data-name="More advanced D3">
 				<section>
 					<h2>More advanced D3</h2>
 				</section>
@@ -744,7 +744,7 @@
 					<h3><em>Optional</em> step 6: Adding transitions</h3>
 				</section>
 			</section>
-			<section>
+			<section data-name="Realistic examples">
 				<section>
 					<h2>Let's see some more realistic examples</h2>
 					<p><a
@@ -752,16 +752,16 @@
 					</p>
 				</section>
 			</section>
-			<section>
+			<section data-name="Introducing HTML5 Canvas">
 				<h2>HTML5 Canvas</h2>
 			</section>
-			<section>
+			<section data-name="D3 with HTML5 Canvas">
 				<h2>D3 with HTML5 Canvas</h2>
 			</section>
-			<section>
+			<section data-name="Canvas demo">
 				<h2>Canvas Demo</h2>
 			</section>
-			<section>
+			<section data-name="D3 in the wild">
 				<section>
 					<h2>D3 in the wild</h2>
 				</section>
