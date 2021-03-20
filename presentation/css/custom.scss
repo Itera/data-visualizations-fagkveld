@@ -67,6 +67,12 @@
         }
     }
 
+    .table-illustration {
+        tbody > tr > td:nth-of-type(2) {
+            text-align: right;
+        }
+    }
+
     .html-viz-demo {
         width: 340px;
         height: 290px;
