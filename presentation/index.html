@@ -23,8 +23,140 @@
 				<h1>Fagkveld - D3</h1>
 				<p>Creating data visualizations with D3</p>
 			</section>
-			<section data-name="What are data visualizations"=>
-				<h2>What are data visualizations</h2>
+			<section data-name="What is data visualization">
+				<section>
+					<h2>What is data visualization?</h2>
+				</section>
+				<section>
+					<h3>Transforming data points into meaningful <em>graphical representations</em></h3>
+					<div class="split">
+						<table class="fragment">
+							<thead>
+								<tr>
+									<th>x</th>
+									<th>y</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>0</td>
+									<td>720</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>989</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>138</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="fragment split">
+							<div style="flex: 0; align-self: center; margin-right: 80px;">
+								⇒
+							</div>
+							<svg width="600" height="350" viewBox="-60 -10 1600 900">
+								<g>
+									<g transform="translate(0, 803.75)" fill="none" font-size="24" text-anchor="middle">
+										<path stroke="currentColor" d="M40.5,6V0.5H1480.5V6"></path>
+										<g transform="translate(295.4838562011719, 0)">
+											<line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9" dy="1em">0</text>
+										</g>
+										<g transform="translate(760, 0)">
+											<line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9" dy="1em">1</text>
+										</g>
+										<g transform="translate(1224.51611328125, 0)">
+											<line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9" dy="1em">2</text>
+										</g>
+									</g>
+									<g transform="translate(40, 0)" fill="none" font-size="24" text-anchor="end">
+										<path stroke="currentColor" d="M-6,804.25H0.5V40.5H-6"></path>
+										<g transform="translate(0,804.25)">
+											<line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em">0</text>
+										</g>
+										<g transform="translate(0, 733.9036865234375)">
+											<line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em">100</text>
+										</g>
+										<g transform="translate(0, 663.557373046875)">
+											<line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em">200</text>
+										</g>
+										<g transform="translate(0, 593.2110595703125)">
+											<line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em">300</text>
+										</g>
+										<g transform="translate(0, 522.86474609375)">
+											<line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em">400</text>
+										</g>
+										<g transform="translate(0, 452.5184020996094)">
+											<line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em">500</text>
+										</g>
+										<g transform="translate(0, 382.1720886230469)">
+											<line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em">600</text>
+										</g>
+										<g transform="translate(0, 311.82574462890625)">
+											<line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em">700</text>
+										</g>
+										<g transform="translate(0, 241.47943115234375)">
+											<line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em">800</text>
+										</g>
+										<g transform="translate(0, 171.13311767578125)">
+											<line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9" dy="0.32em">900</text>
+										</g>
+										<g transform="translate(0, 100.78679656982422)">
+											<line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9"
+												dy="0.32em">1,000</text>
+										</g>
+									</g>
+									<g transform="translate(40, 0)" fill="none" font-size="24" text-anchor="end">
+										<path stroke="currentColor" d="M0.5,804.25V40.5"></path>
+										<g transform="translate(0,804.25)">
+											<line stroke="currentColor" x2="1440"></line><text fill="currentColor" x="-3" dy="0.32em"></text>
+										</g>
+										<g transform="translate(0, 733.9036865234375)">
+											<line stroke="currentColor" x2="1440"></line><text fill="currentColor" x="-3" dy="0.32em"></text>
+										</g>
+										<g transform="translate(0, 663.557373046875)">
+											<line stroke="currentColor" x2="1440"></line><text fill="currentColor" x="-3" dy="0.32em"></text>
+										</g>
+										<g transform="translate(0, 593.2110595703125)">
+											<line stroke="currentColor" x2="1440"></line><text fill="currentColor" x="-3" dy="0.32em"></text>
+										</g>
+										<g transform="translate(0, 522.86474609375)">
+											<line stroke="currentColor" x2="1440"></line><text fill="currentColor" x="-3" dy="0.32em"></text>
+										</g>
+										<g transform="translate(0, 452.5184020996094)">
+											<line stroke="currentColor" x2="1440"></line><text fill="currentColor" x="-3" dy="0.32em"></text>
+										</g>
+										<g transform="translate(0, 382.1720886230469)">
+											<line stroke="currentColor" x2="1440"></line><text fill="currentColor" x="-3" dy="0.32em"></text>
+										</g>
+										<g transform="translate(0, 311.82574462890625)">
+											<line stroke="currentColor" x2="1440"></line><text fill="currentColor" x="-3" dy="0.32em"></text>
+										</g>
+										<g transform="translate(0, 241.47943115234375)">
+											<line stroke="currentColor" x2="1440"></line><text fill="currentColor" x="-3" dy="0.32em"></text>
+										</g>
+										<g transform="translate(0, 171.13311767578125)">
+											<line stroke="currentColor" x2="1440"></line><text fill="currentColor" x="-3" dy="0.32em"></text>
+										</g>
+										<g transform="translate(0, 100.78679656982422)">
+											<line stroke="currentColor" x2="1440"></line><text fill="currentColor" x="-3" dy="0.32em"></text>
+										</g>
+									</g>
+									<g>
+										<g class="bar-container" fill="#a6cee3">
+											<rect x="86.45161290322585" y="298.0865800865801" height="505.6634199134199"
+												width="418.06451612903226"></rect>
+											<rect x="550.9677419354839" y="109.4318181818182" height="694.3181818181818"
+												width="418.06451612903226"></rect>
+											<rect x="1015.483870967742" y="706.8620129870129" height="96.88798701298708"
+												width="418.06451612903226"></rect>
+										</g>
+									</g>
+								</g>
+							</svg>
+						</div>
+				</section>
 			</section>
 			<section data-name="Data visualization intro">
 				<section>
