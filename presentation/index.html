@@ -684,11 +684,11 @@
 				</section>
 				<section class="recipe-step">
 					<h3>Approach: React rendering D3 manipulated data</h3>
-					<pre><code class="javascript" data-trim data-no-escape data-line-numbers="|1|2|4-18|5-9|5-8|9|11-17"><script type="text/template">
+					<pre><code class="javascript" data-trim data-no-escape data-line-numbers="|1|2|4-21|4,19-21|5-8|9|5-9|11-17"><script type="text/template">
 						import React, { useMemo } from 'react';
 						import * as d3 from 'd3';
 
-						function Viz(data = [10, 20, 50, 90, 100]) {
+						function Viz({ data }) {
 							const scale = useMemo(
 								() => d3.scaleLinear().domain([0, d3.max(data)]).range([0, 640]),
 								[data]
@@ -703,15 +703,18 @@
 								</svg>
 							);
 						}
+						Viz.defaultProps = {
+							data: [10, 20, 50, 90, 100]
+						}
 					</script></code></pre>
 				</section>
 				<section class="recipe-step">
 					<h3>Approach: D3 rendering nodes in React</h3>
-					<pre style="font-size: 12px"><code class="javascript" data-trim data-no-escape data-line-numbers="|25-27|11|12-23|13|14-21"><script type="text/template">
+					<pre style="font-size: 12px"><code class="javascript" data-trim data-no-escape data-line-numbers="|25-27|11|12-23|13|14-21|14"><script type="text/template">
 						import React, { useEffect, useMemo, useRef } from 'react';
 						import * as d3 from 'd3';
 
-						function Viz(data = [10, 20, 50, 90, 100]) {
+						function Viz({ data }) {
 							const scale = useMemo(
 								() => d3.scaleLinear().domain([0, d3.max(data)]).range([0, 640]),
 								[data]
