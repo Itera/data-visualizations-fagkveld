@@ -2,7 +2,7 @@
 
 .reveal {
     :not(code table) {
-        font-size: 1.8rem;
+        font-size: 28px;
 
         td {
             vertical-align: top;
@@ -67,33 +67,43 @@
         }
     }
 
+    .table-illustration {
+        tbody > tr > td:nth-of-type(2) {
+            text-align: right;
+        }
+    }
+
     .html-viz-demo {
-        width: 340px;
-        height: 290px;
+        width: 600px;
+        height: 360px;
         margin: 2rem auto;
         background-color: #2b2b2b;
 
         & > div {
             position: relative;
-            width: 260px;
-            height: 180px;
-            margin: auto;
-            transform: translateY(35px);
+            width: 340px;
+            height: 260px;
+            margin: 0 auto;
+            transform: translateY(20px);
 
             & > .axis {
                 position: absolute;
                 left: 0;
                 bottom: 0;
-                border: 1px solid white;
+                width: 3px;
+                height: 3px;
+                background-color: white;
+                transform: translate(-1.5px, 1.5px);
             }
 
             & > .axis-tick {
                 position: absolute;
                 bottom: 0;
+                width: 20px;
                 display: flex;
                 flex-direction: column;
                 text-align: center;
-                transform: translate(-6.5px, 55px);
+                transform: translate(-10px, 54px);
 
                 &::before {
                     content: '|';
@@ -106,7 +116,7 @@
                 height: 10px;
                 background-color: white;
                 border-radius: 10px;
-                transform: translate(-4.5px, 4.5px);
+                transform: translate(-5px, 5px);
             }
         }
     }
