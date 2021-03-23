@@ -31,20 +31,24 @@ const alphabet = [
 ];
 
 export function getRandomStrings(amount: number): string[] {
-  let result: string[] = alphabet.slice(0, Math.min(amount, 26));
+  const result: string[] = alphabet.slice(0, Math.min(amount, 26));
+  let prevPermutations: string[] = [...result];
 
-  for (let i = 0; i < amount; i++) {
-    if (result.length === amount) {
-      return result;
-    }
-
-    result = getPermutations(result, alphabet, amount);
+  while (result.length < amount) {
+    const nextPermutations = getPermutations(
+      prevPermutations,
+      alphabet,
+      amount - result.length
+    );
+    result.push(...nextPermutations);
+    prevPermutations = nextPermutations;
   }
+
   return result;
 }
 
 function getPermutations(a: string[], b: string[], amount: number) {
-  const result = [...a];
+  const result = [];
   for (let i = 0; i < a.length; i++) {
     for (let j = 0; j < b.length; j++) {
       if (result.length === amount) return result;
@@ -77,7 +81,7 @@ export function getDates(
 
   for (let i = 1; i < amount; i++) {
     const nextDate = new Date(result[i - 1]);
-    nextDate.setDate(nextDate.getDate() + i * stepInDays);
+    nextDate.setDate(nextDate.getDate() + stepInDays);
     result.push(nextDate);
   }
 

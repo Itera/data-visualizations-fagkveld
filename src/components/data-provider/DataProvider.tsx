@@ -49,10 +49,12 @@ export const DataProvider: FC<DataProviderProps> = ({
 
       if (keyType === "string") {
         randomKeys = getRandomStrings(numKeys);
+        const unique = new Set(randomKeys);
+        console.log(randomKeys.length, unique.size);
       } else if (keyType === "number") {
         randomKeys = getNumbers(0, 1, numKeys);
       } else {
-        randomKeys = getDates(new Date(2000, 1, 1), 1, numKeys);
+        randomKeys = getDates(new Date(2000, 1, 1), 7, numKeys);
       }
 
       setKeys(randomKeys);
