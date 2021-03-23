@@ -4,7 +4,7 @@
 
 import React, { FC, useEffect, useMemo } from "react";
 import * as d3 from "d3";
-import { getTickValues } from "../../helpers";
+import { getTickValues, removeContent } from "../../helpers";
 import { ChartComponentProps, PointData } from "../../types";
 import { COLORS, INVISIBLE_VALUE, MARGIN } from "../../constants";
 
@@ -34,6 +34,7 @@ export const D3RenderedBarChart: FC<ChartComponentProps<PointData[]>> = ({
   );
 
   useEffect(() => {
+    removeContent("#data-container");
     renderAxis(scales, data, height, width);
     renderData(scales, data, height);
   }, [scales, height, width, data]);

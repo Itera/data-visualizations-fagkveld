@@ -41,7 +41,7 @@ export function drawElement(
 }
 
 export function drawXAxis(
-  xScale: d3.ScaleBand<string>,
+  xScale: d3.ScalePoint<string>,
   context: CanvasRenderingContext2D,
   data: PointData[],
   height: number,
@@ -68,12 +68,9 @@ export function drawXAxis(
   context.beginPath();
 
   xAxisTickValues.forEach((d) => {
-    context.moveTo(
-      (xScale(String(d)) as number) + xScale.bandwidth() / 2,
-      height - MARGIN.bottom + 0.5
-    );
+    context.moveTo(xScale(String(d)) as number, height - MARGIN.bottom + 0.5);
     context.lineTo(
-      (xScale(String(d)) as number) + xScale.bandwidth() / 2,
+      xScale(String(d)) as number,
       height - MARGIN.bottom + TICK_LENGTH + 0.5
     );
   });
@@ -91,7 +88,7 @@ export function drawXAxis(
   xAxisTickValues.forEach((d, i) => {
     context.fillText(
       String(i),
-      (xScale(String(d)) as number) + xScale.bandwidth() / 2,
+      xScale(String(d)) as number,
       height - MARGIN.bottom + TICK_LENGTH + 2
     );
   });

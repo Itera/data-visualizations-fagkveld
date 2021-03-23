@@ -37,6 +37,7 @@ export const ReactBarChartExmaple: FC<ExampleProps> = ({ size }) => {
         keyType={"number"}
         defaultNumKeys={60}
         setPlotData={setPlotData}
+        categoriesDisabled={true}
       />
       {plotData && (
         <ReactRenderedBarChart
@@ -56,9 +57,10 @@ export const D3BarChartExample: FC<ExampleProps> = ({ size }) => {
     <>
       <DataProvider
         dataType="point"
-        keyType="number"
+        keyType="string"
         defaultNumKeys={60}
         setPlotData={setPlotData}
+        categoriesDisabled={true}
       />
       {plotData && (
         <D3RenderedBarChart

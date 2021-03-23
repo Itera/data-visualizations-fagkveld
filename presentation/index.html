@@ -22,6 +22,23 @@
 			<section data-name="Fagkveld - D3">
 				<h1>Fagkveld - D3</h1>
 				<p>Creating data visualizations with D3</p>
+				<aside class="notes">
+					Welcome to this session on data visualization with D3</br></br>
+					Over the course of the next two hours, we will go through how to build bespoke/custom data visualization with D3. 
+					We are primarily going to look at rendering our visualization using SVG, 
+					but we are also going to look at how we can use HTML5 Canvas and its 2D rendering context to render plots.</br></br>
+
+					We do not assume much knowledge beyond proficiency with JavaScript, HTML and CSS and basic knowledge of React. 
+					This means we are going to spend quite a bit of time introducing SVG and Canvas. </br></br>
+					
+
+					<h3>Two words about D3, the start of this evening</h3>
+					D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. 
+					D3’s emphasis on web standards gives you the full capabilities of modern browsers without tying yourself to a proprietary framework, 
+					combining powerful visualization components and a data-driven approach to DOM manipulation.
+
+					D3 is the most popular library for building data visualizations on the web with ov er 96K stars on Guthub.
+				</aside>
 			</section>
 			<section data-name="What is data visualization">
 				<section>
@@ -281,6 +298,12 @@
 			<section data-name="How to build">
 				<section data-name="How do we build visualizations?">
 					<h2>How do we build visualizations?</h2>
+					<aside class="notes">
+						...
+						- Transform data into visual variables
+						- Render to the screen
+						...
+					</aside>
 				</section>
 				<section data-name="Step to build">
 					<h3>Steps to build a visualization</h3>
@@ -295,6 +318,12 @@
 				<section data-name="Can we use only native">
 					<h3>Can we achieve it using only native Web <span style="text-transform: none;">APIs</span>?</h3>
 					<p>DIY charts</p>
+					<aside class="notes">
+						- Yes, of course, but is it worth our time?
+						- Simple static charts you could do yourself, and save some on the bundle size.
+						- But it can quickly get complicated when you want to do: 
+								make the visualization dynamic, add animation, make smooth/rounded lines for a line chart, support complex interactions like pan and zoom, etc.
+					</aside>
 				</section>
 				<section data-name="Minimal example using HTML and CSS">
 					<h3>Minimal example using HTML and CSS</h3>
@@ -489,8 +518,8 @@
 				<section>
 					<h2>Building a simple chart using D3</h2>
 				</section>
-				<section data-name="Step 1" class="recipe-step">
-					<h3>Step 1: Enrich data with visual information</h3>
+				<section data-name="Step 1 - Enrich data with spation info" class="recipe-step">
+					<h3>Step 1: Enrich data with spatial information</h3>
 					<pre class="fragment"><code class="javascript" data-trim data-no-escape data-line-numbers="|1|3-5|3|4|5|3-5">
 						import * as d3 from 'd3';
 
@@ -521,7 +550,7 @@
 						</g>
 					</svg>
 				</section>
-				<section data-name="Step 2" class="recipe-step">
+				<section data-name="Step 2 - Specify a selection" class="recipe-step">
 					<h3>Step 2: Specify a selection of nodes to render</h3>
 					<div class="fragment">
 						<p>Given the following HTML document:</p>
@@ -558,7 +587,7 @@
 								briefly look at how to select HTML5 Canvas nodes later.
 							</p> -->
 				</section>
-				<section data-name="Step 3" class="recipe-step">
+				<section data-name="Step 3 - Join data to selection" class="recipe-step">
 					<h3>Step 3: Join enriched data to selection</h3>
 					<div class="fragment">
 						<p>Given the following HTML document:</p>
@@ -588,7 +617,7 @@
 						</code></pre>
 					</div>
 				</section>
-				<section data-name="Step 4" class="recipe-step">
+				<section data-name="Step 4 - Render nodes with enriched data" class="recipe-step">
 					<h3>Step 4: Render nodes with enriched data</h3>
 					<div class="fragment">
 						<p>
@@ -640,33 +669,280 @@
 				</section>
 			</section>
 			<section data-name="Introducing SVG">
-				<section>
-					<h2>But hey!</h2>
-					<p class="fragment">
-						What are these
-						<code style="color: #f92672">&lt;svg&gt;</code>
-						and
-						<code style="color: #f92672">&lt;circle&gt;</code>
-						things?
-					</p>
+				<section data-name="Mastering D3 require mastery of SVG">
+					<h2>Mastering D3 require mastery of SVG</h2>
+					<aside class="notes">
+						Like we mentioned before, one of the great things about D3 is that it does not abstract away the underlying Web Technologies 
+						provided by the browser.</br></br>
+
+						D3 simply allows you to effectively manipulate the DOM directly and do so in a data-driven fashion. </br></br>
+						
+						When we are working with D3 the aim is, in 99% of cases, to build an SVG. It is therefore very important to have a good grasp on
+						SVG. Without it you will not be very effective with D3. So lets dive in.
+					</aside>
 				</section>
-				<section>
-					<h3>Introducing SVG</h3>
+				<section data-name="Two types of computer graphics">
+					<h3>Two types of computer graphics</h3>
+					<ul>
+						<li>Raster graphics</li>
+						<li>Vector graphics</li>
+					</ul>
+					<aside class="notes">
+						-	Vector graphics and Raster graphics (Bitmaps) are two canonical categories of computer graphics.
+					</aside>
 				</section>
+
+				<section data-name="Raster graphics">
+					<h3>Raster graphics</h3>
+				
+					<ul>
+						<li>Bitmaps / grid of pixels</li>
+						<li>Eg. PNG and JPEG</li>
+						<li>Great for photo realism</li>
+						<li>Space efficiency</li>
+						<li>Not very scalable</li>
+					</ul>
+
+					<aside class="notes">
+						RASTER GRAPHICS</br>
+						- Raster graphics you are all familiar with. Raster graphics are bitmaps, usually a rectangular grid of pixels. </br>
+							Where a pixel is a point with color. </br>
+						- Png and jpeg are fileformats that fall under the category of raster graphics.</br>
+						- Raster graphics are great for photo-realism, but because a raster image must somehow describe the color of every pixel it consists of, it 
+							is not very space efficient when containing only simple shapes. </br>
+						- Due to a raster graphic consists of a fixed amount of pixels it is also not very scalable. </br>
+
+					</aside>
+				</section>
+
+				<section data-name="Vector graphics">
+					<h3>Vector graphics</h3>
+
+					<ul>
+						<li>Defined with math</li>
+						<li>Vector graphics = points and the lines/curves between them</li>
+						<li>Source code define shapes
+							<ul>
+								<li>Circle with center of (x,y) and radius r</li>
+								<li>Rectangle with width and height etc.</li>
+							</ul>
+						</li>
+						<li>Stroke and fill</li>
+						<li>Infinitly scalable</li>
+						<li>Can be very space efficient</li>
+						<li>Lack the detail posible in a raster graphic</li>
+						<li>Suitable for simple drawings, not photo realism</li>
+					</ul>
+
+					<aside class="notes">
+						VECTOR GRAPHICS</br>
+						-	Vector graphics is defined by using mathematical equations to describe an image. </br></br>
+
+						- At the lowest level, vector graphics are computer graphics images defined in terms of coordinates/points on a cartesian plane, 
+							connected by lines or curves to form polygons and other shapes.</br></br>
+
+						- The source code of a vector graphic describe the shapes it consists of and their attributes.</br>
+							- Like a circle with center coordinates X and Y and radius r</br>
+							- Or a rectangle with coordinates X and Y and width W and hight H</br></br>
+
+						- The resulting shapes become visible on the screen by giving color to the storke (the line forming the shape) and fill (the inside of the shape).</br></br>
+
+						- The points, the lines and their relative position contain all the information you need to draw the vector graphic at any resolution,
+							and is therefor infinitly scalable.  </br></br>
+
+						-	Considerable space savings can be achieved when all the shapes of an image are defined with simple parameters instead of pixels. </br></br>
+
+						- Because vector graphics consists of coordinates/points with lines and curves between them, the file size of the 
+							representation does not depend on the dimensions of the object. The same graphic can be served to both mobile and 8K displays</br></br>
+
+						-	Vector graphics images will lack the detail compared to a real photo.</br></br>
+						-	And are more suited for simple or drawings.
+					</aside>
+				</section>
+
+				<section data-name="Scalable Vector Graphics (SVG)">
+					<h3>Scalable Vector Graphics (SVG)</h3>
+					<ul>
+						<li>SVG is a web standard for vector graphics</li>
+						<li>XML based markup language</li>
+						<li>Support styling with CSS
+							<ul>
+								<li>But does not support the same attributes as HTML (more on this later)</li>
+							</ul>
+						</li>
+						<li>SVGs are part of the DOM</li>
+						<li>Programmatically manipulating SVG documents is just like manipulating HTML documents</li>
+					</ul>
+
+					<aside class="notes">
+						- SVG is a web standard for vector graphics </br>
+						- SVG is XML based just like HTML</br>
+						- SVG support CSS, so you style your SVGs much like you would your HTML, with some important differences we will come back to.</br>
+						- SVGs and their content are part of the DOM and you work with these elements just like you would normal HTML elements</br>
+						- Programmatically manipulating SVG documents is just like HTML documents</br>
+					</aside>
+				</section>
+
+				<section data-name="Use cases for SVG">
+					<h3>Use cases for SVG</h3>
+					<ul>
+						<li>Adding complex shapes and backgrounds to your webpage</li>
+						<li>Icons</li>
+						<li>Vector based images and illustrations</li>
+						<li>Micro interactions</li>
+						<li>Animations</li>
+						<li>Flare</li>
+						<li>Data visulazation</li>
+					</ul>
+				</section>
+
+				<section data-name="Understanding SVG">
+					<h3>Understanding SVG</h3>
+
+					<ul>
+						<li>Treated much like an image</li>
+						<li>Creates an infinitly large plane</li>
+						<li>Origo in the top left corner</li>
+						<li>Positive x towards the right</li>
+						<li>Positive y downward</li>
+						<li>Four imporatant attributes
+							<ul>
+								<li>xmlns</li>
+								<li>viewBox</li>
+								<li>width</li>
+								<li>hight</li>
+							</ul>
+						</li>
+					</ul>
+
+					<pre>
+						<code class="html">
+							<script type="text/template">
+								<svg 
+									viewBox="0 0 100 100" 
+									xmlns="http://www.w3.org/2000/svg" 
+									width="400" 
+									height="400"
+								></svg>
+							</script>
+						</code>
+					</pre>
+
+				</section>
+
+				<section data-name="The viewBox">
+					<h3>The viewBox</h3>
+
+					<ul>
+						<li>Defines the position adn dimension, in user space, of an SVG viewport</li>
+						<li>The telescope through which we look at the SVG</li>
+					</ul>
+					<pre>
+						<code class="html" data-trim data-no-escape>
+							<script type="text/template">
+								<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="400" height="400"></svg>
+							</script>
+						</code>
+					</pre>
+					<p><a href="https://wattenberger.com/guide/scaling-svg">ViewBox example</a></p>
+
+					<aside class="notes">
+						Explain with visual
+					</aside>
+
+				</section>
+
+				<section data-name="Styling content of SVGs">
+					<h3>Styling content of SVGs</h3>
+
+					<ul>
+						<li>Much like HTML, but not entierly</li>
+						<li>No box model</li>
+						<li>No document flow</li>
+						<li>Only "absolute" positioning relative to the SVG element</li>
+						<li>No z-index</li>
+						<li>Uses "the painters model"</li>
+					</ul>
+
+					<aside class="notes">
+						...
+						SVG uses the "painters model", which means that what you draw first to the SVG is at the back, while what you draw later is to the front.
+						You therefore need to be cognizant of the order you add elements to you SVG.
+					</aside>
+				</section>
+
+				<section data-name="The renderable elements">
+					<h3>The renderable elements</h3>
+
+					<p><a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element">SVG element reference</a></p>
+										
+					<aside class="notes">
+						Lets explore the elements supported by SVG!</br></br>
+
+						- Different types of elements</br>
+						- THIS IS THE PRIMITIVES YOU WILL BE THINKING IN WHEN AUTHORING SVG, WHICH IS WHAT YOU DO WHEN BUILDING DATA VISUALIZATION USING D3!</br>
+						- Renderable elements to take not of: circle, ellipse, image, line, path, polygon, polyline, rect, text, a</br>
+					</aside>
+				</section>
+
+				<section data-name="The group element">
+					<h3>The group element</h3>
+
+					<p>The div of SVG (kind of)</p>
+					
+					<a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/g">MDN Web Docs > SVG > Element > g</a>
+					
+					<aside class="notes">
+						There is another very important element to know about</br>
+						- Container element to group SVG elements together</br>
+						- Is not rendered to the screen</br>
+						- Children inherit attributes from group elements</br>
+						- Transformations applied to the group is applied to all children (very useful)</br>
+					</aside>
+				</section>
+
+				<section data-name="Explore the playground">
+					<h3>Explore the playground</h3>
+
+					<p><a href="http://localhost:3000">Playground demo</a></p>
+				</section>
+
+				<section data-name="How we build a bar chart with SVG and D3">
+					<h3>How we build a bar chart with SVG and D3</h3>
+					
+					<p><a href="https://lucid.app/lucidchart/invitations/accept/7c893ed3-9f39-47be-a308-b398fe8fefa3?viewport_loc=-1894.5280922864351%2C-136.41745792283828%2C2713.862348765844%2C1325.5430867192604%2C0_0">Visual guide to buildinging a bar chart</a></p>
+				
+					<aside class="notes">
+						With our new knowledge of Vector graphics and SVG lets walk through step by step 
+						how we use D3 to construct a data visualizaiton. </br>
+						Tin has already walked us through the general steps, but lets get into the details. </br></br>
+
+						Go through building a data visualization</br>
+						- The SVG element</br>
+						- Group axis and data in group elements</br>
+						- Positioning axis</br>
+						- Positioning data</br>
+
+						Walk through everything while illustrating with high charts
+					</aside>
+				</section>
+
+				<!-- SVG INTRO END -->
 			</section>
-			<section data-name="D3 with React">
-				<section>
+			
+			<section data-name="D3 with React or D3?">
+				<section data-name="D3 with react">
 					<h2>D3 with React</h2>
-					<ul class="fragment">
+					<ul>
 						<li>Two approaches
-							<ul class="fragment">
+							<ul>
 								<li>Use React to render nodes
 									<ul>
 										<li>Manipulates data using D3</li>
 										<li>Benefits from Virtual DOM</li>
 									</ul>
 								</li>
-								<li class="fragment">Use D3 to render nodes
+								<li>Use D3 to render nodes
 									<ul>
 										<li>Mutates DOM directly</li>
 										<li>Avoids overhead from Virtual DOM</li>
@@ -674,174 +950,807 @@
 								</li>
 							</ul>
 						</li>
-						<li class="fragment">Two separate concerns
+						<li>Two separate concerns
 							<ul>
 								<li>Data manipulation</li>
 								<li>Rendering</li>
 							</ul>
 						</li>
 					</ul>
+
+					<aside class="notes">
+						Alright, let's get back to D3. Now we've seen how to use D3 to render SVGs,
+						but how do we use D3 in a project with React? Since most of use are working
+						in React project nowadays, we thought that it'd be nice to give you examples
+						that show how D3 can be integrated with React.</br></br>
+
+						To use D3 with React, you have to choose between two approaches concerning
+						rendering:</br></br>
+
+						- Either you let React do the rendering, which gives you the benefits that a
+						Virtual DOM comes with.</br></br>
+
+						- Or you bypass React's Virtual DOM and let D3 do the rendering by mutating
+						the DOM directly.</br></br>
+
+						Either way, one thing that becomes quite apparent when usind D3 with React is
+						that there are two separate concerns that need to be addressed:</br></br>
+
+						- Data manipulation, which you'll always use D3 for</br></br>
+
+						- And rendering, where you have the two possible approaches above
+						You dont have to use D3 for rendering if you don't want/need to.</br></br>
+
+						This is an important distinction because it means that the data manipulation
+						logic can live outside of React's lifecycle and thus be reused more easily,
+						if you happen to want that.</br></br>
+					</aside>
 				</section>
-				<section class="recipe-step">
+
+				<section data-name="Approach: React rendering D3 manipulated data" class="recipe-step">
 					<h3>Approach: React rendering D3 manipulated data</h3>
-					<pre><code class="javascript" data-trim data-no-escape data-line-numbers="|1|2|4-21|4,19-21|5-8|9|5-9|11-17"><script type="text/template">
-						import React, { useMemo } from 'react';
-						import * as d3 from 'd3';
+					<pre>
+						<code class="javascript" data-trim data-no-escape data-line-numbers>
+							<script type="text/template">
+								import React, { useMemo } from 'react';
+								import * as d3 from 'd3';
 
-						function Viz({ data }) {
-							const scale = useMemo(
-								() => d3.scaleLinear().domain([0, d3.max(data)]).range([0, 640]),
-								[data]
-							);
-							const enrichedData = useMemo(() => data.map(scale), [data, scale]);
+								function Viz({ data }) {
+									const scale = useMemo(
+										() => d3.scaleLinear().domain([0, d3.max(data)]).range([0, 640]),
+										[data]
+									);
+									const enrichedData = useMemo(() => data.map(scale), [data, scale]);
 
-							return (
-								<svg>
-									{enrichedData.map((d) => (
-										<circle cx={d} xy={0} r={5} />
-									))}
-								</svg>
-							);
-						}
-						Viz.defaultProps = {
-							data: [10, 20, 50, 90, 100]
-						}
-					</script></code></pre>
-				</section>
-				<section class="recipe-step">
-					<h3>Approach: D3 rendering nodes in React</h3>
-					<pre style="font-size: 12px"><code class="javascript" data-trim data-no-escape data-line-numbers="|25-27|11|12-23|13|14-21|14"><script type="text/template">
-						import React, { useEffect, useMemo, useRef } from 'react';
-						import * as d3 from 'd3';
-
-						function Viz({ data }) {
-							const scale = useMemo(
-								() => d3.scaleLinear().domain([0, d3.max(data)]).range([0, 640]),
-								[data]
-							);
-							const enrichedData = useMemo(() => data.map(scale), [data, scale]);
-
-							const svgRef = useRef(null);
-							useEffect(() => {
-								if (svgRef.current) {
-									d3.select(svgRef.current)
-										.selectAll('circle')
-										.data(enrichedData)
-										.enter()
-										.append('circle')
-										.attr('cx', (d) => d)
-										.attr('cy', 0)
-										.attr('r', 5);
+									return (
+										<svg>
+											{enrichedData.map((d) => (
+												<circle cx={d} xy={0} r={5} />
+											))}
+										</svg>
+									);
 								}
-							}, [enrichedData]);
+								Viz.defaultProps = {
+									data: [10, 20, 50, 90, 100]
+								}
+							</script>
+						</code>
+					</pre>
 
-							return (
-								<svg ref={svgRef}></svg>
-							);
-						}
-					</script></code></pre>
+					<aside class="notes">
+						Let's take a closer look at the first approach: to let React handle the
+						rendering. The code block that you see here does exactly that, but let's
+						dissect it so that it's easier to digest. </br></br>
+
+						First, we start by importing React and the React hooks that we need. Then we
+						import D3 as usual - this is the same as always.</br></br>
+
+						Finally, we look at the actual juice of this example. Here, we create a React
+						component that takes in our data as a prop.</br></br>
+
+						Then we do our usual business by creating a linear scale and storing the
+						visual properties in a new variable. Only this time, we've wrapped the logic
+						into a `useMemo` hook to make sure that the logic is ran only once - unless
+						the data changes of course, then we'd want to recreate the scale and
+						recalculate the visual properties.</br></br>
+
+						Finally, we render the SVG and circle elements using JSX by iterating over
+						our enriched data.</br></br>
+
+						Simple enough!</br></br>
+
+					</aside>
+				</section>
+
+				<section data-name="Approach: D3 rendering nodes in React" class="recipe-step">
+					<h3>Approach: D3 rendering nodes in React</h3>
+					<pre style="font-size: 12px">
+						<code class="javascript" data-trim data-no-escape data-line-numbers>
+							<script type="text/template">
+								import React, { useEffect, useMemo, useRef } from 'react';
+								import * as d3 from 'd3';
+
+								function Viz({ data }) {
+									const scale = useMemo(
+										() => d3.scaleLinear().domain([0, d3.max(data)]).range([0, 640]),
+										[data]
+									);
+									const enrichedData = useMemo(() => data.map(scale), [data, scale]);
+
+									const svgRef = useRef(null);
+									useEffect(() => {
+										if (svgRef.current) {
+											d3.select(svgRef.current)
+												.selectAll('circle')
+												.data(enrichedData)
+												.enter()
+												.append('circle')
+												.attr('cx', (d) => d)
+												.attr('cy', 0)
+												.attr('r', 5);
+										}
+									}, [enrichedData]);
+
+									return (
+										<svg ref={svgRef}></svg>
+									);
+								}
+							</script>
+						</code>
+					</pre>
+
+					<aside class="notes">
+						So how do we let D3 handle the rendering instead?</br></br>
+
+						Here's a modified version of the React component from the previous slide.
+						Notice that, this time, we do not render the circles using JSX. Instead we
+						store a reference to the SVG element rendered by React using the `useRef`
+						hook and let D3 handle the rendering in a `useEffect` hook.</br></br>
+
+						To render in React using D3, we first need to make sure that the SVG element
+						has been rendered by React - it must exist before we can proceed. Then, we do
+						our usual stuff: specify the selection of nodes that we want to render, bind
+						our data to it, and finally use the enter selection to append elements.</br></br>
+
+						Notice that we can use our reference the React rendered SVG element directly
+						as a parameter to `select`, which will create a selection containing only the
+						SVG element, if it exists.</br></br>
+					</aside>
+
 				</section>
 			</section>
+
 			<section data-name="D3 with TypeScript">
 				<h2>D3 with TypeScript</h2>
 				<ul>
 					<li>There will be plenty of type issues</li>
 					<li>But it's nice to have type-completion<sup>*</sup></li>
 				</ul>
-				<pre><code class="javascript" data-trim data-no-escape data-line-numbers="6,16">
-					import * as d3 from 'd3';
+				<pre>
+					<code class="javascript" data-trim data-no-escape data-line-numbers>
+						import * as d3 from 'd3';
 
-					const data = [10, 20, 50, 90, 100];
+						const data = [10, 20, 50, 90, 100];
 
-					const scale = d3.scaleLinear()
-						.domain(d3.extent(data) as [number, number])
-						.range([0, 640]),
+						const scale = d3.scaleLinear()
+							.domain(d3.extent(data) as [number, number])
+							.range([0, 640]),
 
-					const enrichedData data.map(scale);
+						const enrichedData = data.map(scale);
 
-					d3.select(svgRef.current)
-						.selectAll('circle')
-						.data(enrichedData)
-						.enter()
-						.append('circle')
-						.attr('cx', (d) => d as number)
-						.attr('cy', 0)
-						.attr('r', 5);
-				</code></pre>
+						d3.select(svgRef.current)
+							.selectAll('circle')
+							.data(enrichedData)
+							.enter()
+							.append('circle')
+							.attr('cx', (d) => d as number)
+							.attr('cy', 0)
+							.attr('r', 5);
+					</code>
+				</pre>
 				<footer class="footnotes">
 					<ul>
 						<li><sup>*</sup> Except in rare cases when the types are misleading 😅</li>
 					</ul>
 				</footer>
+
+				<aside class="notes">
+					D3 has types, but the types are not allways as permissive as the JavaScript it describes. 
+					For example a D3 function can in reality handle both numbers and strings, but the types only 
+					allow one of them requiering you to opt out of the Type system or cast the data to the required type.</br></br>
+					
+					Sometimes the types are downright wrong.</br></br>
+
+					The solution is to allow the types to help you as much as possible, and sprinkle in some explicit type casting or 
+					just opt out by using "any" or @ts-ignore. </br></br>
+				</aside>
 			</section>
-			<section data-name="More advanced D3">
-				<section>
+			
+			<section data-name="More advanced D3 - Transition, interaction, pan and zoom">
+				<section data-name="More advanced D3">
 					<h2>More advanced D3</h2>
-				</section>
-				<section class="recipe-step">
-					<h3><em>Optional</em> step 5: Adding interactivity</h3>
-					<pre style="font-size: 12px"><code class="html" data-trim data-no-escape data-line-numbers="|2-3|5|2-3,5"><script type="text/template">
-						<div>
-							<button id="pushBtn">Push point</button>
-							<button id="popBtn">Pop point</button>
-						</div>
-						<svg width="865" height="60"><g transform="translate(100, 30)"></g></svg>
-					</script></code></pre>
-					<pre style="font-size: 12px"><code class="javascript" data-trim data-no-escape data-line-numbers="|12|1-10|2|3-7|8|9|14-21|14-17|18-21|">
-						function render() {
-							const circles = d3.select('svg').select('g').selectAll('circle');
-							circles.enter()
-								.append('circle')
-								.attr('cx', (d) => d)
-								.attr('cy', 0)
-								.attr('r', 5);
-							circles.attr('opacity', '30%');
-							circles.exit().remove();
-						}
 
-						render();
+					<aside class="notes">
+						Now, lets look at some more advanced capabilities of D3.
+					</aside>
+				</section>
 
-						d3.select('#pushBtn').on('click', () => {
-							data.push(Math.random() * 100);
-							render();
-						});
-						d3.select('#popBtn').on('click', () => {
-							data.pop();
-							render();
-						});
-					</code></pre>
-					<div id="interactivity-demo" class="fragment">
-						<button onclick="demo.interactive()">Start demo</button>
-					</div>
+				<section data-name="Transitions">
+					<h3>Transitions with D3</h3>
+
+					<ul>
+						<li>D3 transitions makes it easy to animate DOM changes</li>
+						<li>Transitions is a limited form of keyframe animation</li>
+						<li>Transitions interpolate values over time</li>
+						<li>D3 supports interpolation for several types
+							<ul><li>Numbers, colors, geometric transforms, strings with embeded numbers (paths and fonts for example)</li></ul>
+						</li>
+					</ul>
+
+					<aside class="notes">
+						Lets start with transitions. selection.transition makes it easy to animate transitions when changing the DOM.
+						The ease of applying transitions to your data visualizations is one of the reasons why D3 is so popular. And
+						transisions are something you do not get when rendering with React. Which is why you usually do the rendering with
+						D3 also in the context of a React app. </br></br>
+
+						D3s transition interface mirrors the selection interface which makes it really easy to add smooth 
+						animations to previsouly static visualizations.</br></br>
+
+						Transitions are a limited form of key frame animation with only two key frames: start and end. Where the 
+						start is the current state of the DOM and the end is the desired state of DOM, which you define with 
+						.attr() and .style() to your selection.</br></br>
+
+						D3 is able to interpolate several types of values, not just numbers, but also colors and string values like a path or 
+						fonts and even geometric transforms.</br></br>
+
+					</aside>
 				</section>
-				<section class="recipe-step">
-					<h3><em>Optional</em> step 6: Adding transitions</h3>
-				</section>
-			</section>
-			<section data-name="Realistic examples">
+
 				<section>
-					<h2>Let's see some more realistic examples</h2>
-					<p><a
-							href="https://github.com/Itera/data-visualizations-fagkveld">https://github.com/Itera/data-visualizations-fagkveld</a>
-					</p>
+					<h3>Transitions example</h3>
+
+					<pre>
+						<code class="javascript" data-trim data-no-escape data-line-numbers>
+							d3
+								.selectAll("rect")
+								.data(data)
+								.join(
+									enter => 
+										enter
+											.append("rect")
+											.attr("fill", "red")
+											.attr("opacity", 0)
+											.call(enter => enter
+												.transition()
+												.delay(100)
+												.duration(200)
+												.ease(d3.easeLinear)
+												.attr("opacity", 1)
+											),
+										update => 
+											update
+												.transition()
+												.attr("fill", "blue"),
+										exit => 
+											exit
+												.transition()
+												.attr("opacity", 0)
+												.remove()
+								)
+						</code>
+					</pre>
+
+					<p><a href="https://observablehq.com/@d3/stacked-to-grouped-bars">Example - Transition between stacked and grouped bar chart</a></p>
+
+					<aside class="notes">
+						- Create a selection and bind data to it</br>
+						- We join the data to some rect elements </br>
+						- Setup the start state for entering elements </br>
+						- Call transition(), duration(), delay() and easing() (duration and easing have good defaults) to get a transition and configure it </br>
+						- These methods can also take a function which is given the datum for each element of the transition. This enables
+							control of duration, delay and easing for each element seperately. You can do many compext things with just these methods. </br>
+						- Define the new desired state with .attr() or .style() calls </br>
+						- Handle how you want to transition entering, updating and exiting elements seperately </br>
+						- D3 handles the interpolation of values and applying updates to the DOM </br>
+						- Rebinding your selection to new data will now result in an animated trasition. </br></br>
+
+						What you think about is how to i transition in the entering nodes, how to i transition nodes allready in the DOM to their new state
+						and how to I transition out elements that we no longer have any data binding for. </br></br>
+					</aside>
 				</section>
+
+				<section data-name="Interaction">
+					<h3>Interaction with D3</h3>
+					<ul>
+						<li>Responding to user iteraction</li>
+						<li>We are only limited by what is possible with the DOM</li>
+						<li>We can hook into events like: click, drag, focus, mouseenter, scroll etc.</li>
+						<li>Only limitd by our imagination</li>
+						<li>Tooltip example comming up later</li>
+					</ul>
+					
+					<pre>
+						<code class="javascript" data-trim data-no-escape data-line-numbers>
+							d3.selectAll(".bar").on(eventName, callback);
+						</code>
+					</pre>
+					
+					<aside class="notes">
+						When it comes to interactivity we are refering to making our data visualization repond to user input and interaction.
+						For exmaple </br></br>
+						- adding a click handler which render some additional information about what you clicked at</br>
+						- Adding a tooltip which is shown when hovering over an element</br>
+						- Adding pan and zoom gestures (more about that later)</br></br>
+
+						In 99% of cases we are using D3 to render an SVG, or perhaps we are using HTML. Regardless, we are using the DOM.
+						Which means we have the ability to register event listeners for all sorts of events and do whatever we want in
+						response. Just like we normally do.</br></br>
+
+						We are only limited by our imagination.</br></br>
+
+						Examples of events we could use</br></br>
+						- Click</br>
+						- Drag</br>
+						- Focus</br>
+						- Mouseender, mouseleave</br>
+						- Scroll etc.</br>
+						to update the data visualization.</br></br>
+
+						D3 makes it easy to register event listeners on elements in a selection using the .on(eventName, callback) method.</br></br>
+
+						Later we will see an example of how we can add a tooltip to a plot</br></br>
+					</aside>
+				</section>
+
+				<section data-name="Pan and zoom">
+					<h3>Pan and zoom with D3</h3>
+					<ul>
+						<li>Popular interaction techniques</li>
+						<li>Implemented with CSS transforms</li>
+						<li>Updating the scale factor => zooming</li>
+						<li>Updating x and y translate => panning</li>
+					</ul>
+
+					<pre>
+						<code class="javascript" data-trim data-no-escape data-line-numbers>
+							function zoomHandler({ transform }) {
+								div.style(
+									"transform", 
+									"translate(" + transform.x + "px," + transform.y + "px) scale(" + transform.k + ")"
+								);
+							}
+						</code>
+					</pre>
+
+					<p><a href="https://wellify.ai">Wellify.ai Map View</a></p>
+
+					<p><a href="https://observablehq.com/@d3/zoomable-scatterplot">Zoomable scatterplot example</a></p>
+					
+					<aside class="notes">
+						Panning and zooming are popular interaction techniques which allows the user to focus on a region of interest.
+						We are all very used to click and drag to move around and scroll/pinch to zoom in and out, but how can we implement
+						this with D3?</br></br>
+
+						Basically what D3 does is simply to apply CSS transforms to all the elements in the svg. Meaning to zoom, D3 
+						applies scaling and to pan; D3 applies a translation.</br></br>
+
+						- Talk about Map View (Note creating ZoomBehaviour, adding zoom behaviour to SVG and handling zoom events)</br></br>
+
+						D3 zoom in designed to work with d3-scale and d3-axis. In order to make it easy to update the scale and axis
+						when zooming and panning around. </br></br>
+					</aside>
+				</section>
+
+
+				<section data-name="Realistic examples">
+					<h2>Let's take a look at an example</h2>
+					<p>
+						<a href="http://localhost:3000">Stacked bar chart example</a>
+					</p>
+					<p>
+						<a href="https://github.com/Itera/data-visualizations-fagkveld">https://github.com/Itera/data-visualizations-fagkveld</a>
+					</p>
+
+					<aside class="notes">
+						With even more D3 knowledge, lets look at a more comlex example, the growndwork should allow us to move quickly through.
+					</aside>
+				</section>
+
 			</section>
+
+
+			<section>
+				<h2>What about rendering with HTML5 canvas?</h2>
+
+				<aside class="notes">
+					The DOM has some limitations. When the DOM of the active page becomes too large and highly nested 
+					the browser will have difficulty keeping up and frames start dropping. Lighthouse start triggering 
+					warnings when the DOM exceeds 1500 elements, have a depth greater than 32 nodes or have a parent node 
+					with more than 60 child nodes. The DOM is of course capable of handling a lot more on powerfull devices,
+					but these are still the recommendations of browser engeneers.</br></br>
+
+					Its is said that SVGs should not exceed having more than 1000 elements. 2000 and 3000 and maybe more will 
+					still work in devices with decent hardware, but if you for some reason need the ability to put several 
+					thousand shapes on the screen, HTML5 canvas is what you will need to reach for.</br>
+					Number of shapes on the screen does not need to be the deciding factor for you. Drawing shapes to a Canvas is 
+					in general a lot cheaper than using the DOM. If performance is a concern, canvas can be the solution. </br></br>
+					
+					A general rule I have come accross is that Canvas can handle drawing of an order or magnitue more shapes than 
+					SVG and sill maintain the framerate. This of course depends a lot on what and how you are drawing in adition to 
+					any additional program logic your are running.</br></br>
+
+					The decision of starting to use Canvas should not be taken lightly. Your codebase will grow in complexity,
+					there will be more lines of code to achive the same result you did with SVG. </br></br>
+
+					The browser is not aware of the shapes you have drawn to the canvas or their boundaries. Hit detection you will have to 
+					code yourself, so adding interactivity is a challange, and accessibility of your site will go down as the browser 
+					wont help you in that department ether.</br></br>
+				</aside>
+			</section>
+
 			<section data-name="Introducing HTML5 Canvas">
-				<h2>HTML5 Canvas</h2>
+				<h2>Introduction to HTML5 Canvas</h2>
+
+				<aside class="notes">
+					This will be a quite shallow introduction, but I hope to help you start building your mental model of Canvas and canvas programming
+					as well as placing it in the landscape of other rendering technologeis on the web.</br></br>
+
+					The Canvas API provides a means for drawing graphics via JavaScript on a HTML canvas element. 
+					Among other things, canvas can be used for animation, game graphics, photo manipulation, real-time video processing and data visualization.</br></br>
+
+					The Canvas API largely focuses on 2D graphics. But the WebGL API, which also uses the canvas element, can draws hardware-accelerated 
+					2D and 3D graphics.</br></br>
+				</aside>
 			</section>
+			
+			<section data-name="Introducing HTML5 Canvas">
+				<pre>
+					<code class="html" data-trim data-no-escape data-line-numbers>
+						<script type="text/template">
+							<canvas id="chart" width="150" height="150">
+								<img src="images/chart.png" width="150" height="150" alt=""/>
+							</canvas>
+						</script>
+					</code>
+				</pre>
+
+				<pre>
+					<code class="javascript" data-trim data-no-escape data-line-numbers>
+						const canvas = document.getElementById("chart");
+						const ctx = canvas.getContext("2d");
+						
+						ctx.beginPath();
+						ctx.rect(20, 20, 150, 100);
+						ctx.stroke();
+					</code>
+				</pre>
+
+				<aside class="notes">
+					The canvas element operates much like an image in the DOM, but you have the ability to programmatically 
+					control its content. The canvas element itself can be styled like an image using CSS. Apply margin, border, 
+					background as you normally would. In addition, the base attributes any HTML element has, like id and class, 
+					the canvas element also has. The canvas element also have width and height attributes, but you don’t have to use these; 
+					you can also set width and height with CSS.</br></br>
+
+					-	Fallback content is placed inside the canvas element. For this reason it is required to have a closing tag 
+					(canvas). </br></br>
+
+					The canvas element creates a fixed-size drawing surface that expose one or more “rendering contexts”. 
+					A rendering context is an object we can use to manipulate the content shown in the canvas. 
+					The rendering context we fill focus on today is the 2D rendering context, but there is also a 3D context 
+					which WebGL uses.</br></br>
+				</aside>
+			</section>
+
+			<section data-name="">
+				<h3>Some facts about HTML5 canvas</h3>
+
+				<ul>
+					<il>Same coordinate system as SVG</il>
+					<li>Only support two primitve shapes
+						<ul>
+							<li>Rectangles</li>
+							<li>Paths</li>
+						</ul>
+					</li>
+				</ul>
+
+				<aside class="notes">
+					The canvas coordinate system works the same way as the SVG coordinate system with respect to the 
+					location of the origin and direction of the axis. So you are allready familier with that</br></br>
+
+					The canvas, actually, only supports two primitive shapes: rectangles and paths, where paths are lists of points 
+					connected by lines or curves. </br>
+					All other shapes you want to create must be created by combining one or more paths. </br>
+					On order to author a path you use methods exposed on the 2D context to create and add together multiple subpaths, 
+					which combined can become shapes of arbitrary complexity.</br></br>
+				</aside>	
+			</section>
+
+			<section>
+				<h3>Drawing rectangles</h3>
+
+				<pre>
+					<code class="javascript" data-trim data-no-escape data-line-numbers>
+						var ctx = canvas.getContext('2d');
+	
+						ctx.fillRect(x, y, width, height);
+						ctx.clearRect(x, y, width, height);
+						ctx.strokeRect(x, y, width, height);
+					</code>
+				</pre>
+
+				<aside class="notes">
+					Continuing with how to draw rectangles. Here we have three methods. </br>
+					The first create a rect and fill it, all in one call.</br>
+					The second create a rect and strokes it, all in one call.</br>
+					The third clears a rect (removing any color of the affected pixels)</br>
+				</aside>
+			</section>
+
+			<section>
+				<h3>Drawing paths</h3>
+				
+				<pre>
+					<code type="javascript" data-trim data-no-escape data-line-numbers>
+						const ctx = canvas.getContext("2d");
+	
+						ctx.beginPath();
+	
+						ctx.moveTo(x, y);
+						ctx.lineTo(x, y);
+						ctx.quadraticCurveTo(cpx, cpy, x, y);
+						ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y);
+						ctx.arc(x, y, radius, startAngle, endAngle [, anticlockwise]);
+						ctx.arcTo(x1, y1, x2, y2, radius);
+						ctx.ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle [, anticlockwise]);
+						ctx.rect(x, y, width, height);
+	
+						// ctx.closePath()
+					</code>
+				</pre>
+
+
+				<aside class="notes">
+					As mentioned, a path is a list of points connected by lines.  </br>
+					To make a shape using a path you go through the following steps:</br>
+					
+					1.	Create the path: ctx.beginPath()</br>
+					
+					2.	Issue draw commands do draw the path (specify the points and lines). There is no limit to the 
+							number of draw commands or the combination of them you can issue to create your shapes.</br></br>
+						
+							Go through code on the screen</br></br>
+
+					3.	Finally, you stroke and/or fill the path to make is visible (render it)</br>
+						a.	Ctx.fill()</br>
+						b.	Ctx.stroke()</br>
+					</br></br>
+					A path or sub path can be “closed” or “open”. When filling a path it is closed automatically. Closing a path
+					means to draw a line from the current position of the path to the start position, completing the path, closing the remaining gap.	</br></br>
+
+					Becoming effective in using canvas involves becoming comfortable with these methods and how to compose them 
+					together to create the shapes you want. The methods on the screen is pretty much it (you do have some more tools but..), 
+					those are all you have at your disposal. Take a second to take in the simplicity of the API.</br></br>
+				</aside>
+			</section>
+
+			<section data-name="Drawing text">
+				<h3>Drawing text</h3>
+
+				<pre>
+					<code class="javascript" data-trim data-no-escape data-line-numbers>
+						const ctx = canvas.getContext("2d");
+	
+						ctx.fillText(text, x, y [, maxWidth]);
+						ctx.strokeText(text, x, y [, maxWidth]);
+					</code>
+				</pre>
+
+				<aside class="notes">
+					Adding text to the canvas is easy. You use one of the following two methods to render text to the canvas:</br>
+						1.	fillText(text, x, y [, maxWidth])</br>
+						2.	strokeText(text, x, y [, maxWidth])</br>
+
+					There are styling options to further control how the text is rendered to the canvas, but we will skip over that.</br>
+				</aside>
+			</section>
+
+			<section data-name="Styling and colors">
+				<h3>Styling and colors</h3>
+
+				<ul>
+					<li>Stroke and fill</li>
+					<li>Configure the context before stroking/filling</li>
+				</ul>
+
+				<pre>
+					<code type="javascript" data-trim data-no-escape data-line-numbers>
+						const ctx = canvas.getContext("2d");
+	
+						// Configure styles
+						ctx.fillStyle = 'rgba(250, 130, 0, 0.7)';
+						ctx.strokeStyle = 'blue'
+						ctx.lineWidth = 5;
+						ctx.lineCap = 'round'
+						...
+	
+						// Create path
+						ctx.beginPath();
+						ctx.moveTo(x, y);
+						ctx.lineTo(x, y);
+						...
+	
+						// Stroke and/or fill the path
+						ctx.stroke();
+						ctx.fill();
+					</code>
+				</pre>
+
+
+				<aside class="notes">
+					There are only two things you can do to style a shape. Style the stroke and the fill. </br></br>
+					
+					Styles are defiened by configuring the context with the styles you want before stroking or filling the shape you are drawing.</br></br>
+
+					You do have a few options when it comes to styling:</br>
+					Color:</br>
+					-	Defined the color using the same conventions supported by CSS</br>
+						o	Ctx.fillStyle = “rgba(255, 160, 0, 1) etc.</br>
+					-	Set the alpha for everything about to be storked or filled with ctx.globalAlpha</br>
+
+					Line styles</br>
+					-	LineWidth</br>
+					-	lineCap: appearance of the end of lines</br>
+					-	lineJoin: appearance of the corners where lines meet</br>
+					-	setLineDash(segments)</br>
+					-	lineDathOffset</br></br>
+
+					Gradients </br>
+						It is possible to fill and stroke shapes using linear, radial and conic gradients. </br>
+						This works is done by creating a CanvasGradient object and then assign it to the </br>
+						fillStyle or strokeStyle.</br></br>
+
+					Other tools to style your shapes are </br>
+					-	Patterns</br>
+					-	Shadows</br>
+
+					There are several other tools at your disposal, but the key takeaway here is:</br>
+					- Shapes are styled with stroke and fill</br>
+					- Configure the styles before stroking/filling</br>
+
+				</aside>
+			</section>
+
+			<section>
+				<h3>Managing canvas state</h3>
+
+				<pre>
+					<code class="javascript" data-trim data-no-escape data-line-numbers>
+						...
+						ctx.fill();
+	
+						// Push canvas state to a stack
+						ctx.save();
+	
+						// Change styles
+						ctx.fillStyle = 'rgba(0, 0, 250, 0.5)';
+						...
+	
+						// Draw shapes
+						ctx.beginPath();
+						ctx.rect(x, y, width, height);
+						ctx.fill();
+	
+						// Pop canvas state from a stack
+						ctx.restore();
+					</code>
+				</pre>
+
+				<aside class="notes">
+					Managing the state of the context, meaning the styling configuration can be cumbersome, but you have a tool
+					to make it a bit more manageable. You can save the context state to a stack and later restore it after having modified
+					it.</br></br>
+
+					Explain code</br>
+				</aside>
+			</section>
+
+			<section data-name="Animation">
+				<h3>Animation</h3>
+
+				<ul>
+					<li>No CSS no DOM</li>
+					<li>Redraw everything every frame</li>
+					<li>One class per type of object</li>
+					<li>Scene graph</li>
+				</ul>
+
+				<aside class="notes">
+					You cannot use CSS, and moving a shape does not involve updating an attribute on a DOM element, 
+					but rather to redraw the whole canvas and every shape within it.</br></br>
+					
+					You as a programmer have to take responsibility to recalculate the position and modifications to 
+					all the shapes in the scene and redraw everything. </br></br>
+
+					There are many techniques to optimize this process by reducing the amount of shapes you need to 
+					redraw every frame. For example, put all the static shapes</br></br>
+
+					Since you have to keep track of all the shapes in memory and manage how they all relate to eachother.
+					Which are inside others, which are drawn on top and which are behind. In compex use cases you end up
+					creating dedicated classes for the different types of objects you have in the scene (scene objects). Such a class then 
+					contains positioning and sizing information and so on. It is also common to put the render logic on those 
+					clases. To the objects know how to draw them selves.</br></br>
+					
+					These scene objects can then be organized in a scene graph expressing the relationships of the objects.</br></br>
+				</aside>
+			</section>
+
+			<section data-name="Interaction">
+				<h3>Interaction</h3>
+
+				<ul>
+					<li>The canvas is just a bitmap</li>
+					<li>Add event handlers to the canvas element</li>
+					<li>Based on the "scene graph" you can calculate what object the user interacted with</li>
+				</ul>
+				
+				<aside class="notes">
+					The canvas element is just a bitmap and does not provide any information about its content to the 
+					outside world. All the build in features you get when using HTML or SVG elements, like the ability 
+					to add event handlers or use CSS to dynamically change styles on hover, focus etc, does not work 
+					with object drawn in the canvas. You have to add all these capabilities on your own.</br></br>
+
+					To add interaction you would noramlly</br>
+					-	Add mouse events handleres etc. to the canvas element itself</br>
+					-	Based on the “scene graph” of your application you can calculate what the user is hovering over, 
+						for example, and update the canvas accordingly.</br>
+				</aside>
+			</section>
+
 			<section data-name="D3 with HTML5 Canvas">
 				<h2>D3 with HTML5 Canvas</h2>
+
+				<ul>
+					<li>D3 is tightly coupled with the DOM</li>
+					<li>D3 as a library of utility functions</li>
+					<li>Easiest approach
+						<ul>
+							<li>D3 manipulates the DOM inside a custom element</li>
+							<li>Iterate over the nodes and draw them to the canvas</li>
+						</ul>
+					</li>
+				</ul>
+
+				<aside class="notes">
+					Now we know a bit about Canvas, how can we leverage D3 when drawing to a canvas.</br></br>
+
+					D3 is a library to manipulate the DOM, not arbitrary object in memory. You cannot use d3-selection and 
+					data-biding on an array of JavaScript objects. </br></br>
+
+					D3 has a lot of utility fuctions which you can use to aid in the developent of your own system to handle
+					updates to data, transitions and so on, but you would need to take on a lot of the responsibility that
+					D3 normally has.</br></br>
+
+					The easiest way to move rendering from SVG or HTML to canvas is in fact to use D3 to manipulate the DOM,
+					just like normal, but put all the nodes inside a custom element. The browser will ignore the custom element
+					and not spend any resources on rendering the stuff you put inside.</br>
+					You still use resources to manipulate the DOM, but the browser saves on rendering.</br></br>
+
+					In order to draw to the canvas you simply iterate over all the DOM nodes D3 controlls and use their element type 
+					and attributes as arguments in the drawing process.</br></br>
+
+					Checking the DOM for changes 30 times a second and redrawing the canvas will result in smooth animations,
+					and D3 still does all the heavy lifting. </br></br>
+				</aside>
 			</section>
+			
 			<section data-name="Canvas demo">
 				<h2>Canvas Demo</h2>
+
+				<p>Lets look at a couple of examples</p>
+
+				<p><a href="http://localhost:3000">D3 with canvas demos</a></p>
+
+				<aside class="notes">
+					- Show animation </br>
+					- Explain code </br>
+					- Show scatter plot </br>
+					- Explain code </br>
+				</aside>
 			</section>
+			
 			<section data-name="D3 in the wild">
 				<section>
 					<h2>D3 in the wild</h2>
 				</section>
 				<section>
 					<h3>Cuttings Insight application</h3>
+					<p>
+						<a href="https://wellify.ai">Wellify.ai</a>
+					</p>
 				</section>
+
 			</section>
 		</div>
 	</div>

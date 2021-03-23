@@ -78,19 +78,18 @@ export const StackedBarChart: FC<ChartComponentProps<StackedData[]>> = ({
 
     chartContainer.append("g").attr("id", "data-container");
 
-    svg.call(
-      // @ts-ignore
-      d3
-        .zoom()
-        .extent([
-          [0, 0],
-          [width, height],
-        ])
-        .scaleExtent([1, 8])
-        .on("zoom", function zoomHandler(e: any) {
-          chartContainer.attr("transform", e.transform);
-        })
-    );
+    const zoomBehavior = d3
+      .zoom()
+      .extent([
+        [0, 0],
+        [width, height],
+      ])
+      .scaleExtent([1, 8])
+      .on("zoom", function zoomHandler(e: any) {
+        chartContainer.attr("transform", e.transform);
+      });
+
+    svg.call(zoomBehavior as any);
 
     const tooltip = d3
       .select("body")

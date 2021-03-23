@@ -9,7 +9,7 @@ import { drawElement, drawXAxis, drawYAxis } from "./draw-to-canvas";
 d3.namespaces.custom = "http://d3js.org/namespace/custom";
 
 export type Scales = {
-  x: d3.ScaleBand<string>;
+  x: d3.ScalePoint<string>;
   y: d3.ScaleLinear<number, number>;
 };
 
@@ -21,7 +21,7 @@ export const D3CanvasScatterChart: FC<ChartComponentProps<PointData[]>> = ({
   const scales = useMemo(
     () => ({
       x: d3
-        .scaleBand()
+        .scalePoint()
         .padding(0.1) // equivalent to .paddingInner(0.1).paddingOuter(0.1)
         .range([MARGIN.left, width - MARGIN.right])
         .domain(data.map((d) => String(d.key))),
